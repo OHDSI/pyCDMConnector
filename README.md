@@ -27,7 +27,7 @@ AI-generated Python port of several R packages from the [DARWIN EU](https://darw
 
 ## Install
 
-Install directly from GitHub:
+Install directly from GitHub. This is the closest Python equivalent to R's `devtools::install_github()`:
 
 ```bash
 pip install git+https://github.com/OHDSI/pyCDMConnector.git
@@ -44,9 +44,9 @@ pip install -e ".[dev]"
 To use a database backend other than DuckDB, install the corresponding extra:
 
 ```bash
-pip install "cdmconnector[postgres]"    # PostgreSQL
-pip install "cdmconnector[snowflake]"   # Snowflake
-pip install "cdmconnector[bigquery]"    # BigQuery
+pip install "cdmconnector[postgres] @ git+https://github.com/OHDSI/pyCDMConnector.git"    # PostgreSQL
+pip install "cdmconnector[snowflake] @ git+https://github.com/OHDSI/pyCDMConnector.git"   # Snowflake
+pip install "cdmconnector[bigquery] @ git+https://github.com/OHDSI/pyCDMConnector.git"    # BigQuery
 ```
 
 ## Setting up `EUNOMIA_DATA_FOLDER`

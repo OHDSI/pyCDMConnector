@@ -15,15 +15,30 @@ title: "CDMConnector"
 ## Install
 
 ```bash
-pip install CDMConnector
+# Roughly equivalent to R's devtools::install_github(...)
+pip install "cdmconnector @ git+https://github.com/OHDSI/pyCDMConnector.git"
 ```
 
 With optional backends:
 
 ```bash
-pip install "CDMConnector[postgres]"
-pip install "CDMConnector[dev,docs]"
+# Built-in by default
+# duckdb
+
+# Extras currently exposed by the package
+pip install "cdmconnector[postgres] @ git+https://github.com/OHDSI/pyCDMConnector.git"
+pip install "cdmconnector[snowflake] @ git+https://github.com/OHDSI/pyCDMConnector.git"
+pip install "cdmconnector[bigquery] @ git+https://github.com/OHDSI/pyCDMConnector.git"
+
+# Also supported through Ibis backends used by the package
+# redshift
+# sqlserver
+# spark / databricks
+
+pip install "cdmconnector[dev,docs] @ git+https://github.com/OHDSI/pyCDMConnector.git"
 ```
+
+Supported database backends are: `duckdb`, `postgres`, `redshift`, `sqlserver`, `snowflake`, `bigquery`, and `spark` / `databricks`.
 
 ## Quick example
 
@@ -31,13 +46,14 @@ pip install "CDMConnector[dev,docs]"
 import cdmconnector as cc
 import ibis
 
-# From an Ibis DuckDB connection
-con = ibis.duckdb.connect("path/to/cdm.duckdb")
+# From the Eunomia GiBleed example in DuckDB
+path = cc.eunomia_dir("GiBleed", cdm_version="5.3")
+con = ibis.duckdb.connect(path)
 cdm = cc.cdm_from_con(
     con,
     cdm_schema="main",
     write_schema="main",
-    cdm_name="My CDM",
+    cdm_name="GiBleed",
 )
 
 # Access tables (Ibis expressions)

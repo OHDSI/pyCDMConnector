@@ -40,7 +40,8 @@ Everything else will be taught as we go.
 
 ```python
 # If needed:
-# pip install cdmconnector "cdmconnector[postgres]"  # optional: postgres
+# pip install "cdmconnector @ git+https://github.com/OHDSI/pyCDMConnector.git"
+# pip install "cdmconnector[postgres] @ git+https://github.com/OHDSI/pyCDMConnector.git"  # optional: postgres
 # Eunomia datasets are downloaded on first use.
 
 import cdmconnector as cc

@@ -19,11 +19,10 @@ This folder contains **Jupyter notebook skeletons** that teach the `cdmconnector
    pip install -e ".[duckdb]"
    ```
 
-   Or from PyPI:
+   Or install directly from GitHub, which is the closest Python equivalent to R's `devtools::install_github()`:
 
    ```bash
-   pip install CDMConnector
-   pip install "ibis-framework[duckdb]"
+   pip install "cdmconnector @ git+https://github.com/OHDSI/pyCDMConnector.git"
    ```
 
 3. **Optional**: For cohort SQL from JSON (notebook 06), Circepy is a dependency of the package. For pretty tables (notebooks 07, 09), install great-tables:
@@ -82,4 +81,4 @@ Eunomia data is downloaded on first use via `cc.eunomia_dir("GiBleed")` etc., or
 
 - **Dataset not found**: Run `cc.download_eunomia_data("GiBleed")` (or the dataset name you need) with network access. Ensure `cc.eunomia_dir(...)` is called from a context where the package can write to its cache.
 - **Path errors in notebook 06**: Run Jupyter from the **repository root** so `docs-src/assets/cohort_json` exists. Alternatively set `COHORT_JSON_DIR` in the notebook to the full path of `docs-src/assets/cohort_json`.
-- **Import errors**: Ensure `cdmconnector` and `ibis` are installed (`pip install -e .` or `pip install CDMConnector` and `ibis-framework[duckdb]`).
+- **Import errors**: Ensure `cdmconnector` and `ibis` are installed (`pip install -e .` or `pip install "cdmconnector @ git+https://github.com/OHDSI/pyCDMConnector.git"`).

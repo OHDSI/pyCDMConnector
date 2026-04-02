@@ -14,13 +14,13 @@ All examples use `cdmconnector.cdm_from_con()` with an Ibis backend connection.
 
 ## Prerequisites
 
-Install `cdmconnector` plus the backend extras you need:
+Install `cdmconnector` from GitHub plus the backend extras you need. This is the closest Python equivalent to R's `devtools::install_github()`:
 
 ```bash
-pip install cdmconnector
-pip install "cdmconnector[postgres]"
-pip install "cdmconnector[snowflake]"
-pip install "cdmconnector[bigquery]"
+pip install "cdmconnector @ git+https://github.com/OHDSI/pyCDMConnector.git"
+pip install "cdmconnector[postgres] @ git+https://github.com/OHDSI/pyCDMConnector.git"
+pip install "cdmconnector[snowflake] @ git+https://github.com/OHDSI/pyCDMConnector.git"
+pip install "cdmconnector[bigquery] @ git+https://github.com/OHDSI/pyCDMConnector.git"
 ```
 
 Some backends, such as SQL Server or Databricks, may also require the corresponding Ibis backend dependencies in your environment.

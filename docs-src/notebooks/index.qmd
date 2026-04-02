@@ -18,7 +18,7 @@ This section contains **Jupyter notebooks** that teach the `cdmconnector` packag
 
 ## Running locally
 
-1. **Environment**: Create a venv and install the package with DuckDB: `pip install -e ".[duckdb]"` (or `pip install CDMConnector` and `ibis-framework[duckdb]`).
+1. **Environment**: Create a venv and install the package with DuckDB: `pip install -e ".[duckdb]"`. If you want the GitHub-install equivalent of R's `devtools::install_github()`, use `pip install "cdmconnector @ git+https://github.com/OHDSI/pyCDMConnector.git"`.
 2. **Eunomia**: Example data is downloaded on first use via `cc.eunomia_dir("GiBleed")`, or run `cc.download_eunomia_data("GiBleed")` in advance.
 3. **Paths**: Run Jupyter from the **repository root** so `docs-src/assets/cohort_json` and other paths resolve.
 
