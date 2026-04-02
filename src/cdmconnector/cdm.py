@@ -821,7 +821,7 @@ def cdm_from_con(
         msg = (
             "No CDM tables found in the given schema. "
             "If using Eunomia, reinstall from source so tables are persisted: pip install -e . "
-            "Then delete any existing GiBleed_*.duckdb in your data folder so it is rebuilt."
+            "Then delete any existing GiBleed_*_py.duckdb in your data folder so it is rebuilt."
         )
         raise CDMValidationError(msg)
 

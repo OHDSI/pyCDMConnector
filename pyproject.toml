@@ -114,7 +114,7 @@ markers = [
 
 [tool.pytest_env]
 # D: prefix means "set as default" — won't override if already set in the shell
-"D:EUNOMIA_DATA_FOLDER" = "/Users/ablack/eunomia_data"
+EUNOMIA_DATA_FOLDER = {value = "/Users/ablack/eunomia_data", transform = true}
 
 [tool.coverage.run]
 source = ["src/cdmconnector"]

@@ -195,7 +195,7 @@ def test_eunomia_dir_with_existing_zip_builds_duckdb(tmp_path):
             os.environ.pop("EUNOMIA_DATA_FOLDER", None)
     assert Path(out).exists()
     assert Path(out).suffix == ".duckdb"
-    assert (tmp_path / "GiBleed_5.3.duckdb").exists()
+    assert (tmp_path / "GiBleed_5.3_py.duckdb").exists()
 
 
 def test_eunomia_dir_database_file_arg(tmp_path):

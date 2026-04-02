@@ -27,21 +27,45 @@ AI-generated Python port of several R packages from the [DARWIN EU](https://darw
 
 ## Install
 
-Clone the repository locally, set up a python environment.
+Install directly from GitHub:
+
 ```bash
-pip install -e .
+pip install git+https://github.com/OHDSI/pyCDMConnector.git
 ```
+
+For development (editable install with test/doc dependencies):
+
+```bash
+git clone https://github.com/OHDSI/pyCDMConnector.git
+cd pyCDMConnector
+pip install -e ".[dev]"
+```
+
+To use a database backend other than DuckDB, install the corresponding extra:
+
+```bash
+pip install "cdmconnector[postgres]"    # PostgreSQL
+pip install "cdmconnector[snowflake]"   # Snowflake
+pip install "cdmconnector[bigquery]"    # BigQuery
+```
+
+## Setting up `EUNOMIA_DATA_FOLDER`
+
+The **`EUNOMIA_DATA_FOLDER`** environment variable tells pyCDMConnector where to cache downloaded example datasets (zip files and DuckDB databases). It must be set before using `eunomia_dir()` or any of the example datasets.
+
+```bash
+# Set for the current session
+export EUNOMIA_DATA_FOLDER=/path/to/eunomia_data
+
+# Or add to your shell profile (~/.zshrc, ~/.bashrc) for persistence
+echo 'export EUNOMIA_DATA_FOLDER=/path/to/eunomia_data' >> ~/.zshrc
+```
+
+On first use, `eunomia_dir()` downloads the dataset zip, extracts the parquet files, and builds a DuckDB database in this folder. Subsequent calls use the cached data. The function always returns a path to a *copy* of the DB so the cache is never modified.
+
+> **Note:** Python and R CDMConnector can share the same `EUNOMIA_DATA_FOLDER`. The zip files are shared, and the DuckDB files use different names (`GiBleed_5.3_py.duckdb` for Python vs `GiBleed_5.3.duckdb` for R) so they don't conflict.
 
 ## Eunomia example datasets
-
-Eunomia provides example OMOP CDM datasets for testing and development. The **`EUNOMIA_DATA_FOLDER`** environment variable must be set to a directory where downloaded zip files and built DuckDB databases are cached.
-
-```bash
-# Set the cache directory (add to your shell profile for persistence)
-export EUNOMIA_DATA_FOLDER=/path/to/eunomia_data
-```
-
-`eunomia_dir()` downloads the dataset on first use, builds a DuckDB file from the parquet files in the zip, and returns a path to a *copy* of the DB (the cache is never modified). Subsequent calls use the cached data.
 
 ```python
 import cdmconnector as cc
@@ -52,8 +76,6 @@ cc.example_datasets()
 ```
 
 Most datasets are available in CDM version 5.3. A few (`synpuf-1k`, `empty_cdm`, `Synthea27NjParquet`) are also available in 5.4.
-
-> **Note:** If you also use the R CDMConnector package with the same `EUNOMIA_DATA_FOLDER`, the zip files are shared but the `.duckdb` files are not compatible across R and Python DuckDB versions. Delete any `.duckdb` files built by R so Python can rebuild them from the zip.
 
 ## Quick start with Eunomia GiBleed
 

@@ -185,7 +185,7 @@ def _ensure_valid_zip(
             dataset_name=dataset_name, cdm_version=cdm_version, path=cache_dir
         )
         return
-    db_name = f"{dataset_name}_{cdm_version}.duckdb"
+    db_name = f"{dataset_name}_{cdm_version}_py.duckdb"
     try:
         with zipfile.ZipFile(zip_path, "r") as z:
             z.testzip()
@@ -249,7 +249,7 @@ def eunomia_dir(
             dataset_name=dataset_name, cdm_version=cdm_version, path=cache_dir
         )
 
-    db_name = f"{dataset_name}_{cdm_version}.duckdb"
+    db_name = f"{dataset_name}_{cdm_version}_py.duckdb"
     db_path = cache_dir / db_name
     db_exists = db_path.exists()
     logger.info("eunomia_dir: DuckDB %s exists=%s", db_path.name, db_exists)
