@@ -108,7 +108,7 @@ class DbCdmSource(CdmSource):
         super().__init__(self._detect_dbms(con))
         self.con = con
         self._schema = schema
-        self._prefix = prefix
+        self._prefix = prefix or resolve_prefix(None, schema)
         self._write_schema = write_schema if write_schema is not None else schema
 
     # ------------------------------------------------------------------
