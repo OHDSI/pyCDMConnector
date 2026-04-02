@@ -77,6 +77,8 @@ website:
       contents:
         - href: notebooks/index.qmd
           text: Overview
+        - href: tutorials/database_connection_examples.qmd
+          text: Database connection examples
         - href: tutorials/wasm_example_analysis.qmd
           text: Interactive (WASM) Example
         - href: notebooks/00_welcome_your_first_cdm.ipynb

@@ -1,6 +1,6 @@
 ---
-title: "Pedagogical OMOP in Your Browser (GiBleed-style)"
-description: "Mini-course: observational data analysis on an OMOP CDM using Ibis and DuckDB in-browser—joins, cohort construction, time-at-risk, and outcome counting."
+title: "Pedagogical OMOP in Your Browser (GiBleed / Eunomia)"
+description: "Mini-course: observational data analysis on the GiBleed Eunomia OMOP CDM using Ibis and DuckDB in-browser—joins, cohort construction, time-at-risk, and outcome counting."
 format:
   html:
     toc: true
@@ -22,7 +22,7 @@ execute:
 Serve the **built `docs`** folder (e.g. `cd docs && python -m http.server 4522`), then open **http://localhost:4522/tutorials/wasm_example_analysis.html**. Run each code cell in order.
 :::
 
-This page is a **pedagogical mini-course** in doing observational data analysis on an OMOP CDM. Code runs in your browser (Pyodide + Ibis + DuckDB + pandas). We use **synthetic GiBleed-style data** so you can try the full workflow without installing anything. For real data, use [Eunomia](https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html) and [CDMConnector](https://github.com/darwin-eu/CDMConnector) locally.
+This page is a **pedagogical mini-course** in doing observational data analysis on an OMOP CDM. Code runs in your browser (Pyodide + Ibis + DuckDB + pandas). We use the real **GiBleed Eunomia** example dataset so you can work with an actual OMOP CDM without installing anything locally.
 
 ---
 
@@ -47,98 +47,72 @@ Everything else is taught as we go.
 
 # 3. Install and load packages
 
-In the browser we use **Pyodide** plus **micropip** to install Ibis (not included in the default Pyodide bundle). Run the cell below once; it installs `ibis-framework[duckdb]` then imports Ibis and pandas. Locally you would use `cdmconnector` and Ibis; here we use **Ibis** and **DuckDB** with pandas for execution.
+In the browser we use **Pyodide** plus **micropip** to install Ibis (not included in the default Pyodide bundle). Run the cell below once; it installs `ibis-framework[duckdb]` then imports the tools we need to download and analyze the GiBleed Eunomia example data in-browser.
 
 ```{pyodide-python}
 import micropip
 await micropip.install("ibis-framework[duckdb]")
 import ibis
 import pandas as pd
+import io
+import zipfile
+from pathlib import Path
+from pyodide.http import pyfetch
 ```
 
-# 4. Get the GiBleed-style example and connect
+# 4. Get the GiBleed Eunomia example and connect
 
-Eunomia provides synthetic OMOP CDM datasets; CDMConnector's `eunomia_dir()` creates a DuckDB copy. **In this browser demo** we build a small **in-memory synthetic CDM** with the same shape so you can run the full lesson.
-
-```{pyodide-python}
-# Synthetic person (with birth components for age at cohort entry)
-person = pd.DataFrame({
-    "person_id": [1, 2, 3, 4, 5, 6, 7, 8],
-    "gender_concept_id": [8532, 8507, 8532, 8507, 8532, 8507, 8532, 8507],
-    "year_of_birth": [1980, 1975, 1990, 1985, 1970, 1982, 1995, 1988],
-    "month_of_birth": [6, 3, 1, 7, 12, 5, 9, 11],
-    "day_of_birth": [15, 20, 1, 14, 31, 10, 5, 22],
-})
-
-# Concept table (IDs → names); 192671 = Gastrointestinal hemorrhage (GiBleed)
-concept = pd.DataFrame({
-    "concept_id": [192671, 313217, 316866, 319843, 8532, 8507, 3004249, 3012888, 9201, 9202, 40228110],
-    "concept_name": [
-        "Gastrointestinal hemorrhage", "Atrial fibrillation", "Type 2 diabetes", "Hypertension",
-        "Female", "Male", "Systolic BP", "Diastolic BP", "Inpatient", "Outpatient", "Aspirin"
-    ],
-    "domain_id": ["Condition", "Condition", "Condition", "Condition", "Gender", "Gender", "Measurement", "Measurement", "Visit", "Visit", "Drug"],
-    "vocabulary_id": ["SNOMED", "SNOMED", "SNOMED", "SNOMED", "Gender", "Gender", "LOINC", "LOINC", "Visit", "Visit", "RxNorm"],
-})
-
-# Visits with date range
-visit_occurrence = pd.DataFrame({
-    "visit_occurrence_id": [1, 2, 3, 4, 5, 6, 7],
-    "person_id": [1, 1, 2, 3, 4, 5, 6],
-    "visit_concept_id": [9201, 9202, 9201, 9202, 9201, 9202, 9201],
-    "visit_start_date": ["2020-01-10", "2020-03-01", "2020-02-10", "2020-04-20", "2020-02-01", "2020-03-15", "2020-01-05"],
-    "visit_end_date": ["2020-01-12", "2020-03-02", "2020-02-12", "2020-04-22", "2020-02-03", "2020-03-17", "2020-01-07"],
-})
-
-# Conditions: include GI bleed (192671) for cohort; others for variety
-condition_occurrence = pd.DataFrame({
-    "condition_occurrence_id": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    "person_id": [1, 1, 2, 2, 3, 4, 4, 5, 6, 7],
-    "condition_concept_id": [192671, 316866, 192671, 319843, 192671, 313217, 192671, 192671, 319843, 192671],
-    "condition_start_date": ["2020-01-15", "2020-03-01", "2020-02-10", "2020-04-20", "2020-01-05", "2020-02-28", "2020-05-01", "2020-03-15", "2020-04-05", "2020-02-20"],
-})
-
-# Drug exposures (for semi_join and time-window examples)
-drug_exposure = pd.DataFrame({
-    "drug_exposure_id": [1, 2, 3, 4, 5, 6],
-    "person_id": [1, 1, 2, 4, 5, 6],
-    "drug_concept_id": [40228110, 40228110, 40228110, 40228110, 40228110, 40228110],
-    "drug_exposure_start_date": ["2020-01-01", "2020-01-20", "2020-02-01", "2020-02-25", "2020-03-10", "2020-04-01"],
-})
-
-measurement = pd.DataFrame({
-    "person_id": [1, 1, 2, 3, 4, 5],
-    "measurement_concept_id": [3004249, 3012888, 3004249, 3012888, 3004249, 3012888],
-    "value_as_number": [120.5, 80.2, 118.0, 82.1, 121.0, 79.5],
-})
-
-# Optional death table (sparse)
-death = pd.DataFrame({
-    "person_id": [2],
-    "death_date": ["2020-02-15"],
-})
-```
+Eunomia provides synthetic OMOP CDM datasets for teaching and testing. In this browser demo we download the real **GiBleed 5.3** Eunomia archive, cache its parquet files in Pyodide's local filesystem, and register the core OMOP tables in DuckDB.
 
 ```{pyodide-python}
-# Ibis + DuckDB in-memory: create tables from pandas DataFrames
+DATASET_URL = "https://cdmconnectordata.blob.core.windows.net/cdmconnector-example-data/GiBleed_5.3.zip"
+WORK_DIR = Path("/tmp/eunomia_gibleed")
+WORK_DIR.mkdir(parents=True, exist_ok=True)
+
+parquet_root = WORK_DIR / "GiBleed"
+if not parquet_root.exists() or not any(parquet_root.glob("*.parquet")):
+    print("Downloading GiBleed Eunomia data...")
+    response = await pyfetch(DATASET_URL)
+    if not response.ok:
+        raise RuntimeError(f"Failed to download {DATASET_URL} (status {response.status})")
+    zip_bytes = await response.bytes()
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as zf:
+        zf.extractall(WORK_DIR)
+else:
+    print("Using cached GiBleed Eunomia parquet files.")
+
+if not parquet_root.exists():
+    parquet_root = WORK_DIR
+
+TABLES_TO_LOAD = [
+    "person",
+    "concept",
+    "visit_occurrence",
+    "condition_occurrence",
+    "drug_exposure",
+    "measurement",
+    "death",
+]
+
 con = ibis.duckdb.connect()
-con.create_table("person", person, overwrite=True)
-con.create_table("concept", concept, overwrite=True)
-con.create_table("visit_occurrence", visit_occurrence, overwrite=True)
-con.create_table("condition_occurrence", condition_occurrence, overwrite=True)
-con.create_table("drug_exposure", drug_exposure, overwrite=True)
-con.create_table("measurement", measurement, overwrite=True)
-con.create_table("death", death, overwrite=True)
-print("CDM tables created.")
+loaded_tables = []
+for table_name in TABLES_TO_LOAD:
+    parquet_path = parquet_root / f"{table_name}.parquet"
+    if parquet_path.exists():
+        con.raw_sql(
+            f"CREATE OR REPLACE TABLE {table_name} AS SELECT * FROM read_parquet('{parquet_path.as_posix()}')"
+        )
+        loaded_tables.append(table_name)
+
+print("Loaded tables:", loaded_tables)
 ```
 
 ## 4.1 What is a "CDM reference"?
 
-In CDMConnector you get a single object (e.g. `cdm`) whose elements are lazy Ibis table references. Here we have an **Ibis connection** and table names; we query them with Ibis expressions (filter, select, join, etc.). Same idea: one place to hold "the CDM."
+In CDMConnector you get a single object (for example `cdm`) whose elements are lazy Ibis table references. Here we use a plain **Ibis connection** and the GiBleed OMOP tables loaded from Eunomia parquet files; we query them with the same Ibis expressions.
 
 ```{pyodide-python}
-cdm_tables = ["person", "concept", "visit_occurrence", "condition_occurrence", "drug_exposure", "measurement", "death"]
-print("Tables:", cdm_tables)
+print("Tables:", loaded_tables)
 ```
 
 # 5. First contact with OMOP data
@@ -551,4 +525,4 @@ print("Disconnected.")
 
 ---
 
-**Provenance**: This in-browser lesson uses synthetic data to mirror the [Pedagogical OMOP (GiBleed)](../notebooks/10_pedagogical_omop_gibleed.qmd) tutorial. For real OMOP data, use [CDMConnector](https://github.com/darwin-eu/CDMConnector) with [Eunomia](https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html) (e.g. `eunomia_dir("GiBleed")`) and run the same workflow with Ibis + DuckDB or your backend. Prefer **Ibis** for queries; use **SQLGlot** to translate existing SQL between dialects when needed.
+**Provenance**: This in-browser lesson uses the real **GiBleed Eunomia** example dataset and mirrors the [Pedagogical OMOP (GiBleed)](../notebooks/10_pedagogical_omop_gibleed.qmd) tutorial. For local work, use [CDMConnector](https://github.com/darwin-eu/CDMConnector) with [Eunomia](https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html) (for example `eunomia_dir("GiBleed")`) and run the same workflow with Ibis + DuckDB or your backend. Prefer **Ibis** for queries; use **SQLGlot** to translate existing SQL between dialects when needed.

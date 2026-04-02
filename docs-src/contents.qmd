@@ -11,6 +11,7 @@ Complete list of pages on this site.
 ## Tutorials
 
 - [Notebooks overview](notebooks/index.qmd)
+- [Database connection examples](tutorials/database_connection_examples.qmd)
 - [00 — Welcome / first CDM](notebooks/00_welcome_your_first_cdm.ipynb)
 - [01 — Lazy queries and pipelines](notebooks/01_lazy_queries_and_pipelines.ipynb)
 - [02 — Understanding OMOP people & time domains](notebooks/02_understanding_omop_people_time_domains.ipynb)
