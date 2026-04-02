@@ -1,0 +1,23 @@
+# add_concept_intersect_field { #cdmconnector.add_concept_intersect_field }
+
+```python
+add_concept_intersect_field(
+    table,
+    cdm,
+    concept_set,
+    field,
+    *,
+    index_date='cohort_start_date',
+    censor_date=None,
+    window=[(0, float('inf'))],
+    target_date='event_start_date',
+    order='first',
+    in_observation=True,
+    name_style='{field}_{concept_name}_{window_name}',
+)
+```
+
+Add a field value from the first/last concept record within each window.
+
+For concept intersect field, the field must be a column available in the
+OMOP domain table(s) that contain the concept IDs.

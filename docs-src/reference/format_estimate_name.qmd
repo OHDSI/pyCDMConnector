@@ -1,0 +1,30 @@
+# format_estimate_name { #cdmconnector.format_estimate_name }
+
+```python
+format_estimate_name(
+    result,
+    estimate_name=None,
+    keep_not_formatted=True,
+    use_format_order=True,
+)
+```
+
+Combine estimate_name and estimate_value into new labels.
+
+estimate_name maps display label -> format string with <estimate_name> placeholders,
+e.g. {"N (%)": "<count> (<percentage>)", "N": "<count>"}.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name               | Type      | Description                                                         | Default    |
+|--------------------|-----------|---------------------------------------------------------------------|------------|
+| result             | DataFrame | Must contain estimate_name, estimate_value (and estimate_type).     | _required_ |
+| estimate_name      | dict      | Display name -> format template using <estimate_name> placeholders. | `None`     |
+| keep_not_formatted | bool      | If False, drop rows that didn't match any template.                 | `True`     |
+| use_format_order   | bool      | Sort output by the order of keys in estimate_name.                  | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description   |
+|--------|-----------|---------------|
+|        | DataFrame |               |

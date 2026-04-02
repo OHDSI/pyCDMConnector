@@ -1,0 +1,25 @@
+# tidy_summarised_result { #cdmconnector.tidy_summarised_result }
+
+```python
+tidy_summarised_result(
+    result,
+    settings_column=None,
+    pivot_estimates_by='estimate_name',
+)
+```
+
+Tidy a summarised result: keep long form; optionally pivot estimate_value by estimate_name.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name               | Type        | Description                                                                      | Default           |
+|--------------------|-------------|----------------------------------------------------------------------------------|-------------------|
+| result             | DataFrame   | Summarised result (standard columns).                                            | _required_        |
+| settings_column    | list        | Settings columns to join (from settings table); not implemented here.            | `None`            |
+| pivot_estimates_by | str or None | If "estimate_name", pivot estimate_value so each estimate_name becomes a column. | `'estimate_name'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description   |
+|--------|-----------|---------------|
+|        | DataFrame |               |

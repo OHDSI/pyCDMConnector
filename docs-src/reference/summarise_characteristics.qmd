@@ -1,0 +1,38 @@
+# summarise_characteristics { #cdmconnector.summarise_characteristics }
+
+```python
+summarise_characteristics(
+    cohort,
+    cdm=None,
+    *,
+    cohort_id=None,
+    strata=None,
+    counts=True,
+    demographics=True,
+    table_name=None,
+)
+```
+
+Summarise characteristics of cohorts in a cohort table.
+
+Produces counts (number of subjects, number of records) and optionally
+demographics (age, sex, prior/future observation, cohort start/end dates)
+per cohort_definition_id, in summarised_result format.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                                                                   | Description                                                                                                                   | Default    |
+|--------------|------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|------------|
+| cohort       | Ibis table, DataFrame, or cohort_table-like with cohort_definition_id, | subject_id, cohort_start_date, cohort_end_date. May have cohort_set attribute for cohort names.                               | _required_ |
+| cdm          | Optional Cdm. If provided and demographics is True, person and         | observation_period are used to add age, sex, prior_observation, future_observation. cdm.name is used for cdm_name in results. | `None`     |
+| cohort_id    | Optional cohort_definition_id(s) to include; if None, all.             |                                                                                                                               | `None`     |
+| strata       | Optional list of column names to stratify by (columns must exist       | on cohort or be added by demographics).                                                                                       | `None`     |
+| counts       | If True, include number of subjects and number of records.             |                                                                                                                               | `True`     |
+| demographics | If True, include demographics (requires cdm with person                | and observation_period).                                                                                                      | `True`     |
+| table_name   | Optional cohort table name (e.g. for settings and resolving            | cohort_set from cdm).                                                                                                         | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                                                                                                                                                                                                                                                                  |
+|--------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | SummarisedResult | .results : DataFrame with result_id, cdm_name, group_name, group_level,     strata_name, strata_level, variable_name, variable_level,     estimate_name, estimate_type, estimate_value, additional_name, additional_level. .settings : DataFrame with result_id, package_name, package_version,     result_type, table_name. |

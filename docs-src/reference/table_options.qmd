@@ -1,0 +1,13 @@
+# table_options { #cdmconnector.table_options }
+
+```python
+table_options()
+```
+
+Return default table options for vis_omop_table / vis_table.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                          |
+|--------|------------------|--------------------------------------|
+|        | dict\[str, Any\] | Same as default_table_options(None). |

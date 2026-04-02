@@ -1,0 +1,19 @@
+# add_table_intersect_days { #cdmconnector.add_table_intersect_days }
+
+```python
+add_table_intersect_days(
+    table,
+    cdm,
+    table_name,
+    *,
+    index_date='cohort_start_date',
+    censor_date=None,
+    window=[(0, float('inf'))],
+    target_date=None,
+    in_observation=True,
+    order='first',
+    name_style='{table_name}_{window_name}',
+)
+```
+
+Add days from index_date to first/last record in table_name within each window.

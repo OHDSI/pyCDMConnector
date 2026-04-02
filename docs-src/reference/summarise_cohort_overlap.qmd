@@ -1,0 +1,25 @@
+# summarise_cohort_overlap { #cdmconnector.summarise_cohort_overlap }
+
+```python
+summarise_cohort_overlap(cohort, cdm=None, *, cohort_id=None, strata=None)
+```
+
+Summarise overlap between cohorts.
+
+For each pair of cohorts, counts subjects that are only in the reference
+cohort, only in the comparator cohort, or in both.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                                         | Description   | Default    |
+|-----------|----------------------------------------------|---------------|------------|
+| cohort    | Cohort table.                                |               | _required_ |
+| cdm       | Optional Cdm for cdm_name.                   |               | `None`     |
+| cohort_id | Optional cohort_definition_id(s) to include. |               | `None`     |
+| strata    | Optional stratification columns.             |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

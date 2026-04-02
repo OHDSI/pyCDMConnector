@@ -1,0 +1,405 @@
+# SummarisedResult { #cdmconnector.SummarisedResult }
+
+```python
+SummarisedResult(results=None, settings=None)
+```
+
+Container for a summarised result (results table + settings table).
+
+Mirrors the omopgenerics ``summarised_result`` class. Provides methods for
+filtering, splitting, tidying, suppressing, and combining results.
+
+## Attributes
+
+| Name | Description |
+| --- | --- |
+| [settings](#cdmconnector.SummarisedResult.settings) | Return the settings table. |
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [add_settings](#cdmconnector.SummarisedResult.add_settings) | Add or update columns in the settings table. |
+| [additional_columns](#cdmconnector.SummarisedResult.additional_columns) | Return unique additional_name values (excluding 'overall'). |
+| [combine_strata](#cdmconnector.SummarisedResult.combine_strata) | Combine multiple strata columns into a single compound strata. |
+| [filter_additional](#cdmconnector.SummarisedResult.filter_additional) | Filter results by additional_name/additional_level pairs. |
+| [filter_group](#cdmconnector.SummarisedResult.filter_group) | Filter results by group_name/group_level pairs. |
+| [filter_settings](#cdmconnector.SummarisedResult.filter_settings) | Filter results by settings column values. |
+| [filter_strata](#cdmconnector.SummarisedResult.filter_strata) | Filter results by strata_name/strata_level pairs. |
+| [group_columns](#cdmconnector.SummarisedResult.group_columns) | Return unique group_name values (excluding 'overall'). |
+| [is_result_suppressed](#cdmconnector.SummarisedResult.is_result_suppressed) | Check if this result has been suppressed. |
+| [pivot_estimates](#cdmconnector.SummarisedResult.pivot_estimates) | Pivot estimate_name into columns with estimate_value as values. |
+| [settings_columns](#cdmconnector.SummarisedResult.settings_columns) | Return non-standard settings column names. |
+| [split_additional](#cdmconnector.SummarisedResult.split_additional) | Split additional_name/additional_level into separate columns. |
+| [split_all](#cdmconnector.SummarisedResult.split_all) | Split all dimensions (group, strata, additional) into separate columns. |
+| [split_group](#cdmconnector.SummarisedResult.split_group) | Split group_name/group_level into separate columns. |
+| [split_strata](#cdmconnector.SummarisedResult.split_strata) | Split strata_name/strata_level into separate columns. |
+| [strata_columns](#cdmconnector.SummarisedResult.strata_columns) | Return unique strata_name values (excluding 'overall'). |
+| [suppress](#cdmconnector.SummarisedResult.suppress) | Suppress results below the minimum cell count. |
+| [tidy](#cdmconnector.SummarisedResult.tidy) | Convert to tidy (wide) format. |
+| [tidy_columns](#cdmconnector.SummarisedResult.tidy_columns) | Return the column names that would appear after tidy(). |
+| [unite_additional](#cdmconnector.SummarisedResult.unite_additional) | Recombine individual additional columns back into additional_name/additional_level. |
+| [unite_group](#cdmconnector.SummarisedResult.unite_group) | Recombine individual group columns back into group_name/group_level. |
+| [unite_strata](#cdmconnector.SummarisedResult.unite_strata) | Recombine individual strata columns back into strata_name/strata_level. |
+
+### add_settings { #cdmconnector.SummarisedResult.add_settings }
+
+```python
+SummarisedResult.add_settings(**kwargs)
+```
+
+Add or update columns in the settings table.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                                   | Default   |
+|----------|--------|-----------------------------------------------|-----------|
+| **kwargs | str    | Column name / value pairs to add to settings. | `{}`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### additional_columns { #cdmconnector.SummarisedResult.additional_columns }
+
+```python
+SummarisedResult.additional_columns()
+```
+
+Return unique additional_name values (excluding 'overall').
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description   |
+|--------|-------------|---------------|
+|        | list\[str\] |               |
+
+### combine_strata { #cdmconnector.SummarisedResult.combine_strata }
+
+```python
+SummarisedResult.combine_strata(*columns)
+```
+
+Combine multiple strata columns into a single compound strata.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                          | Default   |
+|----------|--------|--------------------------------------|-----------|
+| *columns | str    | Column names to combine into strata. | `()`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### filter_additional { #cdmconnector.SummarisedResult.filter_additional }
+
+```python
+SummarisedResult.filter_additional(**kwargs)
+```
+
+Filter results by additional_name/additional_level pairs.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                                                                                      | Default   |
+|----------|--------|--------------------------------------------------------------------------------------------------|-----------|
+| **kwargs | Any    | Pairs where key is the additional_name value and value is the additional_level value(s) to keep. | `{}`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### filter_group { #cdmconnector.SummarisedResult.filter_group }
+
+```python
+SummarisedResult.filter_group(**kwargs)
+```
+
+Filter results by group_name/group_level pairs.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                                                                            | Default   |
+|----------|--------|----------------------------------------------------------------------------------------|-----------|
+| **kwargs | Any    | Pairs where key is the group_name value and value is the group_level value(s) to keep. | `{}`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### filter_settings { #cdmconnector.SummarisedResult.filter_settings }
+
+```python
+SummarisedResult.filter_settings(**kwargs)
+```
+
+Filter results by settings column values.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                                                                                                  | Default   |
+|----------|--------|--------------------------------------------------------------------------------------------------------------|-----------|
+| **kwargs | Any    | Column name / value pairs to filter the settings table by. Values can be a single value or a list of values. | `{}`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description      |
+|--------|------------------|------------------|
+|        | SummarisedResult | Filtered result. |
+
+### filter_strata { #cdmconnector.SummarisedResult.filter_strata }
+
+```python
+SummarisedResult.filter_strata(**kwargs)
+```
+
+Filter results by strata_name/strata_level pairs.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                                                                              | Default   |
+|----------|--------|------------------------------------------------------------------------------------------|-----------|
+| **kwargs | Any    | Pairs where key is the strata_name value and value is the strata_level value(s) to keep. | `{}`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### group_columns { #cdmconnector.SummarisedResult.group_columns }
+
+```python
+SummarisedResult.group_columns()
+```
+
+Return unique group_name values (excluding 'overall').
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description   |
+|--------|-------------|---------------|
+|        | list\[str\] |               |
+
+### is_result_suppressed { #cdmconnector.SummarisedResult.is_result_suppressed }
+
+```python
+SummarisedResult.is_result_suppressed()
+```
+
+Check if this result has been suppressed.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                            |
+|--------|--------|----------------------------------------|
+|        | bool   | True if min_cell_count setting is > 0. |
+
+### pivot_estimates { #cdmconnector.SummarisedResult.pivot_estimates }
+
+```python
+SummarisedResult.pivot_estimates()
+```
+
+Pivot estimate_name into columns with estimate_value as values.
+
+Similar to tidy() but does not split dimensions or merge settings.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |
+
+### settings_columns { #cdmconnector.SummarisedResult.settings_columns }
+
+```python
+SummarisedResult.settings_columns()
+```
+
+Return non-standard settings column names.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description   |
+|--------|-------------|---------------|
+|        | list\[str\] |               |
+
+### split_additional { #cdmconnector.SummarisedResult.split_additional }
+
+```python
+SummarisedResult.split_additional()
+```
+
+Split additional_name/additional_level into separate columns.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |
+
+### split_all { #cdmconnector.SummarisedResult.split_all }
+
+```python
+SummarisedResult.split_all()
+```
+
+Split all dimensions (group, strata, additional) into separate columns.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |
+
+### split_group { #cdmconnector.SummarisedResult.split_group }
+
+```python
+SummarisedResult.split_group()
+```
+
+Split group_name/group_level into separate columns.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                         |
+|--------|------------------|---------------------------------------------------------------------|
+|        | pandas.DataFrame | Results with group_name/group_level replaced by individual columns. |
+
+### split_strata { #cdmconnector.SummarisedResult.split_strata }
+
+```python
+SummarisedResult.split_strata()
+```
+
+Split strata_name/strata_level into separate columns.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |
+
+### strata_columns { #cdmconnector.SummarisedResult.strata_columns }
+
+```python
+SummarisedResult.strata_columns()
+```
+
+Return unique strata_name values (excluding 'overall').
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description   |
+|--------|-------------|---------------|
+|        | list\[str\] |               |
+
+### suppress { #cdmconnector.SummarisedResult.suppress }
+
+```python
+SummarisedResult.suppress(min_cell_count=5)
+```
+
+Suppress results below the minimum cell count.
+
+Replaces estimate_value with NA for numeric estimates where the
+count is below min_cell_count, and obscures the exact count.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name           | Type   | Description                               | Default   |
+|----------------|--------|-------------------------------------------|-----------|
+| min_cell_count | int    | Minimum cell count threshold (default 5). | `5`       |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### tidy { #cdmconnector.SummarisedResult.tidy }
+
+```python
+SummarisedResult.tidy()
+```
+
+Convert to tidy (wide) format.
+
+Splits all dimensions and pivots estimate_name into columns with
+values from estimate_value.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |
+
+### tidy_columns { #cdmconnector.SummarisedResult.tidy_columns }
+
+```python
+SummarisedResult.tidy_columns()
+```
+
+Return the column names that would appear after tidy().
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description   |
+|--------|-------------|---------------|
+|        | list\[str\] |               |
+
+### unite_additional { #cdmconnector.SummarisedResult.unite_additional }
+
+```python
+SummarisedResult.unite_additional()
+```
+
+Recombine individual additional columns back into additional_name/additional_level.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### unite_group { #cdmconnector.SummarisedResult.unite_group }
+
+```python
+SummarisedResult.unite_group()
+```
+
+Recombine individual group columns back into group_name/group_level.
+
+Reverses the effect of split_group. Finds columns that were produced
+by splitting and re-merges them into the ``group_name`` /
+``group_level`` compound format.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |
+
+### unite_strata { #cdmconnector.SummarisedResult.unite_strata }
+
+```python
+SummarisedResult.unite_strata()
+```
+
+Recombine individual strata columns back into strata_name/strata_level.
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

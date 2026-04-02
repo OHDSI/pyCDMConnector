@@ -1,0 +1,41 @@
+# box_plot { #cdmconnector.box_plot }
+
+```python
+box_plot(
+    result,
+    x,
+    lower='q25',
+    middle='median',
+    upper='q75',
+    ymin='min',
+    ymax='max',
+    facet=None,
+    colour=None,
+)
+```
+
+Create a box plot from pre-computed summary statistics.
+
+Unlike standard box plots that compute statistics from raw data, this function
+expects pre-computed statistics (q25, median, q75, min, max) as columns, matching
+the R visOmopResults boxPlot API.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                      | Description                                                                                                                                | Default    |
+|--------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| result | pandas.DataFrame          | Summarised result with standard columns. Must contain columns matching lower, middle, upper, ymin, ymax (by estimate_name or column name). | _required_ |
+| x      | str                       | Column for x-axis categories.                                                                                                              | _required_ |
+| lower  | str                       | Column name for lower quartile (Q1/q25).                                                                                                   | `'q25'`    |
+| middle | str                       | Column name for median.                                                                                                                    | `'median'` |
+| upper  | str                       | Column name for upper quartile (Q3/q75).                                                                                                   | `'q75'`    |
+| ymin   | str                       | Column name for whisker minimum.                                                                                                           | `'min'`    |
+| ymax   | str                       | Column name for whisker maximum.                                                                                                           | `'max'`    |
+| facet  | str, list\[str\], or None | Column(s) to facet by.                                                                                                                     | `None`     |
+| colour | str or None               | Column to map to colour.                                                                                                                   | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description          |
+|--------|-----------|----------------------|
+|        | alt.Chart | Altair chart object. |

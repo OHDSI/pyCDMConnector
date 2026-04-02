@@ -1,0 +1,34 @@
+# add_date_of_birth { #cdmconnector.add_date_of_birth }
+
+```python
+add_date_of_birth(
+    table,
+    cdm,
+    *,
+    date_of_birth_name='date_of_birth',
+    missing_day=1,
+    missing_month=1,
+    impose_day=False,
+    impose_month=False,
+)
+```
+
+Add date of birth from person (with optional impose day/month).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name               | Type   | Description                                   | Default           |
+|--------------------|--------|-----------------------------------------------|-------------------|
+| table              | Any    | Ibis table with person_id or subject_id.      | _required_        |
+| cdm                | Cdm    | CDM reference (person).                       | _required_        |
+| date_of_birth_name | str    | Output column name (default "date_of_birth"). | `'date_of_birth'` |
+| missing_day        | int    | Default day/month when missing (default 1).   | `1`               |
+| missing_month      | int    | Default day/month when missing (default 1).   | `1`               |
+| impose_day         | bool   | Force default day/month (default False).      | `False`           |
+| impose_month       | bool   | Force default day/month (default False).      | `False`           |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                      |
+|--------|-----------------------|----------------------------------|
+|        | ibis.expr.types.Table | Table with date_of_birth column. |

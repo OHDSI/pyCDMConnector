@@ -1,0 +1,20 @@
+# add_cohort_intersect_field { #cdmconnector.add_cohort_intersect_field }
+
+```python
+add_cohort_intersect_field(
+    table,
+    cdm,
+    target_cohort_table,
+    field,
+    *,
+    target_cohort_id=None,
+    index_date='cohort_start_date',
+    censor_date=None,
+    target_date='cohort_start_date',
+    order='first',
+    window=[(0, float('inf'))],
+    name_style='{cohort_name}_{field}_{window_name}',
+)
+```
+
+Add a field value from the first/last cohort record within each window.

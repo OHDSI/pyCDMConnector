@@ -1,0 +1,7 @@
+# standard_concept_id_column { #cdmconnector.standard_concept_id_column }
+
+```python
+standard_concept_id_column(table_name)
+```
+
+Return the standard concept_id column for an OMOP table, or None.

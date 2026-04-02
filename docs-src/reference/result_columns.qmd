@@ -1,0 +1,13 @@
+# result_columns { #cdmconnector.result_columns }
+
+```python
+result_columns()
+```
+
+Return the standard summarised_result column names.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description   |
+|--------|-------------------|---------------|
+|        | tuple\[str, ...\] |               |

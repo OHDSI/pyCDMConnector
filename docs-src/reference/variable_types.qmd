@@ -1,0 +1,21 @@
+# variable_types { #cdmconnector.variable_types }
+
+```python
+variable_types(table)
+```
+
+Return a DataFrame with variable_name and variable_type (integer, numeric, date, categorical, logical).
+
+For Ibis tables, infers from schema without executing; for DataFrames uses dtypes.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description                     | Default    |
+|--------|--------|---------------------------------|------------|
+| table  | Any    | Ibis table or pandas.DataFrame. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                            |
+|--------|------------------|----------------------------------------|
+|        | pandas.DataFrame | Columns: variable_name, variable_type. |

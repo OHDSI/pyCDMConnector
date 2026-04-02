@@ -1,0 +1,43 @@
+# summarise_result { #cdmconnector.summarise_result }
+
+```python
+summarise_result(
+    table,
+    *,
+    group=None,
+    include_overall_group=False,
+    strata=None,
+    include_overall_strata=True,
+    variables=None,
+    estimates=None,
+    counts=True,
+    weights=None,
+    cdm_name='unknown',
+)
+```
+
+Summarise variables into a summarised_result-like structure.
+
+Produces group_name, group_level, strata_name, strata_level, variable_name, variable_level,
+estimate_name, estimate_type, estimate_value. Collects table to memory and aggregates.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                   | Type                | Description                                                                      | Default     |
+|------------------------|---------------------|----------------------------------------------------------------------------------|-------------|
+| table                  | Any                 | Ibis table or DataFrame with person_id or subject_id and variables to summarise. | _required_  |
+| group                  | list or None        | Grouping column names.                                                           | `None`      |
+| include_overall_group  | bool                | If True, include overall group level (default False).                            | `False`     |
+| strata                 | list or None        | Stratification column names.                                                     | `None`      |
+| include_overall_strata | bool                | If True, include overall strata (default True).                                  | `True`      |
+| variables              | list\[str\] or None | Variables to summarise; None = all.                                              | `None`      |
+| estimates              | list\[str\] or None | Estimate names to include; None = default set.                                   | `None`      |
+| counts                 | bool                | Include number_records, number_subjects (default True).                          | `True`      |
+| weights                | str or None         | Optional weight column name.                                                     | `None`      |
+| cdm_name               | str                 | CDM name for result rows (default "unknown").                                    | `'unknown'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                                |
+|--------|------------------|--------------------------------------------------------------------------------------------|
+|        | pandas.DataFrame | Summarised result format (result_id, cdm_name, group_*, strata_*, variable_*, estimate_*). |

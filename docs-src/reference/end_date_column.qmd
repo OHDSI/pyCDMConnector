@@ -1,0 +1,7 @@
+# end_date_column { #cdmconnector.end_date_column }
+
+```python
+end_date_column(table_name)
+```
+
+Return the end date column name for an OMOP table, or None.

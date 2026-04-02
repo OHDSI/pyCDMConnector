@@ -1,0 +1,21 @@
+# customise_text { #cdmconnector.customise_text }
+
+```python
+customise_text(x, custom=None, keep=None)
+```
+
+Style text: replace underscores with spaces and convert to sentence case.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type               | Description                                              | Default    |
+|--------|--------------------|----------------------------------------------------------|------------|
+| x      | str or list\[str\] | Text to style.                                           | _required_ |
+| custom | dict               | Specific overrides mapping original -> replacement text. | `None`     |
+| keep   | list\[str\]        | Values to keep unchanged.                                | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type               | Description   |
+|--------|--------------------|---------------|
+|        | str or list\[str\] | Styled text.  |

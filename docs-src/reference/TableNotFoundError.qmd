@@ -4,4 +4,4 @@
 TableNotFoundError()
 ```
 
-Raised when a requested table does not exist in the CDM.
+Raised when a table is not found in the CDM.

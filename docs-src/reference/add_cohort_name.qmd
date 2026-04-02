@@ -1,0 +1,20 @@
+# add_cohort_name { #cdmconnector.add_cohort_name }
+
+```python
+add_cohort_name(cohort, cohort_set)
+```
+
+Left join cohort_set to add cohort_name by cohort_definition_id.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name       | Type   | Description                                        | Default    |
+|------------|--------|----------------------------------------------------|------------|
+| cohort     | Any    | Ibis table with cohort_definition_id.              | _required_ |
+| cohort_set | Any    | Ibis table with cohort_definition_id, cohort_name. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                           |
+|--------|-----------------------|---------------------------------------|
+|        | ibis.expr.types.Table | Cohort with cohort_name column added. |

@@ -1,0 +1,33 @@
+# table_characteristics { #cdmconnector.table_characteristics }
+
+```python
+table_characteristics(
+    result,
+    *,
+    header=None,
+    group_column=None,
+    hide=None,
+    estimate_format=None,
+)
+```
+
+Format a summarise_characteristics (or summarise_cohort_count) result into a table.
+
+Pivots estimate_name/estimate_value so each estimate is a column, and
+optionally selects/orders columns for display.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name            | Type                                                                    | Description                                                                     | Default    |
+|-----------------|-------------------------------------------------------------------------|---------------------------------------------------------------------------------|------------|
+| result          | SummarisedResult (with .results and .settings) or DataFrame of results. |                                                                                 | _required_ |
+| header          | Columns to show first (e.g. \[\"cdm_name\", \"group_level\"\]). Default | ["cdm_name", "group_level", "strata_level", "variable_name", "variable_level"]. | `None`     |
+| group_column    | Extra grouping columns to keep.                                         |                                                                                 | `None`     |
+| hide            | Column names to drop from output.                                       |                                                                                 | `None`     |
+| estimate_format | Optional mapping from estimate_name to display format                   | (e.g. {"count": "N", "percentage": "%"}). Applied to column names after pivot.  | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                               |
+|--------|------------------|-------------------------------------------------------------------------------------------|
+|        | pandas.DataFrame | Formatted table with one row per (group, strata, variable) and columns for each estimate. |

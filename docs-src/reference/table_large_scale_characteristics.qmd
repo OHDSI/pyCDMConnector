@@ -1,0 +1,30 @@
+# table_large_scale_characteristics { #cdmconnector.table_large_scale_characteristics }
+
+```python
+table_large_scale_characteristics(
+    result,
+    *,
+    top_concepts=None,
+    header=None,
+    group_column=None,
+    hide=None,
+)
+```
+
+Format a summarise_large_scale_characteristics result into a table.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                                          | Description   | Default    |
+|--------------|-----------------------------------------------|---------------|------------|
+| result       | SummarisedResult or DataFrame.                |               | _required_ |
+| top_concepts | If set, limit to top N concepts by frequency. |               | `None`     |
+| header       | Columns for header.                           |               | `None`     |
+| group_column | Extra grouping columns.                       |               | `None`     |
+| hide         | Columns to hide.                              |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |

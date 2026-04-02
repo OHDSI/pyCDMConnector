@@ -1,0 +1,28 @@
+# plot_cohort_overlap { #cdmconnector.plot_cohort_overlap }
+
+```python
+plot_cohort_overlap(
+    result,
+    *,
+    unique_combinations=True,
+    facet=None,
+    colour=None,
+)
+```
+
+Plot cohort overlap as a stacked bar chart.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                | Type                                            | Description   | Default    |
+|---------------------|-------------------------------------------------|---------------|------------|
+| result              | SummarisedResult from summarise_cohort_overlap. |               | _required_ |
+| unique_combinations | If True, show only unique cohort pairs.         |               | `True`     |
+| facet               | Column(s) to facet by.                          |               | `None`     |
+| colour              | Column to colour by.                            |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

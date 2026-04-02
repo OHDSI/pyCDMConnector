@@ -44,11 +44,103 @@ quartodoc:
         - example_datasets
         - require_eunomia
     - title: Patient profiles
-      desc: Demographics and summarise helpers.
+      desc: Demographics, observation windows, and patient-level intersections.
       contents:
         - add_age
+        - add_categories
+        - add_cdm_name
+        - add_cohort_name
+        - add_concept_name
+        - add_date_of_birth
+        - add_death_date
+        - add_death_days
+        - add_death_flag
         - add_demographics
+        - add_future_observation
+        - add_in_observation
+        - add_observation_period_id
+        - add_prior_observation
         - add_sex
+        - add_table_intersect_count
+        - add_table_intersect_date
+        - add_table_intersect_days
+        - add_table_intersect_field
+        - add_table_intersect_flag
+        - add_cohort_intersect_count
+        - add_cohort_intersect_date
+        - add_cohort_intersect_days
+        - add_cohort_intersect_field
+        - add_cohort_intersect_flag
+        - add_concept_intersect_count
+        - add_concept_intersect_date
+        - add_concept_intersect_days
+        - add_concept_intersect_field
+        - add_concept_intersect_flag
+        - available_estimates
+        - end_date_column
+        - filter_cohort_id
+        - filter_in_observation
+        - mock_patient_profiles
+        - source_concept_id_column
+        - standard_concept_id_column
+        - start_date_column
+        - summarise_result
+        - variable_types
+    - title: Cohort characteristics
+      desc: Summaries, formatted tables, and analytic plots for cohort results.
+      contents:
+        - SummarisedResult
+        - bind_summarised_results
+        - empty_summarised_result
+        - estimate_type_choices
+        - new_summarised_result
+        - result_columns
+        - result_package_version
+        - transform_to_summarised_result
+        - summarise_characteristics
+        - summarise_cohort_attrition
+        - summarise_cohort_count
+        - summarise_cohort_overlap
+        - summarise_cohort_timing
+        - summarise_large_scale_characteristics
+        - table_characteristics
+        - table_cohort_attrition
+        - table_cohort_count
+        - table_cohort_overlap
+        - table_cohort_timing
+        - table_large_scale_characteristics
+        - plot_characteristics
+        - plot_cohort_attrition
+        - plot_cohort_count
+        - plot_cohort_overlap
+        - plot_cohort_timing
+        - plot_compared_large_scale_characteristics
+        - plot_large_scale_characteristics
+    - title: Visualisation
+      desc: visOmopResults-style table and chart helpers.
+      contents:
+        - default_table_options
+        - empty_plot
+        - empty_table
+        - format_estimate_name
+        - format_estimate_value
+        - format_header
+        - format_min_cell_count
+        - format_table
+        - mock_summarised_result
+        - plot_columns
+        - plot_type
+        - table_columns
+        - table_options
+        - table_style
+        - table_type
+        - tidy_summarised_result
+        - vis_omop_table
+        - vis_table
+        - bar_plot
+        - box_plot
+        - customise_text
+        - scatter_plot
     - title: Results
       desc: Result container and export.
       contents:

@@ -1,0 +1,13 @@
+# plot_type { #cdmconnector.plot_type }
+
+```python
+plot_type()
+```
+
+Supported plot output types.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description   |
+|--------|-------------------|---------------|
+|        | tuple\[str, ...\] | ("altair",).  |

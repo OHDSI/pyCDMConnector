@@ -1,0 +1,44 @@
+# summarise_large_scale_characteristics { #cdmconnector.summarise_large_scale_characteristics }
+
+```python
+summarise_large_scale_characteristics(
+    cohort,
+    cdm,
+    *,
+    cohort_id=None,
+    strata=None,
+    window=None,
+    event_in_window=None,
+    episode_in_window=None,
+    index_date='cohort_start_date',
+    minimum_frequency=0.005,
+    excluded_codes=(0,),
+)
+```
+
+Summarise large-scale characteristics for cohorts.
+
+For each clinical domain table, counts concepts occurring in specified time
+windows relative to the index date. Reports counts and percentages for
+concepts above the minimum frequency threshold.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type                                                               | Description                                       | Default               |
+|-------------------|--------------------------------------------------------------------|---------------------------------------------------|-----------------------|
+| cohort            | Cohort table.                                                      |                                                   | _required_            |
+| cdm               | Cdm reference with clinical tables.                                |                                                   | _required_            |
+| cohort_id         | Optional cohort_definition_id(s) to include.                       |                                                   | `None`                |
+| strata            | Optional stratification columns.                                   |                                                   | `None`                |
+| window            | Time windows as (lower, upper) day offsets. Default spans from     | -Inf to Inf with standard breaks.                 | `None`                |
+| event_in_window   | Domain tables to analyze (e.g. \[\"condition_occurrence\"\]).      | If None, defaults to all available domain tables. | `None`                |
+| episode_in_window | Not yet implemented.                                               |                                                   | `None`                |
+| index_date        | Column name for the reference date. Default \"cohort_start_date\". |                                                   | `'cohort_start_date'` |
+| minimum_frequency | Minimum proportion to keep a concept. Default 0.005.               |                                                   | `0.005`               |
+| excluded_codes    | Concept IDs to exclude. Default (0,).                              |                                                   | `(0,)`                |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

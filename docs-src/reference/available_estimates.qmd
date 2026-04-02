@@ -1,0 +1,20 @@
+# available_estimates { #cdmconnector.available_estimates }
+
+```python
+available_estimates(variable_type=None, full_quantiles=False)
+```
+
+Return DataFrame of estimate_name, estimate_description, estimate_type per variable_type.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name           | Type                       | Description                                                                           | Default   |
+|----------------|----------------------------|---------------------------------------------------------------------------------------|-----------|
+| variable_type  | str or list\[str\] or None | Filter by variable_type(s): integer, numeric, date, categorical, logical; None = all. | `None`    |
+| full_quantiles | bool                       | If True, include full quantile set (default False).                                   | `False`   |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                  |
+|--------|------------------|--------------------------------------------------------------|
+|        | pandas.DataFrame | Columns: estimate_name, estimate_description, variable_type. |

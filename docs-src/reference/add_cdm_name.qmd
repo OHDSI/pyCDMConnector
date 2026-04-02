@@ -1,0 +1,20 @@
+# add_cdm_name { #cdmconnector.add_cdm_name }
+
+```python
+add_cdm_name(table, cdm)
+```
+
+Add a column with the CDM name.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description    | Default    |
+|--------|--------|----------------|------------|
+| table  | Any    | Ibis table.    | _required_ |
+| cdm    | Cdm    | CDM reference. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                                    |
+|--------|-----------------------|------------------------------------------------|
+|        | ibis.expr.types.Table | Table with cdm_name column (literal cdm.name). |

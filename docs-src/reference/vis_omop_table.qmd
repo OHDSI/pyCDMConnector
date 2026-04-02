@@ -1,0 +1,45 @@
+# vis_omop_table { #cdmconnector.vis_omop_table }
+
+```python
+vis_omop_table(
+    result,
+    estimate_name=None,
+    header=None,
+    settings_column=None,
+    group_column=None,
+    rename=None,
+    type=None,
+    hide=None,
+    column_order=None,
+    factor=None,
+    style=None,
+    show_min_cell_count=True,
+    options=None,
+)
+```
+
+Format a summarised_result DataFrame into a display table (visOmopTable port).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                | Type                                | Description                                                                                                                                                          | Default    |
+|---------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| result              | DataFrame                           | Summarised result with standard columns (result_id, cdm_name, group_*, strata_*, variable_name, variable_level, estimate_name, estimate_type, estimate_value, etc.). | _required_ |
+| estimate_name       | dict                                | E.g. {"N (%)": "<count> (<percentage>)", "N": "<count>"}.                                                                                                            | `None`     |
+| header              | list of str                         | Columns to use as table header.                                                                                                                                      | `None`     |
+| settings_column     | list                                | Settings columns to include (if result has settings merged).                                                                                                         | `None`     |
+| group_column        | list                                | E.g. [strata_columns(result)].                                                                                                                                       | `None`     |
+| rename              | dict                                | Display names for columns.                                                                                                                                           | `None`     |
+| type                | \'dataframe\' \| \'html\' \| \'gt\' |                                                                                                                                                                      | `None`     |
+| hide                | list of str                         | Columns to drop (default includes result_id, estimate_type).                                                                                                         | `None`     |
+| column_order        | list of str                         | Final column order.                                                                                                                                                  | `None`     |
+| factor              | dict                                | Column -> ordered list of levels (for categorical order).                                                                                                            | `None`     |
+| style               | str                                 |                                                                                                                                                                      | `None`     |
+| show_min_cell_count | bool                                | If True and settings has min_cell_count, show suppression threshold.                                                                                                 | `True`     |
+| options             | dict                                |                                                                                                                                                                      | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                                              | Description   |
+|--------|-------------------------------------------------------------------|---------------|
+|        | DataFrame, HTML str, or great_tables GT object (when type=\'gt\') |               |

@@ -1,0 +1,19 @@
+# add_concept_intersect_date { #cdmconnector.add_concept_intersect_date }
+
+```python
+add_concept_intersect_date(
+    table,
+    cdm,
+    concept_set,
+    *,
+    index_date='cohort_start_date',
+    censor_date=None,
+    window=[(0, float('inf'))],
+    target_date='event_start_date',
+    order='first',
+    in_observation=True,
+    name_style='{concept_name}_{window_name}',
+)
+```
+
+Add first/last concept date within each window.

@@ -1,0 +1,22 @@
+# plot_columns { #cdmconnector.plot_columns }
+
+```python
+plot_columns(result)
+```
+
+Column names available for use in plot aesthetics for a summarised result.
+
+Includes tidy columns (split group/strata/additional name-level pairs) plus
+estimate names as potential y-axis values.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type             | Description                              | Default    |
+|--------|------------------|------------------------------------------|------------|
+| result | pandas.DataFrame | Summarised result with standard columns. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description                                                |
+|--------|-------------|------------------------------------------------------------|
+|        | list\[str\] | Column names usable in plot x, y, facet, colour arguments. |

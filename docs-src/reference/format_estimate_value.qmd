@@ -1,0 +1,22 @@
+# format_estimate_value { #cdmconnector.format_estimate_value }
+
+```python
+format_estimate_value(result, decimals=None, decimal_mark='.', big_mark=',')
+```
+
+Format the estimate_value column by decimal places and number formatting.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type        | Description                                                                                                                                    | Default    |
+|--------------|-------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| result       | DataFrame   | Must contain estimate_name, estimate_type, estimate_value.                                                                                     | _required_ |
+| decimals     | dict or int | Map estimate_type or estimate_name -> number of decimals. If int, same decimals for all. Keys can be integer, numeric, percentage, proportion. | `None`     |
+| decimal_mark | str         | Decimal separator.                                                                                                                             | `'.'`      |
+| big_mark     | str         | Thousands separator (e.g. ",").                                                                                                                | `','`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description                                              |
+|--------|-----------|----------------------------------------------------------|
+|        | DataFrame | Copy of result with estimate_value formatted as strings. |

@@ -1,0 +1,34 @@
+# add_in_observation { #cdmconnector.add_in_observation }
+
+```python
+add_in_observation(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    window=(0, 0),
+    complete_interval=False,
+    name_style='in_observation',
+)
+```
+
+Add column(s) indicating whether index_date is within observation and (optionally) within window.
+
+window (0, 0) means just "in observation"; otherwise name_style may use {window_name}.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type   | Description                                                      | Default               |
+|-------------------|--------|------------------------------------------------------------------|-----------------------|
+| table             | Any    | Ibis table with person_id or subject_id and index_date.          | _required_            |
+| cdm               | Cdm    | CDM reference (observation_period).                              | _required_            |
+| index_date        | str    | Column name for index date (default "cohort_start_date").        | `'cohort_start_date'` |
+| window            | tuple  | (low, high) days from index; (0, 0) means only "in observation". | `(0, 0)`              |
+| complete_interval | bool   | If True, require full window inside observation (default False). | `False`               |
+| name_style        | str    | Output column name (default "in_observation").                   | `'in_observation'`    |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                             |
+|--------|-----------------------|-----------------------------------------|
+|        | ibis.expr.types.Table | Table with in_observation (0/1) column. |

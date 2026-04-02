@@ -1,0 +1,41 @@
+# format_table { #cdmconnector.format_table }
+
+```python
+format_table(
+    x,
+    type=None,
+    delim='\n',
+    na=NA_STR,
+    title=None,
+    subtitle=None,
+    caption=None,
+    group_column=None,
+    group_as_column=False,
+    group_order=None,
+    merge='all_columns',
+)
+```
+
+Format a DataFrame as a table (dataframe, HTML string, or great_tables GT object).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name            | Type                                | Description   | Default    |
+|-----------------|-------------------------------------|---------------|------------|
+| x               | DataFrame                           |               | _required_ |
+| type            | \'dataframe\' \| \'html\' \| \'gt\' |               | `None`     |
+| delim           | optional                            |               | `'\n'`     |
+| na              | optional                            |               | `'\n'`     |
+| title           | optional                            |               | `'\n'`     |
+| subtitle        | optional                            |               | `'\n'`     |
+| caption         | optional                            |               | `'\n'`     |
+| group_column    | optional grouping                   |               | `None`     |
+| group_as_column | optional grouping                   |               | `None`     |
+| group_order     | optional grouping                   |               | `None`     |
+| merge           | optional grouping                   |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                                 | Description   |
+|--------|------------------------------------------------------|---------------|
+|        | DataFrame, HTML str, or GT object (when type=\'gt\') |               |

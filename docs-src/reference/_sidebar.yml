@@ -24,9 +24,99 @@ website:
       section: Eunomia
     - contents:
       - reference/add_age.qmd
+      - reference/add_categories.qmd
+      - reference/add_cdm_name.qmd
+      - reference/add_cohort_name.qmd
+      - reference/add_concept_name.qmd
+      - reference/add_date_of_birth.qmd
+      - reference/add_death_date.qmd
+      - reference/add_death_days.qmd
+      - reference/add_death_flag.qmd
       - reference/add_demographics.qmd
+      - reference/add_future_observation.qmd
+      - reference/add_in_observation.qmd
+      - reference/add_observation_period_id.qmd
+      - reference/add_prior_observation.qmd
       - reference/add_sex.qmd
+      - reference/add_table_intersect_count.qmd
+      - reference/add_table_intersect_date.qmd
+      - reference/add_table_intersect_days.qmd
+      - reference/add_table_intersect_field.qmd
+      - reference/add_table_intersect_flag.qmd
+      - reference/add_cohort_intersect_count.qmd
+      - reference/add_cohort_intersect_date.qmd
+      - reference/add_cohort_intersect_days.qmd
+      - reference/add_cohort_intersect_field.qmd
+      - reference/add_cohort_intersect_flag.qmd
+      - reference/add_concept_intersect_count.qmd
+      - reference/add_concept_intersect_date.qmd
+      - reference/add_concept_intersect_days.qmd
+      - reference/add_concept_intersect_field.qmd
+      - reference/add_concept_intersect_flag.qmd
+      - reference/available_estimates.qmd
+      - reference/end_date_column.qmd
+      - reference/filter_cohort_id.qmd
+      - reference/filter_in_observation.qmd
+      - reference/mock_patient_profiles.qmd
+      - reference/source_concept_id_column.qmd
+      - reference/standard_concept_id_column.qmd
+      - reference/start_date_column.qmd
+      - reference/summarise_result.qmd
+      - reference/variable_types.qmd
       section: Patient profiles
+    - contents:
+      - reference/SummarisedResult.qmd
+      - reference/bind_summarised_results.qmd
+      - reference/empty_summarised_result.qmd
+      - reference/estimate_type_choices.qmd
+      - reference/new_summarised_result.qmd
+      - reference/result_columns.qmd
+      - reference/result_package_version.qmd
+      - reference/transform_to_summarised_result.qmd
+      - reference/summarise_characteristics.qmd
+      - reference/summarise_cohort_attrition.qmd
+      - reference/summarise_cohort_count.qmd
+      - reference/summarise_cohort_overlap.qmd
+      - reference/summarise_cohort_timing.qmd
+      - reference/summarise_large_scale_characteristics.qmd
+      - reference/table_characteristics.qmd
+      - reference/table_cohort_attrition.qmd
+      - reference/table_cohort_count.qmd
+      - reference/table_cohort_overlap.qmd
+      - reference/table_cohort_timing.qmd
+      - reference/table_large_scale_characteristics.qmd
+      - reference/plot_characteristics.qmd
+      - reference/plot_cohort_attrition.qmd
+      - reference/plot_cohort_count.qmd
+      - reference/plot_cohort_overlap.qmd
+      - reference/plot_cohort_timing.qmd
+      - reference/plot_compared_large_scale_characteristics.qmd
+      - reference/plot_large_scale_characteristics.qmd
+      section: Cohort characteristics
+    - contents:
+      - reference/default_table_options.qmd
+      - reference/empty_plot.qmd
+      - reference/empty_table.qmd
+      - reference/format_estimate_name.qmd
+      - reference/format_estimate_value.qmd
+      - reference/format_header.qmd
+      - reference/format_min_cell_count.qmd
+      - reference/format_table.qmd
+      - reference/mock_summarised_result.qmd
+      - reference/plot_columns.qmd
+      - reference/plot_type.qmd
+      - reference/table_columns.qmd
+      - reference/table_options.qmd
+      - reference/table_style.qmd
+      - reference/table_type.qmd
+      - reference/tidy_summarised_result.qmd
+      - reference/vis_omop_table.qmd
+      - reference/vis_table.qmd
+      - reference/bar_plot.qmd
+      - reference/box_plot.qmd
+      - reference/customise_text.qmd
+      - reference/scatter_plot.qmd
+      section: Visualisation
     - contents:
       - reference/Result.qmd
       section: Results

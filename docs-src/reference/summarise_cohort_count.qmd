@@ -1,0 +1,34 @@
+# summarise_cohort_count { #cdmconnector.summarise_cohort_count }
+
+```python
+summarise_cohort_count(
+    cohort,
+    cdm=None,
+    *,
+    cohort_id=None,
+    strata=None,
+    table_name=None,
+)
+```
+
+Summarise counts for cohorts in a cohort table.
+
+Same as summarise_characteristics with counts=True and demographics=False.
+Returns a summarised result with number of subjects and number of records
+per cohort (and per strata if strata is given).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name       | Type                                                        | Description   | Default    |
+|------------|-------------------------------------------------------------|---------------|------------|
+| cohort     | Cohort table (Ibis table or DataFrame with cohort columns). |               | _required_ |
+| cdm        | Optional Cdm (for cdm_name and cohort_set).                 |               | `None`     |
+| cohort_id  | Optional cohort_definition_id(s) to include.                |               | `None`     |
+| strata     | Optional list of column names to stratify by.               |               | `None`     |
+| table_name | Optional cohort table name.                                 |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                            |
+|--------|------------------|----------------------------------------------------------------------------------------|
+|        | SummarisedResult | Results and settings in summarised_result format (result_type summarise_cohort_count). |

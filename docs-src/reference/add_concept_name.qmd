@@ -1,0 +1,22 @@
+# add_concept_name { #cdmconnector.add_concept_name }
+
+```python
+add_concept_name(table, cdm, *, column=None, name_style='{column}_name')
+```
+
+Add concept_name for concept_id column(s). If column is None, all columns ending with _concept_id are used.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name       | Type                       | Description                                                            | Default           |
+|------------|----------------------------|------------------------------------------------------------------------|-------------------|
+| table      | Any                        | Ibis table with one or more *_concept_id columns.                      | _required_        |
+| cdm        | Cdm                        | CDM reference (concept table).                                         | _required_        |
+| column     | str or list\[str\] or None | Concept ID column(s) to add names for; None = all *_concept_id.        | `None`            |
+| name_style | str                        | Format for name column (default "{column}_name", e.g. condition_name). | `'{column}_name'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                        |
+|--------|-----------------------|------------------------------------|
+|        | ibis.expr.types.Table | Table with *_name column(s) added. |

@@ -1,0 +1,19 @@
+# default_table_options { #cdmconnector.default_table_options }
+
+```python
+default_table_options(user_options=None)
+```
+
+Default table formatting options (mirrors visOmopResults defaultTableOptions).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type         | Description                                                          | Default   |
+|--------------|--------------|----------------------------------------------------------------------|-----------|
+| user_options | dict or None | Overrides for default options (decimals, decimal_mark, title, etc.). | `None`    |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                       |
+|--------|------------------|-------------------------------------------------------------------|
+|        | dict\[str, Any\] | Options dict (decimals, decimal_mark, big_mark, na, title, etc.). |

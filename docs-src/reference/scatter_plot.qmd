@@ -1,0 +1,41 @@
+# scatter_plot { #cdmconnector.scatter_plot }
+
+```python
+scatter_plot(
+    result,
+    x,
+    y,
+    line=False,
+    point=True,
+    ribbon=False,
+    ymin=None,
+    ymax=None,
+    facet=None,
+    colour=None,
+    group=None,
+)
+```
+
+Create a scatter/line plot from a summarised_result DataFrame.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                      | Description                                                | Default    |
+|--------|---------------------------|------------------------------------------------------------|------------|
+| result | pandas.DataFrame          | Summarised result with standard columns.                   | _required_ |
+| x      | str                       | Column for x-axis (can be a column name or estimate name). | _required_ |
+| y      | str                       | Column for y-axis (can be a column name or estimate name). | _required_ |
+| line   | bool                      | Whether to draw lines connecting points.                   | `False`    |
+| point  | bool                      | Whether to draw points.                                    | `True`     |
+| ribbon | bool                      | Whether to draw a ribbon (requires ymin and ymax).         | `False`    |
+| ymin   | str or None               | Column for ribbon/error bar lower bound.                   | `None`     |
+| ymax   | str or None               | Column for ribbon/error bar upper bound.                   | `None`     |
+| facet  | str, list\[str\], or None | Column(s) to facet by.                                     | `None`     |
+| colour | str or None               | Column to map to colour.                                   | `None`     |
+| group  | str or None               | Column to group by (defaults to colour).                   | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description          |
+|--------|-----------|----------------------|
+|        | alt.Chart | Altair chart object. |

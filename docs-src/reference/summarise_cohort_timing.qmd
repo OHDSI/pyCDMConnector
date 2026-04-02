@@ -1,0 +1,35 @@
+# summarise_cohort_timing { #cdmconnector.summarise_cohort_timing }
+
+```python
+summarise_cohort_timing(
+    cohort,
+    cdm=None,
+    *,
+    cohort_id=None,
+    strata=None,
+    restrict_to_first_entry=True,
+    estimates=('min', 'q25', 'median', 'q75', 'max'),
+)
+```
+
+Summarise timing between cohort entries for individuals in multiple cohorts.
+
+Self-joins the cohort on subject_id to compute days between entry dates
+for each pair of cohorts.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                    | Type                                                  | Description   | Default                                  |
+|-------------------------|-------------------------------------------------------|---------------|------------------------------------------|
+| cohort                  | Cohort table.                                         |               | _required_                               |
+| cdm                     | Optional Cdm for cdm_name.                            |               | `None`                                   |
+| cohort_id               | Optional cohort_definition_id(s) to include.          |               | `None`                                   |
+| strata                  | Optional stratification columns.                      |               | `None`                                   |
+| restrict_to_first_entry | If True, keep only earliest entry per subject/cohort. |               | `True`                                   |
+| estimates               | Summary statistics to compute.                        |               | `('min', 'q25', 'median', 'q75', 'max')` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

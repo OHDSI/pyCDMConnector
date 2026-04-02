@@ -1,0 +1,32 @@
+# plot_cohort_timing { #cdmconnector.plot_cohort_timing }
+
+```python
+plot_cohort_timing(
+    result,
+    *,
+    plot_type='boxplot',
+    time_scale='days',
+    unique_combinations=True,
+    facet=None,
+    colour=None,
+)
+```
+
+Plot timing between cohort entries.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                | Type                                           | Description   | Default     |
+|---------------------|------------------------------------------------|---------------|-------------|
+| result              | SummarisedResult from summarise_cohort_timing. |               | _required_  |
+| plot_type           | \"boxplot\" or \"densityplot\".                |               | `'boxplot'` |
+| time_scale          | \"days\" or \"years\".                         |               | `'days'`    |
+| unique_combinations | If True, show only unique cohort pairs.        |               | `True`      |
+| facet               | Column(s) to facet by.                         |               | `None`      |
+| colour              | Column to colour by.                           |               | `None`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

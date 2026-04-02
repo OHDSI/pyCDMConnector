@@ -9,7 +9,7 @@ Core CDM object and connection helpers.
 | [Cdm](Cdm.qmd#cdmconnector.Cdm) | OMOP CDM reference: holds a mapping of table names to Ibis table expressions |
 | [cdm_from_con](cdm_from_con.qmd#cdmconnector.cdm_from_con) | Create a CDM reference from an Ibis connection. |
 | [cdm_from_tables](cdm_from_tables.qmd#cdmconnector.cdm_from_tables) | Create a CDM reference from a dict of (table_name -> Ibis table or DataFrame). |
-| [cdm_tables](cdm_tables.qmd#cdmconnector.cdm_tables) | Return available CDM table names (logical names). |
+| [cdm_tables](cdm_tables.qmd#cdmconnector.cdm_tables) | Return the logical tables currently attached to the CDM object. |
 | [collect](collect.qmd#cdmconnector.collect) | Materialize an Ibis expression to a pandas DataFrame. |
 | [compute](compute.qmd#cdmconnector.compute) | Materialize an Ibis expression into a table in the CDM's write schema. |
 | [insert_table](insert_table.qmd#cdmconnector.insert_table) | Insert a table (Ibis expr or pyarrow/pandas) into the write schema and return Ibis table ref. |
@@ -37,13 +37,113 @@ Example datasets and download helpers.
 
 ## Patient profiles
 
-Demographics and summarise helpers.
+Demographics, observation windows, and patient-level intersections.
 
 | | |
 | --- | --- |
 | [add_age](add_age.qmd#cdmconnector.add_age) | Add age at index_date (and optional age groups). |
+| [add_categories](add_categories.qmd#cdmconnector.add_categories) | Categorise a numeric (or date) variable into named groups. |
+| [add_cdm_name](add_cdm_name.qmd#cdmconnector.add_cdm_name) | Add a column with the CDM name. |
+| [add_cohort_name](add_cohort_name.qmd#cdmconnector.add_cohort_name) | Left join cohort_set to add cohort_name by cohort_definition_id. |
+| [add_concept_name](add_concept_name.qmd#cdmconnector.add_concept_name) | Add concept_name for concept_id column(s). If column is None, all columns ending with _concept_id are used. |
+| [add_date_of_birth](add_date_of_birth.qmd#cdmconnector.add_date_of_birth) | Add date of birth from person (with optional impose day/month). |
+| [add_death_date](add_death_date.qmd#cdmconnector.add_death_date) | Add date of death within window (only within same observation period as index_date). |
+| [add_death_days](add_death_days.qmd#cdmconnector.add_death_days) | Add days to death within window. |
+| [add_death_flag](add_death_flag.qmd#cdmconnector.add_death_flag) | Add flag for death within window (1/0). |
 | [add_demographics](add_demographics.qmd#cdmconnector.add_demographics) | Add demographic characteristics to a table: age, sex, prior/future observation, optional date_of_birth. |
+| [add_future_observation](add_future_observation.qmd#cdmconnector.add_future_observation) | Add days (or date) of future observation from index_date to end of observation period. |
+| [add_in_observation](add_in_observation.qmd#cdmconnector.add_in_observation) | Add column(s) indicating whether index_date is within observation and (optionally) within window. |
+| [add_observation_period_id](add_observation_period_id.qmd#cdmconnector.add_observation_period_id) | Add the observation_period_id (ordinal within person) for the observation period containing index_date. |
+| [add_prior_observation](add_prior_observation.qmd#cdmconnector.add_prior_observation) | Add days (or date) of prior observation in the current observation period at index_date. |
 | [add_sex](add_sex.qmd#cdmconnector.add_sex) | Add sex from person (gender_concept_id: 8507 Male, 8532 Female). |
+| [add_table_intersect_count](add_table_intersect_count.qmd#cdmconnector.add_table_intersect_count) | Add count of records in table_name within each window. |
+| [add_table_intersect_date](add_table_intersect_date.qmd#cdmconnector.add_table_intersect_date) | Add date of first/last record in table_name within each window. |
+| [add_table_intersect_days](add_table_intersect_days.qmd#cdmconnector.add_table_intersect_days) | Add days from index_date to first/last record in table_name within each window. |
+| [add_table_intersect_field](add_table_intersect_field.qmd#cdmconnector.add_table_intersect_field) | Add a value column from the first/last record in table_name within each window. |
+| [add_table_intersect_flag](add_table_intersect_flag.qmd#cdmconnector.add_table_intersect_flag) | Add flag (1/0) for whether the person has a record in table_name within each window. |
+| [add_cohort_intersect_count](add_cohort_intersect_count.qmd#cdmconnector.add_cohort_intersect_count) | Add count of cohort entries within each window. |
+| [add_cohort_intersect_date](add_cohort_intersect_date.qmd#cdmconnector.add_cohort_intersect_date) | Add first/last cohort date within each window. |
+| [add_cohort_intersect_days](add_cohort_intersect_days.qmd#cdmconnector.add_cohort_intersect_days) | Add days to first/last cohort entry within each window. |
+| [add_cohort_intersect_field](add_cohort_intersect_field.qmd#cdmconnector.add_cohort_intersect_field) | Add a field value from the first/last cohort record within each window. |
+| [add_cohort_intersect_flag](add_cohort_intersect_flag.qmd#cdmconnector.add_cohort_intersect_flag) | Add flag (1/0) for overlap with cohort(s) in target_cohort_table within each window. |
+| [add_concept_intersect_count](add_concept_intersect_count.qmd#cdmconnector.add_concept_intersect_count) | Add count of concept occurrences within each window. |
+| [add_concept_intersect_date](add_concept_intersect_date.qmd#cdmconnector.add_concept_intersect_date) | Add first/last concept date within each window. |
+| [add_concept_intersect_days](add_concept_intersect_days.qmd#cdmconnector.add_concept_intersect_days) | Add days to first/last concept record within each window. |
+| [add_concept_intersect_field](add_concept_intersect_field.qmd#cdmconnector.add_concept_intersect_field) | Add a field value from the first/last concept record within each window. |
+| [add_concept_intersect_flag](add_concept_intersect_flag.qmd#cdmconnector.add_concept_intersect_flag) | Add flag for presence of concepts within each window. |
+| [available_estimates](available_estimates.qmd#cdmconnector.available_estimates) | Return DataFrame of estimate_name, estimate_description, estimate_type per variable_type. |
+| [end_date_column](end_date_column.qmd#cdmconnector.end_date_column) | Return the end date column name for an OMOP table, or None. |
+| [filter_cohort_id](filter_cohort_id.qmd#cdmconnector.filter_cohort_id) | Filter cohort to rows with cohort_definition_id in cohort_id. If cohort_id is None, return cohort unchanged. |
+| [filter_in_observation](filter_in_observation.qmd#cdmconnector.filter_in_observation) | Keep only rows where index_date falls within an observation period. |
+| [mock_patient_profiles](mock_patient_profiles.qmd#cdmconnector.mock_patient_profiles) | Create a minimal mock CDM for testing PatientProfiles (person, observation_period, cohort-like table). |
+| [source_concept_id_column](source_concept_id_column.qmd#cdmconnector.source_concept_id_column) | Return the source concept_id column for an OMOP table, or None. |
+| [standard_concept_id_column](standard_concept_id_column.qmd#cdmconnector.standard_concept_id_column) | Return the standard concept_id column for an OMOP table, or None. |
+| [start_date_column](start_date_column.qmd#cdmconnector.start_date_column) | Return the start date column name for an OMOP table (e.g. 'condition_occurrence' -> 'condition_start_date'). |
+| [summarise_result](summarise_result.qmd#cdmconnector.summarise_result) | Summarise variables into a summarised_result-like structure. |
+| [variable_types](variable_types.qmd#cdmconnector.variable_types) | Return a DataFrame with variable_name and variable_type (integer, numeric, date, categorical, logical). |
+
+## Cohort characteristics
+
+Summaries, formatted tables, and analytic plots for cohort results.
+
+| | |
+| --- | --- |
+| [SummarisedResult](SummarisedResult.qmd#cdmconnector.SummarisedResult) | Container for a summarised result (results table + settings table). |
+| [bind_summarised_results](bind_summarised_results.qmd#cdmconnector.bind_summarised_results) | Combine multiple SummarisedResult objects. |
+| [empty_summarised_result](empty_summarised_result.qmd#cdmconnector.empty_summarised_result) | Create an empty SummarisedResult. |
+| [estimate_type_choices](estimate_type_choices.qmd#cdmconnector.estimate_type_choices) | Return valid estimate_type values. |
+| [new_summarised_result](new_summarised_result.qmd#cdmconnector.new_summarised_result) | Construct a SummarisedResult from a DataFrame and optional settings. |
+| [result_columns](result_columns.qmd#cdmconnector.result_columns) | Return the standard summarised_result column names. |
+| [result_package_version](result_package_version.qmd#cdmconnector.result_package_version) | Analyze package versions used in a SummarisedResult. |
+| [transform_to_summarised_result](transform_to_summarised_result.qmd#cdmconnector.transform_to_summarised_result) | Convert an arbitrary DataFrame to a SummarisedResult. |
+| [summarise_characteristics](summarise_characteristics.qmd#cdmconnector.summarise_characteristics) | Summarise characteristics of cohorts in a cohort table. |
+| [summarise_cohort_attrition](summarise_cohort_attrition.qmd#cdmconnector.summarise_cohort_attrition) | Summarise attrition for cohorts. |
+| [summarise_cohort_count](summarise_cohort_count.qmd#cdmconnector.summarise_cohort_count) | Summarise counts for cohorts in a cohort table. |
+| [summarise_cohort_overlap](summarise_cohort_overlap.qmd#cdmconnector.summarise_cohort_overlap) | Summarise overlap between cohorts. |
+| [summarise_cohort_timing](summarise_cohort_timing.qmd#cdmconnector.summarise_cohort_timing) | Summarise timing between cohort entries for individuals in multiple cohorts. |
+| [summarise_large_scale_characteristics](summarise_large_scale_characteristics.qmd#cdmconnector.summarise_large_scale_characteristics) | Summarise large-scale characteristics for cohorts. |
+| [table_characteristics](table_characteristics.qmd#cdmconnector.table_characteristics) | Format a summarise_characteristics (or summarise_cohort_count) result into a table. |
+| [table_cohort_attrition](table_cohort_attrition.qmd#cdmconnector.table_cohort_attrition) | Format a summarise_cohort_attrition result into a table. |
+| [table_cohort_count](table_cohort_count.qmd#cdmconnector.table_cohort_count) | Format a summarise_cohort_count result into a table. |
+| [table_cohort_overlap](table_cohort_overlap.qmd#cdmconnector.table_cohort_overlap) | Format a summarise_cohort_overlap result into a table. |
+| [table_cohort_timing](table_cohort_timing.qmd#cdmconnector.table_cohort_timing) | Format a summarise_cohort_timing result into a table. |
+| [table_large_scale_characteristics](table_large_scale_characteristics.qmd#cdmconnector.table_large_scale_characteristics) | Format a summarise_large_scale_characteristics result into a table. |
+| [plot_characteristics](plot_characteristics.qmd#cdmconnector.plot_characteristics) | Plot characteristics from a summarise_characteristics result. |
+| [plot_cohort_attrition](plot_cohort_attrition.qmd#cdmconnector.plot_cohort_attrition) | Plot cohort attrition as a flow diagram. |
+| [plot_cohort_count](plot_cohort_count.qmd#cdmconnector.plot_cohort_count) | Plot cohort counts as a bar chart. |
+| [plot_cohort_overlap](plot_cohort_overlap.qmd#cdmconnector.plot_cohort_overlap) | Plot cohort overlap as a stacked bar chart. |
+| [plot_cohort_timing](plot_cohort_timing.qmd#cdmconnector.plot_cohort_timing) | Plot timing between cohort entries. |
+| [plot_compared_large_scale_characteristics](plot_compared_large_scale_characteristics.qmd#cdmconnector.plot_compared_large_scale_characteristics) | Compare large-scale characteristics across groups as a scatter plot. |
+| [plot_large_scale_characteristics](plot_large_scale_characteristics.qmd#cdmconnector.plot_large_scale_characteristics) | Plot large-scale characteristics as a scatter plot of concept frequencies. |
+
+## Visualisation
+
+visOmopResults-style table and chart helpers.
+
+| | |
+| --- | --- |
+| [default_table_options](default_table_options.qmd#cdmconnector.default_table_options) | Default table formatting options (mirrors visOmopResults defaultTableOptions). |
+| [empty_plot](empty_plot.qmd#cdmconnector.empty_plot) | Return an empty Altair chart with a title message. |
+| [empty_table](empty_table.qmd#cdmconnector.empty_table) | Return an empty formatted table (DataFrame or GT object). |
+| [format_estimate_name](format_estimate_name.qmd#cdmconnector.format_estimate_name) | Combine estimate_name and estimate_value into new labels. |
+| [format_estimate_value](format_estimate_value.qmd#cdmconnector.format_estimate_value) | Format the estimate_value column by decimal places and number formatting. |
+| [format_header](format_header.qmd#cdmconnector.format_header) | Pivot result so header columns become column headers; estimate_value becomes cells. |
+| [format_min_cell_count](format_min_cell_count.qmd#cdmconnector.format_min_cell_count) | Replace suppressed count placeholders with min_cell_count from settings. |
+| [format_table](format_table.qmd#cdmconnector.format_table) | Format a DataFrame as a table (dataframe, HTML string, or great_tables GT object). |
+| [mock_summarised_result](mock_summarised_result.qmd#cdmconnector.mock_summarised_result) | Create a mock summarised_result DataFrame for examples (mirrors visOmopResults mockSummarisedResult). |
+| [plot_columns](plot_columns.qmd#cdmconnector.plot_columns) | Column names available for use in plot aesthetics for a summarised result. |
+| [plot_type](plot_type.qmd#cdmconnector.plot_type) | Supported plot output types. |
+| [table_columns](table_columns.qmd#cdmconnector.table_columns) | Column names that can be used in table header/group for a summarised result. |
+| [table_options](table_options.qmd#cdmconnector.table_options) | Return default table options for vis_omop_table / vis_table. |
+| [table_style](table_style.qmd#cdmconnector.table_style) | Pre-defined table style names. |
+| [table_type](table_type.qmd#cdmconnector.table_type) | Supported table output types. |
+| [tidy_summarised_result](tidy_summarised_result.qmd#cdmconnector.tidy_summarised_result) | Tidy a summarised result: keep long form; optionally pivot estimate_value by estimate_name. |
+| [vis_omop_table](vis_omop_table.qmd#cdmconnector.vis_omop_table) | Format a summarised_result DataFrame into a display table (visOmopTable port). |
+| [vis_table](vis_table.qmd#cdmconnector.vis_table) | Format a table (summarised_result-like DataFrame) into a display table. |
+| [bar_plot](bar_plot.qmd#cdmconnector.bar_plot) | Create a bar plot from a summarised_result DataFrame. |
+| [box_plot](box_plot.qmd#cdmconnector.box_plot) | Create a box plot from pre-computed summary statistics. |
+| [customise_text](customise_text.qmd#cdmconnector.customise_text) | Style text: replace underscores with spaces and convert to sentence case. |
+| [scatter_plot](scatter_plot.qmd#cdmconnector.scatter_plot) | Create a scatter/line plot from a summarised_result DataFrame. |
 
 ## Results
 
@@ -59,9 +159,9 @@ Errors raised by the package.
 
 | | |
 | --- | --- |
-| [CDMConnectorError](CDMConnectorError.qmd#cdmconnector.CDMConnectorError) | Base exception for CDMConnector. |
-| [CDMValidationError](CDMValidationError.qmd#cdmconnector.CDMValidationError) | Raised when CDM or table validation fails. |
-| [CohortError](CohortError.qmd#cdmconnector.CohortError) | Raised when cohort operations or validation fail. |
-| [EunomiaError](EunomiaError.qmd#cdmconnector.EunomiaError) | Raised when Eunomia download or path operations fail. |
-| [SourceError](SourceError.qmd#cdmconnector.SourceError) | Raised when source/connection operations fail. |
-| [TableNotFoundError](TableNotFoundError.qmd#cdmconnector.TableNotFoundError) | Raised when a requested table does not exist in the CDM. |
+| [CDMConnectorError](CDMConnectorError.qmd#cdmconnector.CDMConnectorError) | Base exception for all CDMConnector errors. |
+| [CDMValidationError](CDMValidationError.qmd#cdmconnector.CDMValidationError) | Raised when CDM validation fails (e.g. missing tables, bad schema). |
+| [CohortError](CohortError.qmd#cdmconnector.CohortError) | Raised for cohort operation failures. |
+| [EunomiaError](EunomiaError.qmd#cdmconnector.EunomiaError) | Raised for Eunomia download/path failures. |
+| [SourceError](SourceError.qmd#cdmconnector.SourceError) | Raised for source/connection failures. |
+| [TableNotFoundError](TableNotFoundError.qmd#cdmconnector.TableNotFoundError) | Raised when a table is not found in the CDM. |

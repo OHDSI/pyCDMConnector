@@ -1,0 +1,7 @@
+# source_concept_id_column { #cdmconnector.source_concept_id_column }
+
+```python
+source_concept_id_column(table_name)
+```
+
+Return the source concept_id column for an OMOP table, or None.

@@ -1,0 +1,30 @@
+# table_cohort_overlap { #cdmconnector.table_cohort_overlap }
+
+```python
+table_cohort_overlap(
+    result,
+    *,
+    unique_combinations=True,
+    header=None,
+    group_column=None,
+    hide=None,
+)
+```
+
+Format a summarise_cohort_overlap result into a table.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                | Type                                    | Description   | Default    |
+|---------------------|-----------------------------------------|---------------|------------|
+| result              | SummarisedResult or DataFrame.          |               | _required_ |
+| unique_combinations | If True, show only unique cohort pairs. |               | `True`     |
+| header              | Columns for header.                     |               | `None`     |
+| group_column        | Extra grouping columns.                 |               | `None`     |
+| hide                | Columns to hide.                        |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |

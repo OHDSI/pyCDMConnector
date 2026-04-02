@@ -1,0 +1,28 @@
+# transform_to_summarised_result { #cdmconnector.transform_to_summarised_result }
+
+```python
+transform_to_summarised_result(
+    x,
+    *,
+    result_type='custom',
+    package_name='cdmconnector',
+)
+```
+
+Convert an arbitrary DataFrame to a SummarisedResult.
+
+Adds missing required columns with default values ("overall").
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type             | Description                | Default          |
+|--------------|------------------|----------------------------|------------------|
+| x            | pandas.DataFrame | Input data.                | _required_       |
+| result_type  | str              | Result type for settings.  | `'custom'`       |
+| package_name | str              | Package name for settings. | `'cdmconnector'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

@@ -22,6 +22,7 @@ plus metadata (name, version, schemas, source).
 | --- | --- |
 | [achilles_schema](#cdmconnector.Cdm.achilles_schema) | Schema for Achilles tables (optional). |
 | [cdm_schema](#cdmconnector.Cdm.cdm_schema) | Schema where CDM tables live. |
+| [con](#cdmconnector.Cdm.con) | Underlying Ibis connection, or None if not database-backed. |
 | [name](#cdmconnector.Cdm.name) | CDM name (e.g. from cdm_source or user). |
 | [source](#cdmconnector.Cdm.source) | Source (connection) for this CDM. |
 | [tables](#cdmconnector.Cdm.tables) | List of table names in this CDM. |
@@ -36,7 +37,7 @@ plus metadata (name, version, schemas, source).
 | [flatten](#cdmconnector.Cdm.flatten) | Flatten the CDM into a single observation table. |
 | [sample](#cdmconnector.Cdm.sample) | Subset the CDM to a random sample of n persons. |
 | [select_tables](#cdmconnector.Cdm.select_tables) | Return a new Cdm with only the given tables (subset). |
-| [snapshot](#cdmconnector.Cdm.snapshot) | Snapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame. |
+| [snapshot](#cdmconnector.Cdm.snapshot) | Snapshot CDM metadata. Executes and returns a 1-row pandas DataFrame. |
 | [subset](#cdmconnector.Cdm.subset) | Subset the CDM to a set of person IDs. |
 | [subset_cohort](#cdmconnector.Cdm.subset_cohort) | Subset the CDM to individuals in one or more cohorts. |
 
@@ -137,10 +138,17 @@ Return a new Cdm with only the given tables (subset).
 Cdm.snapshot(compute_data_hash=False)
 ```
 
-Snapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.
+Snapshot CDM metadata. Executes and returns a 1-row pandas DataFrame.
+
+Call with parentheses: ``cdm.snapshot()``. Without () you get the method
+object, not the DataFrame.
 
 Requires person, observation_period, cdm_source, and vocabulary tables.
-Does not execute until Result.collect() is called.
+Column order matches R CDMConnector snapshot(): cdm_name, cdm_source_name,
+cdm_description, cdm_documentation_reference, cdm_version, cdm_holder,
+cdm_release_date, vocabulary_version, person_count, observation_period_count,
+earliest_observation_period_start_date, latest_observation_period_end_date,
+snapshot_date, cdm_data_hash.
 
 #### Parameters {.doc-section .doc-section-parameters}
 
@@ -150,9 +158,9 @@ Does not execute until Result.collect() is called.
 
 #### Returns {.doc-section .doc-section-returns}
 
-| Name   | Type   | Description                                           |
-|--------|--------|-------------------------------------------------------|
-|        | Result | Lazy result; call .collect() to get pandas.DataFrame. |
+| Name   | Type             | Description                                          |
+|--------|------------------|------------------------------------------------------|
+|        | pandas.DataFrame | Exactly one row (1-row DataFrame) with CDM metadata. |
 
 ### subset { #cdmconnector.Cdm.subset }
 

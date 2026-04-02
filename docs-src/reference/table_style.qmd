@@ -1,0 +1,13 @@
+# table_style { #cdmconnector.table_style }
+
+```python
+table_style()
+```
+
+Pre-defined table style names.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description            |
+|--------|-------------------|------------------------|
+|        | tuple\[str, ...\] | ("default", "darwin"). |

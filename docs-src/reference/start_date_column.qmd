@@ -1,0 +1,7 @@
+# start_date_column { #cdmconnector.start_date_column }
+
+```python
+start_date_column(table_name)
+```
+
+Return the start date column name for an OMOP table (e.g. 'condition_occurrence' -> 'condition_start_date').

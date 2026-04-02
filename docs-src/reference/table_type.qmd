@@ -1,0 +1,13 @@
+# table_type { #cdmconnector.table_type }
+
+```python
+table_type()
+```
+
+Supported table output types.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description                  |
+|--------|-------------------|------------------------------|
+|        | tuple\[str, ...\] | ("dataframe", "html", "gt"). |

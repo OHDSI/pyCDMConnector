@@ -1,0 +1,32 @@
+# add_death_days { #cdmconnector.add_death_days }
+
+```python
+add_death_days(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    censor_date=None,
+    window=(0, float('inf')),
+    death_days_name='days_to_death',
+)
+```
+
+Add days to death within window.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name            | Type        | Description                                               | Default               |
+|-----------------|-------------|-----------------------------------------------------------|-----------------------|
+| table           | Any         | Ibis table with person_id or subject_id and index_date.   | _required_            |
+| cdm             | Cdm         | CDM reference (death, observation_period).                | _required_            |
+| index_date      | str         | Column name for index date (default "cohort_start_date"). | `'cohort_start_date'` |
+| censor_date     | str or None | Optional censor date column name.                         | `None`                |
+| window          | tuple       | (low, high) days from index_date (default (0, inf)).      | `(0, float('inf'))`   |
+| death_days_name | str         | Output column name (default "days_to_death").             | `'days_to_death'`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                                                   |
+|--------|-----------------------|---------------------------------------------------------------|
+|        | ibis.expr.types.Table | Table with days_to_death column (null if no death in window). |

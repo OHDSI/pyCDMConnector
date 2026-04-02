@@ -4,4 +4,4 @@
 EunomiaError()
 ```
 
-Raised when Eunomia download or path operations fail.
+Raised for Eunomia download/path failures.

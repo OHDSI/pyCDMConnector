@@ -1,0 +1,13 @@
+# estimate_type_choices { #cdmconnector.estimate_type_choices }
+
+```python
+estimate_type_choices()
+```
+
+Return valid estimate_type values.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description   |
+|--------|-------------------|---------------|
+|        | tuple\[str, ...\] |               |

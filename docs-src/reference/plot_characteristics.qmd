@@ -1,0 +1,22 @@
+# plot_characteristics { #cdmconnector.plot_characteristics }
+
+```python
+plot_characteristics(result, *, plot_type='barplot', facet=None, colour=None)
+```
+
+Plot characteristics from a summarise_characteristics result.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                                                           | Description   | Default     |
+|-----------|----------------------------------------------------------------|---------------|-------------|
+| result    | SummarisedResult or DataFrame.                                 |               | _required_  |
+| plot_type | \"barplot\", \"scatterplot\", \"boxplot\", or \"densityplot\". |               | `'barplot'` |
+| facet     | Column(s) to facet by.                                         |               | `None`      |
+| colour    | Column to colour by.                                           |               | `None`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

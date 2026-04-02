@@ -1,0 +1,21 @@
+# plot_cohort_count { #cdmconnector.plot_cohort_count }
+
+```python
+plot_cohort_count(result, *, facet=None, colour=None)
+```
+
+Plot cohort counts as a bar chart.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                          | Description   | Default    |
+|--------|-----------------------------------------------|---------------|------------|
+| result | SummarisedResult from summarise_cohort_count. |               | _required_ |
+| facet  | Column(s) to facet by.                        |               | `None`     |
+| colour | Column to colour by.                          |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

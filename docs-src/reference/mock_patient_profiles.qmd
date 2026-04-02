@@ -1,0 +1,23 @@
+# mock_patient_profiles { #cdmconnector.mock_patient_profiles }
+
+```python
+mock_patient_profiles(number_individuals=100, seed=1, *, source='duckdb')
+```
+
+Create a minimal mock CDM for testing PatientProfiles (person, observation_period, cohort-like table).
+
+For full OMOP mock use cdmconnector.eunomia (e.g. require_eunomia + cdm_from_con).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name               | Type        | Description                           | Default    |
+|--------------------|-------------|---------------------------------------|------------|
+| number_individuals | int         | Number of persons (default 100).      | `100`      |
+| seed               | int or None | Random seed (default 1).              | `1`        |
+| source             | str         | Backend ("duckdb"); default "duckdb". | `'duckdb'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                    |
+|--------|--------|----------------------------------------------------------------|
+|        | Cdm    | CDM reference with person, observation_period, cohort1 tables. |

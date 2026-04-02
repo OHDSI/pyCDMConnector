@@ -1,0 +1,20 @@
+# new_summarised_result { #cdmconnector.new_summarised_result }
+
+```python
+new_summarised_result(x, settings=None)
+```
+
+Construct a SummarisedResult from a DataFrame and optional settings.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                            | Description                                           | Default    |
+|----------|---------------------------------|-------------------------------------------------------|------------|
+| x        | pandas.DataFrame or dict        | Results data with standard summarised_result columns. | _required_ |
+| settings | pandas.DataFrame, dict, or None | Settings table.                                       | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

@@ -1,0 +1,24 @@
+# bar_plot { #cdmconnector.bar_plot }
+
+```python
+bar_plot(result, x, y, position='dodge', facet=None, colour=None)
+```
+
+Create a bar plot from a summarised_result DataFrame.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                      | Description                                      | Default    |
+|----------|---------------------------|--------------------------------------------------|------------|
+| result   | pandas.DataFrame          | Summarised result with standard columns.         | _required_ |
+| x        | str                       | Column for x-axis.                               | _required_ |
+| y        | str                       | Column for y-axis (height of bars).              | _required_ |
+| position | str                       | Bar position: 'dodge' (side-by-side) or 'stack'. | `'dodge'`  |
+| facet    | str, list\[str\], or None | Column(s) to facet by.                           | `None`     |
+| colour   | str or None               | Column to map to colour/fill.                    | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description          |
+|--------|-----------|----------------------|
+|        | alt.Chart | Altair chart object. |

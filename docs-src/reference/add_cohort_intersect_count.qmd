@@ -1,0 +1,19 @@
+# add_cohort_intersect_count { #cdmconnector.add_cohort_intersect_count }
+
+```python
+add_cohort_intersect_count(
+    table,
+    cdm,
+    target_cohort_table,
+    *,
+    target_cohort_id=None,
+    index_date='cohort_start_date',
+    censor_date=None,
+    target_start_date='cohort_start_date',
+    target_end_date='cohort_end_date',
+    window=[(0, float('inf'))],
+    name_style='{cohort_name}_{window_name}',
+)
+```
+
+Add count of cohort entries within each window.

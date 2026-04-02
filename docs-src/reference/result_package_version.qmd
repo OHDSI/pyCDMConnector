@@ -1,0 +1,19 @@
+# result_package_version { #cdmconnector.result_package_version }
+
+```python
+result_package_version(result)
+```
+
+Analyze package versions used in a SummarisedResult.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type             | Description   | Default    |
+|--------|------------------|---------------|------------|
+| result | SummarisedResult |               | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description                                        |
+|--------|--------------------------|----------------------------------------------------|
+|        | dict\[str, list\[str\]\] | Mapping of package_name to list of versions found. |

@@ -1,0 +1,37 @@
+# vis_table { #cdmconnector.vis_table }
+
+```python
+vis_table(
+    result,
+    estimate_name=None,
+    header=None,
+    group_column=None,
+    rename=None,
+    type=None,
+    hide=None,
+    style=None,
+    options=None,
+)
+```
+
+Format a table (summarised_result-like DataFrame) into a display table.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type                                | Description                                                                        | Default    |
+|---------------|-------------------------------------|------------------------------------------------------------------------------------|------------|
+| result        | DataFrame                           | Must contain estimate_value; estimate_name, estimate_type optional for formatting. | _required_ |
+| estimate_name | dict                                | Display name -> format template, e.g. {"N (%)": "<count> (<percentage>)"}.         | `None`     |
+| header        | list of str                         | Columns to use as header (pivoted into columns).                                   | `None`     |
+| group_column  | list of str                         | Columns to group by (e.g. strata_level).                                           | `None`     |
+| rename        | dict                                | Column renames for display (e.g. {"cdm_name": "Database name"}).                   | `None`     |
+| type          | \'dataframe\' \| \'html\' \| \'gt\' |                                                                                    | `None`     |
+| hide          | list of str                         | Columns to drop.                                                                   | `None`     |
+| style         | str                                 | Style name (currently only affects future backends).                               | `None`     |
+| options       | dict                                | Override default_table_options().                                                  | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                                              | Description   |
+|--------|-------------------------------------------------------------------|---------------|
+|        | DataFrame, HTML str, or great_tables GT object (when type=\'gt\') |               |

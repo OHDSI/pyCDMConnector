@@ -1,0 +1,19 @@
+# mock_summarised_result { #cdmconnector.mock_summarised_result }
+
+```python
+mock_summarised_result(seed=1)
+```
+
+Create a mock summarised_result DataFrame for examples (mirrors visOmopResults mockSummarisedResult).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description                                         | Default   |
+|--------|--------|-----------------------------------------------------|-----------|
+| seed   | int    | Random seed for reproducible mock data (default 1). | `1`       |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                                                        |
+|--------|------------------|--------------------------------------------------------------------------------------------------------------------|
+|        | pandas.DataFrame | Mock result with result_id, cdm_name, group_*, strata_*, variable_*, estimate_name, estimate_type, estimate_value. |

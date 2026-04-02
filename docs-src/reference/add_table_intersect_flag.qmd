@@ -1,0 +1,40 @@
+# add_table_intersect_flag { #cdmconnector.add_table_intersect_flag }
+
+```python
+add_table_intersect_flag(
+    table,
+    cdm,
+    table_name,
+    *,
+    index_date='cohort_start_date',
+    censor_date=None,
+    window=[(0, float('inf'))],
+    target_start_date=None,
+    target_end_date=None,
+    in_observation=True,
+    name_style='{table_name}_{window_name}',
+)
+```
+
+Add flag (1/0) for whether the person has a record in table_name within each window.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type        | Description                                                        | Default                        |
+|-------------------|-------------|--------------------------------------------------------------------|--------------------------------|
+| table             | Any         | Ibis table with person_id or subject_id and index_date.            | _required_                     |
+| cdm               | Cdm         | CDM reference.                                                     | _required_                     |
+| table_name        | str         | OMOP table name (e.g. "condition_occurrence").                     | _required_                     |
+| index_date        | str         | Column for index date (default "cohort_start_date").               | `'cohort_start_date'`          |
+| censor_date       | str or None | Optional censor date column name.                                  | `None`                         |
+| window            | WindowSpec  | Single tuple, list of tuples, or dict of name→tuple.               | `[(0, float('inf'))]`          |
+| target_start_date | str or None | Override target date columns (default: from FIELD_TABLES_COLUMNS). | `None`                         |
+| target_end_date   | str or None | Override target date columns (default: from FIELD_TABLES_COLUMNS). | `None`                         |
+| in_observation    | bool        | Restrict to records in observation period (default True).          | `True`                         |
+| name_style        | str         | Column name template with {table_name}, {window_name}.             | `'{table_name}_{window_name}'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description   |
+|--------|-----------------------|---------------|
+|        | ibis.expr.types.Table |               |

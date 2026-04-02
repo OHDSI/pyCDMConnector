@@ -4,4 +4,4 @@
 CohortError()
 ```
 
-Raised when cohort operations or validation fail.
+Raised for cohort operation failures.

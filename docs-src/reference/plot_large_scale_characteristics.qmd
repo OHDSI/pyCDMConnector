@@ -1,0 +1,21 @@
+# plot_large_scale_characteristics { #cdmconnector.plot_large_scale_characteristics }
+
+```python
+plot_large_scale_characteristics(result, *, facet=None, colour=None)
+```
+
+Plot large-scale characteristics as a scatter plot of concept frequencies.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                                         | Description   | Default    |
+|--------|--------------------------------------------------------------|---------------|------------|
+| result | SummarisedResult from summarise_large_scale_characteristics. |               | _required_ |
+| facet  | Column(s) to facet by.                                       |               | `None`     |
+| colour | Column to colour by. Default \"variable_level\" (window).    |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

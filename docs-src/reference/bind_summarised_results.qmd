@@ -1,0 +1,21 @@
+# bind_summarised_results { #cdmconnector.bind_summarised_results }
+
+```python
+bind_summarised_results(*results)
+```
+
+Combine multiple SummarisedResult objects.
+
+Re-assigns result_id values to avoid collisions.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type             | Description         | Default   |
+|----------|------------------|---------------------|-----------|
+| *results | SummarisedResult | Results to combine. | `()`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

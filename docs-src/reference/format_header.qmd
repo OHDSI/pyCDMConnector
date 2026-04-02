@@ -1,0 +1,29 @@
+# format_header { #cdmconnector.format_header }
+
+```python
+format_header(
+    result,
+    header,
+    delim='\n',
+    include_header_name=True,
+    include_header_key=True,
+)
+```
+
+Pivot result so header columns become column headers; estimate_value becomes cells.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                | Type        | Description                                                                  | Default    |
+|---------------------|-------------|------------------------------------------------------------------------------|------------|
+| result              | DataFrame   | Must contain estimate_value. Header columns must be in result.               | _required_ |
+| header              | list of str | Column names to build headers from (order = hierarchy).                      | _required_ |
+| delim               | str         | Delimiter in generated header labels.                                        | `'\n'`     |
+| include_header_name | bool        | Include the key name (e.g. "Study strata") in the header text.               | `True`     |
+| include_header_key  | bool        | Include [header], [header_level] etc. in the label (for downstream styling). | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description                                             |
+|--------|-----------|---------------------------------------------------------|
+|        | DataFrame | Pivoted table with new column names from header levels. |

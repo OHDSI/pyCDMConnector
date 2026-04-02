@@ -1,0 +1,22 @@
+# table_cohort_count { #cdmconnector.table_cohort_count }
+
+```python
+table_cohort_count(result, *, header=None, group_column=None, hide=None)
+```
+
+Format a summarise_cohort_count result into a table.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                                             | Description   | Default    |
+|--------------|--------------------------------------------------|---------------|------------|
+| result       | SummarisedResult or DataFrame.                   |               | _required_ |
+| header       | Columns for header. Default \[\"cohort_name\"\]. |               | `None`     |
+| group_column | Extra grouping columns.                          |               | `None`     |
+| hide         | Columns to hide.                                 |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | pandas.DataFrame |               |

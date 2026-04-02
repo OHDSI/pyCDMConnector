@@ -1,0 +1,20 @@
+# empty_plot { #cdmconnector.empty_plot }
+
+```python
+empty_plot(title='No data to plot', subtitle='')
+```
+
+Return an empty Altair chart with a title message.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type   | Description                  | Default             |
+|----------|--------|------------------------------|---------------------|
+| title    | str    | Title for the empty plot.    | `'No data to plot'` |
+| subtitle | str    | Subtitle for the empty plot. | `''`                |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type      | Description             |
+|--------|-----------|-------------------------|
+|        | alt.Chart | Empty chart with title. |

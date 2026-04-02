@@ -1,0 +1,30 @@
+# add_prior_observation { #cdmconnector.add_prior_observation }
+
+```python
+add_prior_observation(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    prior_observation_name='prior_observation',
+    prior_observation_type='days',
+)
+```
+
+Add days (or date) of prior observation in the current observation period at index_date.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                   | Type   | Description                                               | Default               |
+|------------------------|--------|-----------------------------------------------------------|-----------------------|
+| table                  | Any    | Ibis table with person_id or subject_id and index_date.   | _required_            |
+| cdm                    | Cdm    | CDM reference (observation_period).                       | _required_            |
+| index_date             | str    | Column name for index date (default "cohort_start_date"). | `'cohort_start_date'` |
+| prior_observation_name | str    | Output column name (default "prior_observation").         | `'prior_observation'` |
+| prior_observation_type | str    | "days" or "date" (default "days").                        | `'days'`              |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                          |
+|--------|-----------------------|--------------------------------------|
+|        | ibis.expr.types.Table | Table with prior_observation column. |

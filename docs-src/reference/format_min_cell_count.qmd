@@ -1,0 +1,23 @@
+# format_min_cell_count { #cdmconnector.format_min_cell_count }
+
+```python
+format_min_cell_count(result, settings=None)
+```
+
+Replace suppressed count placeholders with min_cell_count from settings.
+
+If settings has result_id and min_cell_count, values like '<5' are shown
+using the actual threshold from settings.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                     | Description                                                      | Default    |
+|----------|--------------------------|------------------------------------------------------------------|------------|
+| result   | pandas.DataFrame         | Summarised result with result_id, estimate_name, estimate_value. | _required_ |
+| settings | pandas.DataFrame or None | Settings with result_id, min_cell_count (optional).              | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                             |
+|--------|------------------|-----------------------------------------------------------------------------------------|
+|        | pandas.DataFrame | result with estimate_value updated for suppressed counts (or unchanged if no settings). |

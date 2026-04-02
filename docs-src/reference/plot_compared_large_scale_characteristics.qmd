@@ -1,0 +1,31 @@
+# plot_compared_large_scale_characteristics { #cdmconnector.plot_compared_large_scale_characteristics }
+
+```python
+plot_compared_large_scale_characteristics(
+    result,
+    *,
+    colour=None,
+    reference=None,
+    facet=None,
+)
+```
+
+Compare large-scale characteristics across groups as a scatter plot.
+
+Plots frequency in reference group (x-axis) vs frequency in comparator
+group (y-axis) for each concept.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                                                         | Description   | Default    |
+|-----------|--------------------------------------------------------------|---------------|------------|
+| result    | SummarisedResult from summarise_large_scale_characteristics. |               | _required_ |
+| colour    | Column to colour by.                                         |               | `None`     |
+| reference | Reference group level for comparison.                        |               | `None`     |
+| facet     | Column(s) to facet by.                                       |               | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

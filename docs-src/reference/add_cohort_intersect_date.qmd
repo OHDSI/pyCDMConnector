@@ -1,0 +1,19 @@
+# add_cohort_intersect_date { #cdmconnector.add_cohort_intersect_date }
+
+```python
+add_cohort_intersect_date(
+    table,
+    cdm,
+    target_cohort_table,
+    *,
+    target_cohort_id=None,
+    index_date='cohort_start_date',
+    censor_date=None,
+    target_date='cohort_start_date',
+    order='first',
+    window=[(0, float('inf'))],
+    name_style='{cohort_name}_{window_name}',
+)
+```
+
+Add first/last cohort date within each window.

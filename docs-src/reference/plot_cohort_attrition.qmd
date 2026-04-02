@@ -1,0 +1,20 @@
+# plot_cohort_attrition { #cdmconnector.plot_cohort_attrition }
+
+```python
+plot_cohort_attrition(result, *, show=('subjects', 'records'))
+```
+
+Plot cohort attrition as a flow diagram.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                                        | Description   | Default                   |
+|--------|-------------------------------------------------------------|---------------|---------------------------|
+| result | SummarisedResult from summarise_cohort_attrition.           |               | _required_                |
+| show   | Which metrics to display (\"subjects\" and/or \"records\"). |               | `('subjects', 'records')` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                     | Description   |
+|--------|--------------------------|---------------|
+|        | matplotlib.figure.Figure |               |

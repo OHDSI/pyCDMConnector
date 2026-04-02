@@ -4,4 +4,4 @@
 CDMConnectorError()
 ```
 
-Base exception for CDMConnector.
+Base exception for all CDMConnector errors.

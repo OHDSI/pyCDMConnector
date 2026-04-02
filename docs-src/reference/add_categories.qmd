@@ -1,0 +1,35 @@
+# add_categories { #cdmconnector.add_categories }
+
+```python
+add_categories(
+    table,
+    variable,
+    categories,
+    *,
+    missing_category_value='None',
+    include_lower_bound=True,
+    include_upper_bound=True,
+)
+```
+
+Categorise a numeric (or date) variable into named groups.
+
+categories: e.g. {"age_group": [(0, 39), (40, 79), (80, 150)]} (single label per column)
+or {"age_group": {"0-39": (0, 39), "40-79": (40, 79)}} (label per range).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                   | Type   | Description                                                                     | Default    |
+|------------------------|--------|---------------------------------------------------------------------------------|------------|
+| table                  | Any    | Ibis table with variable column.                                                | _required_ |
+| variable               | str    | Column name to categorise (numeric or date).                                    | _required_ |
+| categories             | dict   | Maps output column name -> list of (low, high) or dict of label -> (low, high). | _required_ |
+| missing_category_value | str    | Value for out-of-range (default "None").                                        | `'None'`   |
+| include_lower_bound    | bool   | Whether bounds are inclusive (default True).                                    | `True`     |
+| include_upper_bound    | bool   | Whether bounds are inclusive (default True).                                    | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                        |
+|--------|-----------------------|------------------------------------|
+|        | ibis.expr.types.Table | Table with new category column(s). |

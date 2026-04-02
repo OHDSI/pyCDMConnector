@@ -1,0 +1,34 @@
+# add_concept_intersect_flag { #cdmconnector.add_concept_intersect_flag }
+
+```python
+add_concept_intersect_flag(
+    table,
+    cdm,
+    concept_set,
+    *,
+    index_date='cohort_start_date',
+    censor_date=None,
+    window=[(0, float('inf'))],
+    target_start_date='event_start_date',
+    target_end_date='event_end_date',
+    in_observation=True,
+    name_style='{concept_name}_{window_name}',
+)
+```
+
+Add flag for presence of concepts within each window.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type                     | Description                                                                                                           | Default                          |
+|-------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| table             | Any                      | Ibis table with person_id or subject_id and index_date.                                                               | _required_                       |
+| cdm               | Cdm                      | CDM reference.                                                                                                        | _required_                       |
+| concept_set       | dict\[str, list\[int\]\] | Named dict mapping concept names to lists of concept IDs. Example: {"acetaminophen": [1125315], "aspirin": [1112807]} | _required_                       |
+| index_date        | str                      | Index date column (default "cohort_start_date").                                                                      | `'cohort_start_date'`            |
+| censor_date       | str or None              | Optional censor date column.                                                                                          | `None`                           |
+| window            | WindowSpec               | Time window(s).                                                                                                       | `[(0, float('inf'))]`            |
+| target_start_date | str                      | Standardised event date column names.                                                                                 | `'event_start_date'`             |
+| target_end_date   | str                      | Standardised event date column names.                                                                                 | `'event_start_date'`             |
+| in_observation    | bool                     | Restrict to records in observation period (default True).                                                             | `True`                           |
+| name_style        | str                      | Column name template with {concept_name}, {window_name}.                                                              | `'{concept_name}_{window_name}'` |

@@ -1,0 +1,19 @@
+# empty_summarised_result { #cdmconnector.empty_summarised_result }
+
+```python
+empty_summarised_result(settings=None)
+```
+
+Create an empty SummarisedResult.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                     | Description              | Default   |
+|----------|--------------------------|--------------------------|-----------|
+| settings | pandas.DataFrame or None | Optional settings table. | `None`    |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description   |
+|--------|------------------|---------------|
+|        | SummarisedResult |               |

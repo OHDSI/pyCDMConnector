@@ -4,16 +4,4 @@
 cdm_tables(cdm)
 ```
 
-Return available CDM table names (logical names).
-
-## Parameters {.doc-section .doc-section-parameters}
-
-| Name   | Type   | Description    | Default    |
-|--------|--------|----------------|------------|
-| cdm    | Cdm    | CDM reference. | _required_ |
-
-## Returns {.doc-section .doc-section-returns}
-
-| Name   | Type        | Description             |
-|--------|-------------|-------------------------|
-|        | list\[str\] | Table names in the CDM. |
+Return the logical tables currently attached to the CDM object.

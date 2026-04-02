@@ -1,0 +1,30 @@
+# add_future_observation { #cdmconnector.add_future_observation }
+
+```python
+add_future_observation(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    future_observation_name='future_observation',
+    future_observation_type='days',
+)
+```
+
+Add days (or date) of future observation from index_date to end of observation period.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                    | Type   | Description                                               | Default                |
+|-------------------------|--------|-----------------------------------------------------------|------------------------|
+| table                   | Any    | Ibis table with person_id or subject_id and index_date.   | _required_             |
+| cdm                     | Cdm    | CDM reference (observation_period).                       | _required_             |
+| index_date              | str    | Column name for index date (default "cohort_start_date"). | `'cohort_start_date'`  |
+| future_observation_name | str    | Output column name (default "future_observation").        | `'future_observation'` |
+| future_observation_type | str    | "days" or "date" (default "days").                        | `'days'`               |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                           |
+|--------|-----------------------|---------------------------------------|
+|        | ibis.expr.types.Table | Table with future_observation column. |

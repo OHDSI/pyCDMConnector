@@ -1,0 +1,34 @@
+# add_cohort_intersect_flag { #cdmconnector.add_cohort_intersect_flag }
+
+```python
+add_cohort_intersect_flag(
+    table,
+    cdm,
+    target_cohort_table,
+    *,
+    target_cohort_id=None,
+    index_date='cohort_start_date',
+    censor_date=None,
+    target_start_date='cohort_start_date',
+    target_end_date='cohort_end_date',
+    window=[(0, float('inf'))],
+    name_style='{cohort_name}_{window_name}',
+)
+```
+
+Add flag (1/0) for overlap with cohort(s) in target_cohort_table within each window.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                | Type                      | Description                                             | Default                         |
+|---------------------|---------------------------|---------------------------------------------------------|---------------------------------|
+| table               | Any                       | Ibis table with person_id or subject_id and index_date. | _required_                      |
+| cdm                 | Cdm                       | CDM reference.                                          | _required_                      |
+| target_cohort_table | str                       | Name of the cohort table in the CDM.                    | _required_                      |
+| target_cohort_id    | int, list\[int\], or None | Cohort IDs to check; None = all.                        | `None`                          |
+| index_date          | str                       | Index date column (default "cohort_start_date").        | `'cohort_start_date'`           |
+| censor_date         | str or None               | Optional censor date column.                            | `None`                          |
+| target_start_date   | str                       | Date columns in the target cohort table.                | `'cohort_start_date'`           |
+| target_end_date     | str                       | Date columns in the target cohort table.                | `'cohort_start_date'`           |
+| window              | WindowSpec                | Time window(s).                                         | `[(0, float('inf'))]`           |
+| name_style          | str                       | Column name template with {cohort_name}, {window_name}. | `'{cohort_name}_{window_name}'` |

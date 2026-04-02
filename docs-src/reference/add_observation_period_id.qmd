@@ -1,0 +1,28 @@
+# add_observation_period_id { #cdmconnector.add_observation_period_id }
+
+```python
+add_observation_period_id(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    name_observation_period_id='observation_period_id',
+)
+```
+
+Add the observation_period_id (ordinal within person) for the observation period containing index_date.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                       | Type   | Description                                               | Default                   |
+|----------------------------|--------|-----------------------------------------------------------|---------------------------|
+| table                      | Any    | Ibis table with person_id or subject_id and index_date.   | _required_                |
+| cdm                        | Cdm    | CDM reference (observation_period).                       | _required_                |
+| index_date                 | str    | Column name for index date (default "cohort_start_date"). | `'cohort_start_date'`     |
+| name_observation_period_id | str    | Output column name (default "observation_period_id").     | `'observation_period_id'` |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                              |
+|--------|-----------------------|------------------------------------------|
+|        | ibis.expr.types.Table | Table with observation_period_id column. |

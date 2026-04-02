@@ -4,4 +4,4 @@
 SourceError()
 ```
 
-Raised when source/connection operations fail.
+Raised for source/connection failures.
