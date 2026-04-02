@@ -45,4 +45,5 @@ jobs:
         with:
           files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
+          slug: OHDSI/pyCDMConnector
           fail_ci_if_error: true
