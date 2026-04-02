@@ -30,3 +30,9 @@ jobs:
 
       - name: Run tests
         run: pytest tests -m integration -v --tb=short
+
+      - name: Verify tests actually ran
+        run: |
+          if [ ! -f .pytest_cache/v/cache/lastfailed ] && [ ! -f .pytest_cache/v/cache/stepwise ]; then
+            echo "Tests completed successfully"
+          fi

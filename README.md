@@ -1,6 +1,6 @@
-# CDMConnector (Python) UNDER CONSTRUCTION - DO NOT USE
+# CDMConnector (Python)
 
-> **AI-generated port.** This package was generated with the assistance of Claude (Anthropic) from the R packages listed in [Attribution](#attribution) below. The code, tests, and documentation were produced by AI and reviewed by humans. It is not yet production-ready.
+> **Early development — not production-ready.** This package is an AI-generated port (see [Attribution](#attribution)) and is under active development. You are welcome to install it, try it out, and [open issues](https://github.com/OHDSI/pyCDMConnector/issues) with bug reports or feedback. Please do not use it in production or for research that depends on correct results.
 
 <!-- badges: start -->
 [![duckdb status](https://github.com/OHDSI/pyCDMConnector/workflows/duckdb-test/badge.svg)](https://github.com/OHDSI/pyCDMConnector/actions?query=workflow%3Aduckdb-test)

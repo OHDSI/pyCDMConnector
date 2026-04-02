@@ -7,23 +7,7 @@ on:
     branches: [main, master, develop]
 
 jobs:
-  check-secrets:
-    runs-on: ubuntu-latest
-    outputs:
-      has-secrets: ${{ steps.check.outputs.has-secrets }}
-    steps:
-      - id: check
-        run: |
-          if [ -z "${{ secrets.CDM5_REDSHIFT_DBNAME }}" ]; then
-            echo "::notice::Skipping redshift tests – CDM5_REDSHIFT_DBNAME secret not configured"
-            echo "has-secrets=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "has-secrets=true" >> "$GITHUB_OUTPUT"
-          fi
-
   test:
-    needs: check-secrets
-    if: needs.check-secrets.outputs.has-secrets == 'true'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,6 +24,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check required environment variables
+        run: |
+          missing=""
+          for var in CDM5_REDSHIFT_USER CDM5_REDSHIFT_PASSWORD CDM5_REDSHIFT_HOST CDM5_REDSHIFT_DBNAME CDM5_REDSHIFT_CDM_SCHEMA CDM5_REDSHIFT_SCRATCH_SCHEMA; do
+            if [ -z "${!var}" ]; then
+              missing="${missing}  - ${var}\n"
+            fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required secrets for redshift tests. Set the following in Settings > Secrets and variables > Actions:"
+            printf "$missing" | while IFS= read -r line; do echo "::error::$line"; done
+            exit 1
+          fi
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
