@@ -1,0 +1,19 @@
+# table_refs { #cdmconnector.table_refs }
+
+```python
+table_refs(domain_ids)
+```
+
+Return domain_id -> table name and column names (concept_id, start_date, end_date).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name       | Type        | Description                                         | Default    |
+|------------|-------------|-----------------------------------------------------|------------|
+| domain_ids | list\[str\] | Domain IDs (e.g. "condition", "drug", "procedure"). | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                                                                |
+|--------|------------------|----------------------------------------------------------------------------------------------------------------------------|
+|        | pandas.DataFrame | Columns: domain_id, table_name, concept_id, start_date, end_date (concept_id/start_date/end_date are column name strings). |

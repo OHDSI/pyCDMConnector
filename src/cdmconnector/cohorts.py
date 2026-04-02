@@ -799,7 +799,7 @@ def generate_cohort_set(
     return cdm
 
 
-def _table_refs(domain_ids: list[str]) -> Any:
+def table_refs(domain_ids: list[str]) -> Any:
     """Return domain_id -> table name and column names (concept_id, start_date, end_date).
 
     Parameters
@@ -829,6 +829,11 @@ def _table_refs(domain_ids: list[str]) -> Any:
         columns=["domain_id", "table_name", "concept_id", "start_date", "end_date"],
     )
     return df[df["domain_id"].isin([d.lower() for d in domain_ids])]
+
+
+def _table_refs(domain_ids: list[str]) -> Any:
+    """Backwards-compatible internal alias for table_refs()."""
+    return table_refs(domain_ids)
 
 
 def cohort_collapse(x: Any) -> Any:

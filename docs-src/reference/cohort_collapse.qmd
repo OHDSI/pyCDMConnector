@@ -1,0 +1,22 @@
+# cohort_collapse { #cdmconnector.cohort_collapse }
+
+```python
+cohort_collapse(x)
+```
+
+Collapse overlapping cohort periods per (cohort_definition_id, subject_id) into contiguous intervals.
+
+Expects columns cohort_definition_id, subject_id, cohort_start_date, cohort_end_date.
+Orders by cohort_start_date and duration, then merges overlapping/adjacent periods.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                           | Description                              | Default    |
+|--------|--------------------------------|------------------------------------------|------------|
+| x      | Ibis table or pandas DataFrame | Cohort-like table with required columns. | _required_ |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                                                         |
+|--------|------------------|-----------------------------------------------------------------------------------------------------|
+|        | pandas.DataFrame | Collapsed cohort with columns cohort_definition_id, subject_id, cohort_start_date, cohort_end_date. |

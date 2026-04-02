@@ -13,7 +13,11 @@ website:
       - reference/drop_table.qmd
       section: CDM & connection
     - contents:
+      - reference/cohort_collapse.qmd
       - reference/generate_cohort_set.qmd
+      - reference/generate_concept_cohort_set.qmd
+      - reference/new_cohort_table.qmd
+      - reference/table_refs.qmd
       section: Cohorts
     - contents:
       - reference/download_eunomia_data.qmd

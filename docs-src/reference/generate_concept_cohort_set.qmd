@@ -1,0 +1,50 @@
+# generate_concept_cohort_set { #cdmconnector.generate_concept_cohort_set }
+
+```python
+generate_concept_cohort_set(
+    cdm,
+    concept_set,
+    *,
+    name='cohort',
+    limit='first',
+    required_observation=(0, 0),
+    end='observation_period_end_date',
+    subset_cohort=None,
+    subset_cohort_id=None,
+    overwrite=True,
+)
+```
+
+Generate a cohort set from one or more concept sets (named list of concept IDs).
+
+Each concept set becomes one cohort; each row represents the time during which
+the concept was observed for that subject. Concepts are looked up in the CDM
+vocabulary and domain tables (condition_occurrence, drug_exposure, etc.).
+Concepts not in the vocabulary or in missing domain tables are silently skipped.
+If a domain has no end date (e.g. procedure, observation), start date is used as end date.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                 | Type                                                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Default                         |
+|----------------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|
+| cdm                  | Cdm reference (from cdm_from_con with observation_period and concept table). |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | _required_                      |
+| concept_set          | dict\[str, list\[int\] \| list\[dict\]\]                                     | Named concept sets: name -> list of concept_id (int) or list of concept specs (dict). Each name becomes one cohort. Concept specs are dicts with: - "concept_id" (int, required) - "include_descendants" (bool, optional): if True, expand via concept_ancestor (requires concept_ancestor table). Default False. - "is_excluded" (bool, optional): if True, exclude this concept from the set. Default False. Simple form: {"cohort_a": [192671, 123]} uses no descendants and not excluded. | _required_                      |
+| name                 | str                                                                          | Name of the cohort table (lowercase, letters/numbers/underscores). Default "cohort".                                                                                                                                                                                                                                                                                                                                                                                                          | `'cohort'`                      |
+| limit                | str                                                                          | "first" (default) or "all": include only first occurrence per subject per cohort, or all.                                                                                                                                                                                                                                                                                                                                                                                                     | `'first'`                       |
+| required_observation | tuple\[int, int\]                                                            | (prior_days, future_days) required observation around the event. Default (0, 0).                                                                                                                                                                                                                                                                                                                                                                                                              | `(0, 0)`                        |
+| end                  | str or int                                                                   | How to set cohort_end_date: "observation_period_end_date" (default), "event_end_date", or a fixed number of days from cohort_start_date.                                                                                                                                                                                                                                                                                                                                                      | `'observation_period_end_date'` |
+| subset_cohort        | str                                                                          | If set, only persons in this cohort table are included.                                                                                                                                                                                                                                                                                                                                                                                                                                       | `None`                          |
+| subset_cohort_id     | int or list\[int\]                                                           | If set with subset_cohort, only these cohort_definition_id(s) from the subset cohort.                                                                                                                                                                                                                                                                                                                                                                                                         | `None`                          |
+| overwrite            | bool                                                                         | If True, overwrite existing cohort tables. Default True.                                                                                                                                                                                                                                                                                                                                                                                                                                      | `True`                          |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                                |
+|--------|--------|----------------------------------------------------------------------------|
+|        | Cdm    | CDM with the new cohort table and cohort_set / cohort_attrition populated. |
+
+## Raises {.doc-section .doc-section-raises}
+
+| Name   | Type        | Description                                                                     |
+|--------|-------------|---------------------------------------------------------------------------------|
+|        | CohortError | If CDM has no database source, name is invalid, or required tables are missing. |

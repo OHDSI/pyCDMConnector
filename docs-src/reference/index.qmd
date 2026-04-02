@@ -17,11 +17,15 @@ Core CDM object and connection helpers.
 
 ## Cohorts
 
-Cohort set generation.
+Cohort set generation and cohort-table helpers.
 
 | | |
 | --- | --- |
+| [cohort_collapse](cohort_collapse.qmd#cdmconnector.cohort_collapse) | Collapse overlapping cohort periods per (cohort_definition_id, subject_id) into contiguous intervals. |
 | [generate_cohort_set](generate_cohort_set.qmd#cdmconnector.generate_cohort_set) | Generate a cohort set from a cohort definition set (CIRCE JSON or equivalent). |
+| [generate_concept_cohort_set](generate_concept_cohort_set.qmd#cdmconnector.generate_concept_cohort_set) | Generate a cohort set from one or more concept sets (named list of concept IDs). |
+| [new_cohort_table](new_cohort_table.qmd#cdmconnector.new_cohort_table) | Create an empty cohort table in the CDM's write schema and register it. |
+| [table_refs](table_refs.qmd#cdmconnector.table_refs) | Return domain_id -> table name and column names (concept_id, start_date, end_date). |
 
 ## Eunomia
 

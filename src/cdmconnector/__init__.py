@@ -76,6 +76,7 @@ from cdmconnector.cohorts import (
     attrition,
     bind,
     cohort_codelist,
+    cohort_collapse,
     cohort_count,
     generate_cohort_set,
     generate_concept_cohort_set,
@@ -84,6 +85,7 @@ from cdmconnector.cohorts import (
     new_cohort_table,
     record_cohort_attrition,
     settings,
+    table_refs,
 )
 from cdmconnector.eunomia import (
     download_eunomia_data,
@@ -320,6 +322,7 @@ __all__ = [
     "attrition",
     "bind",
     "cohort_codelist",
+    "cohort_collapse",
     "cohort_count",
     "generate_cohort_set",
     "generate_concept_cohort_set",
@@ -328,6 +331,7 @@ __all__ = [
     "new_cohort_table",
     "record_cohort_attrition",
     "settings",
+    "table_refs",
     # Import/Export
     "export_codelist",
     "export_concept_set_expression",

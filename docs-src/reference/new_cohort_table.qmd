@@ -1,0 +1,30 @@
+# new_cohort_table { #cdmconnector.new_cohort_table }
+
+```python
+new_cohort_table(cdm, name, *, overwrite=True)
+```
+
+Create an empty cohort table in the CDM's write schema and register it.
+
+Creates tables: name (cohort), name_set (cohort_set), name_attrition (cohort_attrition).
+Returns the CDM with the new cohort table added.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                                      | Description   | Default    |
+|-----------|-------------------------------------------|---------------|------------|
+| cdm       | Cdm (database-backed, from cdm_from_con). |               | _required_ |
+| name      | Table name (lowercase recommended).       |               | _required_ |
+| overwrite | If True, replace existing tables.         |               | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                          | Description   |
+|--------|-----------------------------------------------|---------------|
+|        | The same Cdm with the new cohort table added. |               |
+
+## Raises {.doc-section .doc-section-raises}
+
+| Name   | Type        | Description                                                                  |
+|--------|-------------|------------------------------------------------------------------------------|
+|        | CohortError | If cdm has no database source (e.g. from cdm_from_tables without a backend). |

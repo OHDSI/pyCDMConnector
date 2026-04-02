@@ -32,9 +32,13 @@ quartodoc:
         - insert_table
         - drop_table
     - title: Cohorts
-      desc: Cohort set generation.
+      desc: Cohort set generation and cohort-table helpers.
       contents:
+        - cohort_collapse
         - generate_cohort_set
+        - generate_concept_cohort_set
+        - new_cohort_table
+        - table_refs
     - title: Eunomia
       desc: Example datasets and download helpers.
       contents:
