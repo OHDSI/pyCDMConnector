@@ -15,8 +15,12 @@ import re
 import warnings
 from typing import Any
 
-import altair as alt
 import pandas as pd
+
+try:
+    import altair as alt
+except ImportError:
+    alt = None  # type: ignore[assignment]
 
 try:
     from great_tables import GT
@@ -993,6 +997,15 @@ PLOT_TYPES = ("altair",)
 DEFAULT_PLOT_TYPE = "altair"
 
 
+def _require_altair() -> None:
+    """Raise an informative error when Altair-backed plotting is unavailable."""
+    if alt is None:
+        raise ImportError(
+            "Altair is required for visualization chart functions. "
+            "Install `altair` to use `empty_plot`, `scatter_plot`, `bar_plot`, or `box_plot`."
+        )
+
+
 def plot_type() -> tuple[str, ...]:
     """Supported plot output types.
 
@@ -1261,6 +1274,7 @@ def empty_plot(
     alt.Chart
         Empty chart with title.
     """
+    _require_altair()
     chart = (
         alt.Chart(pd.DataFrame({"x": [0], "y": [0]}))
         .mark_text(fontSize=14, color="gray")
@@ -1323,6 +1337,7 @@ def scatter_plot(
     alt.Chart
         Altair chart object.
     """
+    _require_altair()
     if result.empty:
         warnings.warn("result object is empty, returning empty plot.", stacklevel=2)
         return empty_plot()
@@ -1418,6 +1433,7 @@ def bar_plot(
     alt.Chart
         Altair chart object.
     """
+    _require_altair()
     if position not in ("dodge", "stack"):
         raise ValueError(f"position must be 'dodge' or 'stack', got '{position}'")
 
@@ -1495,6 +1511,7 @@ def box_plot(
     alt.Chart
         Altair chart object.
     """
+    _require_altair()
     if result.empty:
         warnings.warn("result object is empty, returning empty plot.", stacklevel=2)
         return empty_plot()

@@ -14,14 +14,34 @@ jobs:
         python-version: ["3.11"]
     env:
       CDMCONNECTOR_TEST_DB: spark
-      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-      DATABRICKS_HTTPPATH: ${{ secrets.DATABRICKS_HTTPPATH }}
-      DATABRICKS_CDM_SCHEMA: ${{ secrets.DATABRICKS_CDM_SCHEMA }}
-      DATABRICKS_SCRATCH_SCHEMA: ${{ secrets.DATABRICKS_SCRATCH_SCHEMA }}
+      LEGACY_DATABRICKS_CONNECTION_STRING: ${{ secrets.CDM5_SPARK_CONNECTION_STRING }}
+      LEGACY_DATABRICKS_TOKEN: ${{ secrets.CDM5_SPARK_PASSWORD }}
+      LEGACY_DATABRICKS_CDM_SCHEMA: ${{ secrets.CDM5_SPARK_CDM_SCHEMA }}
+      LEGACY_DATABRICKS_SCRATCH_SCHEMA: ${{ secrets.CDM5_SPARK_OHDSI_SCHEMA }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Map legacy Databricks secrets
+        shell: bash
+        run: |
+          conn="${LEGACY_DATABRICKS_CONNECTION_STRING}"
+          host=""
+          http_path=""
+
+          if [ -n "$conn" ]; then
+            host="${conn#jdbc:databricks://}"
+            host="${host%%/*}"
+            http_path="$(printf '%s' "$conn" | sed -n 's/.*;httpPath=\([^;]*\).*/\1/p')"
+          fi
+
+          {
+            echo "DATABRICKS_HOST=${host}"
+            echo "DATABRICKS_TOKEN=${LEGACY_DATABRICKS_TOKEN}"
+            echo "DATABRICKS_HTTPPATH=${http_path}"
+            echo "DATABRICKS_CDM_SCHEMA=${LEGACY_DATABRICKS_CDM_SCHEMA}"
+            echo "DATABRICKS_SCRATCH_SCHEMA=${LEGACY_DATABRICKS_SCRATCH_SCHEMA}"
+          } >> "$GITHUB_ENV"
 
       - name: Check required environment variables
         run: |

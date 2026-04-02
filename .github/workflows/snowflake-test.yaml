@@ -14,16 +14,56 @@ jobs:
         python-version: ["3.11"]
     env:
       CDMCONNECTOR_TEST_DB: snowflake
-      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-      SNOWFLAKE_CDM_SCHEMA: ${{ secrets.SNOWFLAKE_CDM_SCHEMA }}
-      SNOWFLAKE_SCRATCH_SCHEMA: ${{ secrets.SNOWFLAKE_SCRATCH_SCHEMA }}
+      LEGACY_SNOWFLAKE_USER: ${{ secrets.CDM_SNOWFLAKE_USER }}
+      LEGACY_SNOWFLAKE_PASSWORD: ${{ secrets.CDM_SNOWFLAKE_PASSWORD }}
+      LEGACY_SNOWFLAKE_SERVER: ${{ secrets.CDM_SNOWFLAKE_SERVER }}
+      LEGACY_SNOWFLAKE_CONNECTION_STRING: ${{ secrets.CDM_SNOWFLAKE_CONNECTION_STRING }}
+      LEGACY_SNOWFLAKE_CDM_SCHEMA: ${{ secrets.CDM_SNOWFLAKE_CDM53_SCHEMA }}
+      LEGACY_SNOWFLAKE_SCRATCH_SCHEMA: ${{ secrets.CDM_SNOWFLAKE_OHDSI_SCHEMA }}
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Map legacy Snowflake secrets
+        shell: bash
+        run: |
+          server="${LEGACY_SNOWFLAKE_SERVER}"
+          conn="${LEGACY_SNOWFLAKE_CONNECTION_STRING}"
+          cdm_schema="${LEGACY_SNOWFLAKE_CDM_SCHEMA}"
+          scratch_schema="${LEGACY_SNOWFLAKE_SCRATCH_SCHEMA}"
+
+          if [ -z "$server" ] && [ -n "$conn" ]; then
+            server="${conn#jdbc:snowflake://}"
+            server="${server%%\?*}"
+            server="${server%%/*}"
+          fi
+
+          account="${server#https://}"
+          account="${account#http://}"
+          account="${account%%/*}"
+          account="${account%%.snowflakecomputing.com}"
+
+          database=""
+          warehouse=""
+
+          if [ -n "$conn" ]; then
+            database="$(printf '%s' "$conn" | sed -n 's/.*[?&]db=\([^&;]*\).*/\1/p')"
+            warehouse="$(printf '%s' "$conn" | sed -n 's/.*[?&]warehouse=\([^&;]*\).*/\1/p')"
+          fi
+
+          if [ -z "$database" ] && [[ "$cdm_schema" == *.* ]]; then
+            database="${cdm_schema%%.*}"
+          fi
+
+          {
+            echo "SNOWFLAKE_USER=${LEGACY_SNOWFLAKE_USER}"
+            echo "SNOWFLAKE_PASSWORD=${LEGACY_SNOWFLAKE_PASSWORD}"
+            echo "SNOWFLAKE_ACCOUNT=${account}"
+            echo "SNOWFLAKE_DATABASE=${database}"
+            echo "SNOWFLAKE_WAREHOUSE=${warehouse}"
+            echo "SNOWFLAKE_CDM_SCHEMA=${cdm_schema}"
+            echo "SNOWFLAKE_SCRATCH_SCHEMA=${scratch_schema}"
+          } >> "$GITHUB_ENV"
 
       - name: Check required environment variables
         run: |
