@@ -14,6 +14,8 @@ from typing import Any, Dict, Optional, Union
 import pandas as pd
 import requests
 
+DEFAULT_HECATE_BASE_URL = "https://hecate.pantheon-hds.com"
+
 
 def search_vocab(
     query: str,
@@ -51,7 +53,9 @@ def search_vocab(
     limit : int
         Max results (default 20, max 150).
     base_url : str | None
-        Hecate base URL. If None, uses env var HECATE_BASE_URL.
+        Hecate base URL. If None, uses env var HECATE_BASE_URL, else defaults
+        to the public Hecate API at https://hecate.pantheon-hds.com
+        (OpenAPI spec: https://hecate.pantheon-hds.com/openapi/).
     timeout_ms : int | None
         Request timeout in ms. If None, uses env var HECATE_TIMEOUT_MS, else defaults to 30000.
     api_key : str | None
@@ -74,11 +78,11 @@ def search_vocab(
     # -----------------------------
     # Defaults (like app_config())
     # -----------------------------
-    base_url = (base_url or os.getenv("HECATE_BASE_URL") or "").strip()
-    if not base_url:
-        raise ValueError(
-            "Missing base_url. Pass base_url=... or set env var HECATE_BASE_URL."
-        )
+    base_url = (
+        base_url
+        or os.getenv("HECATE_BASE_URL")
+        or DEFAULT_HECATE_BASE_URL
+    ).strip()
     base_url = base_url.rstrip("/")
 
     api_key = api_key if api_key is not None else os.getenv("HECATE_API_KEY", "")

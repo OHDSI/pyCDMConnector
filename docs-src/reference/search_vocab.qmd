@@ -1,0 +1,44 @@
+# search_vocab { #cdmconnector.search_vocab }
+
+```python
+search_vocab(
+    query,
+    vocabulary_id=None,
+    standard_concept=None,
+    domain_id=None,
+    concept_class_id=None,
+    limit=20,
+    base_url=None,
+    timeout_ms=None,
+    api_key=None,
+)
+```
+
+Search Hecate concepts and return results as a pandas DataFrame.
+
+Mirrors the behavior of the R `hecate_search()` wrapper:
+  - GET {base_url}/search?q=...
+  - Optional filters: vocabulary_id, standard_concept, domain_id, concept_class_id, limit
+  - Rate limit: 100 calls / 60 seconds (process-local)
+  - Returns a flattened DataFrame (one row per nested concept result)
+  - On API errors or unexpected shapes: returns an empty DataFrame (instead of NULL)
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name             | Type        | Description                                                                                                                                                                                 | Default    |
+|------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| query            | str         | Search query (required, non-empty).                                                                                                                                                         | _required_ |
+| vocabulary_id    | str \| None | Optional vocabulary filter (comma-separated).                                                                                                                                               | `None`     |
+| standard_concept | str \| None | Optional standard concept flag (e.g. "S", "C").                                                                                                                                             | `None`     |
+| domain_id        | str \| None | Optional domain filter (comma-separated).                                                                                                                                                   | `None`     |
+| concept_class_id | str \| None | Optional concept class filter.                                                                                                                                                              | `None`     |
+| limit            | int         | Max results (default 20, max 150).                                                                                                                                                          | `20`       |
+| base_url         | str \| None | Hecate base URL. If None, uses env var HECATE_BASE_URL, else defaults to the public Hecate API at https://hecate.pantheon-hds.com (OpenAPI spec: https://hecate.pantheon-hds.com/openapi/). | `None`     |
+| timeout_ms       | int \| None | Request timeout in ms. If None, uses env var HECATE_TIMEOUT_MS, else defaults to 30000.                                                                                                     | `None`     |
+| api_key          | str \| None | Bearer token. If None, uses env var HECATE_API_KEY.                                                                                                                                         | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                       |
+|--------|------------------|-------------------------------------------------------------------|
+|        | pandas.DataFrame | Flattened results. Empty if error/no results/unexpected response. |

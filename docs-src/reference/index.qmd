@@ -39,6 +39,14 @@ Example datasets and download helpers.
 | [example_datasets](example_datasets.qmd#cdmconnector.example_datasets) | Return the list of available Eunomia example dataset names. |
 | [require_eunomia](require_eunomia.qmd#cdmconnector.require_eunomia) | Ensure the Eunomia dataset is available; download if needed. |
 
+## Vocabulary
+
+Vocabulary and Hecate-backed search helpers.
+
+| | |
+| --- | --- |
+| [search_vocab](search_vocab.qmd#cdmconnector.search_vocab) | Search Hecate concepts and return results as a pandas DataFrame. |
+
 ## Patient profiles
 
 Demographics, observation windows, and patient-level intersections.

@@ -10,7 +10,7 @@ import pandas as pd
 import pytest
 import requests
 
-from cdmconnector.vocabulary import search_vocab
+from cdmconnector.vocabulary import DEFAULT_HECATE_BASE_URL, search_vocab
 
 
 # ---- Validation ----
@@ -36,11 +36,21 @@ def test_search_vocab_limit_validation():
         search_vocab("asthma", base_url="https://api.example.com", limit=20.5)  # type: ignore[arg-type]
 
 
-def test_search_vocab_base_url_required():
-    """search_vocab raises if base_url is missing and HECATE_BASE_URL not set."""
+def test_search_vocab_uses_public_default_base_url():
+    """search_vocab uses the public Hecate URL when no base_url is configured."""
     with patch.dict(os.environ, {"HECATE_BASE_URL": ""}, clear=False):
-        with pytest.raises(ValueError, match="base_url|HECATE_BASE_URL"):
+        with patch("cdmconnector.vocabulary.requests.get") as mget:
+            mget.return_value.status_code = 200
+            mget.return_value.reason = "OK"
+            mget.return_value.json.return_value = [
+                {"concept_name": "x", "concepts": [{"concept_id": 1}]},
+            ]
+            mget.return_value.text = ""
+
             search_vocab("asthma")
+
+    mget.assert_called_once()
+    assert mget.call_args[0][0] == f"{DEFAULT_HECATE_BASE_URL}/search"
 
 
 # ---- Mocked API success ----

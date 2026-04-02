@@ -47,6 +47,10 @@ quartodoc:
         - eunomia_is_available
         - example_datasets
         - require_eunomia
+    - title: Vocabulary
+      desc: Vocabulary and Hecate-backed search helpers.
+      contents:
+        - search_vocab
     - title: Patient profiles
       desc: Demographics, observation windows, and patient-level intersections.
       contents:
