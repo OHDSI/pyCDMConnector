@@ -15,6 +15,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check required environment variables
+        run: |
+          missing=""
+          if [ -z "${{ secrets.CODECOV_TOKEN }}" ]; then
+            missing="${missing}  - CODECOV_TOKEN: required for uploading coverage to codecov.io. Add it under Settings > Secrets and variables > Actions.\n"
+          fi
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required environment variables:"
+            printf "$missing" | while IFS= read -r line; do echo "::error::$line"; done
+            printf "Missing required environment variables:\n$missing"
+            exit 1
+          fi
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -31,4 +44,5 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           files: coverage.xml
-          fail_ci_if_error: false
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
