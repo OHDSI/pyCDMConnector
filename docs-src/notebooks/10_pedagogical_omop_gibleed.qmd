@@ -99,6 +99,24 @@ gender_counts = (
 cc.collect(gender_counts)
 ```
 
+### Optional: search the public vocabulary API
+
+When you do not already know the concept ID you want, `search_vocab()` can query the
+public Hecate vocabulary API and return a pandas DataFrame of candidate concepts.
+
+```python
+#| eval: false
+cc.search_vocab(
+    "gastrointestinal hemorrhage",
+    domain_id="Condition",
+    standard_concept="S",
+    limit=5,
+)
+```
+
+This is a good way to discover concept IDs before using them in cohort definitions or
+targeted table filters.
+
 ## 5.2 Visits: where do records cluster in time?
 
 In OMOP, many records can be linked to a visit via `visit_occurrence_id` (when available).
@@ -286,6 +304,75 @@ sex_with_names = sex_summary.join(
     how="left",
 ).select("gender_concept_id", "concept_name", "n")
 cc.collect(sex_with_names)
+```
+
+## 9.1 The same baseline step with PatientProfiles helpers
+
+The manual joins above are useful for learning the OMOP structure. Once you know the
+pattern, the PatientProfiles helpers can add common baseline fields for you.
+
+```python
+profiles = cc.add_demographics(
+    cdm["gibleed_cohort"],
+    cdm,
+    index_date="cohort_start_date",
+)
+cc.collect(
+    profiles.select(
+        "subject_id",
+        "cohort_start_date",
+        "age",
+        "sex",
+        "prior_observation",
+        "future_observation",
+    ).limit(10)
+)
+```
+
+This is often the quickest way to enrich a cohort table with age, sex, and observation
+time before building descriptive summaries.
+
+## 9.2 CohortCharacteristics helpers
+
+`summarise_characteristics()` produces a standardised result object with counts and
+demographic summaries for the cohort.
+
+```python
+characteristics = cc.summarise_characteristics(
+    cdm["gibleed_cohort"],
+    cdm=cdm,
+    table_name="gibleed_cohort",
+)
+characteristics.results.head(10)
+```
+
+If you want a wide, analyst-friendly table, use `table_characteristics()`.
+
+```python
+cc.table_characteristics(characteristics).head(10)
+```
+
+## 9.3 visOmopResults-style table formatting
+
+The visOmopResults-style helpers take the long summarised result and prepare it for
+presentation. Using `type="dataframe"` keeps the example lightweight and portable.
+
+```python
+cc.vis_omop_table(
+    characteristics.results,
+    type="dataframe",
+).head(10)
+```
+
+For more custom layouts, `vis_table()` lets you format the same result object with your
+own header, grouping, and estimate label rules.
+
+```python
+cc.vis_table(
+    characteristics.results,
+    type="dataframe",
+    rename={"cdm_name": "Database"},
+).head(10)
 ```
 
 # 10. Outcomes: count events during time-at-risk

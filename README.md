@@ -20,7 +20,7 @@ AI-generated Python port of several R packages from the [DARWIN EU](https://darw
 
 - **Cdm** — Single object holding OMOP table references (Ibis tables) plus metadata (name, version, schemas).
 - **Lazy-by-default** — Build queries with Ibis; materialize only with `collect()` or `compute()`.
-- **Cohort tables** — OMOP cohort structure, attrition, and `generate_cohort_set` from CIRCE definitions.
+- **Cohort tables** — OMOP cohort structure, attrition, and `generate_cohort_set` from CIRCE definitions via [Circepy](https://github.com/OHDSI/Circepy).
 - **add_{} functions** — `add_demographics`, `add_age`, `add_sex`, ect to add columns to cohort tables.
 - **Eunomia example datasets** — Helpers to download and use example OMOP datasets (e.g. GiBleed).
 - **Schema-aware** — `cdm_schema`, `write_schema`, optional prefix; works with Ibis backends (DuckDB, Postgres, etc.).
@@ -137,7 +137,7 @@ print(df)
 
 | Function | Description |
 |----------|-------------|
-| **`generate_cohort_set(cdm, cohort_definition_set, name="cohort", ...)`** | Create cohort tables from a CIRCE cohort definition set (e.g. from `read_cohort_set`). |
+| **`generate_cohort_set(cdm, cohort_definition_set, name="cohort", ...)`** | Create cohort tables from a CIRCE cohort definition set (e.g. from `read_cohort_set`). Python cohort SQL generation is powered by [Circepy](https://github.com/OHDSI/Circepy). |
 
 ### Patient profiles
 

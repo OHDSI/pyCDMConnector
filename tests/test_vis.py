@@ -5,9 +5,10 @@
 
 from __future__ import annotations
 
-import altair as alt
 import pandas as pd
 import pytest
+
+alt = pytest.importorskip("altair")
 
 from cdmconnector.vis import (
     bar_plot,
