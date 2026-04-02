@@ -1,0 +1,22 @@
+# add_sex { #cdmconnector.add_sex }
+
+```python
+add_sex(table, cdm, *, sex_name='sex', missing_sex_value='None')
+```
+
+Add sex from person (gender_concept_id: 8507 Male, 8532 Female).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type   | Description                                | Default    |
+|-------------------|--------|--------------------------------------------|------------|
+| table             | Any    | Ibis table with person_id or subject_id.   | _required_ |
+| cdm               | Cdm    | CDM reference (person).                    | _required_ |
+| sex_name          | str    | Output column name (default "sex").        | `'sex'`    |
+| missing_sex_value | str    | Value for unknown gender (default "None"). | `'None'`   |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description            |
+|--------|-----------------------|------------------------|
+|        | ibis.expr.types.Table | Table with sex column. |

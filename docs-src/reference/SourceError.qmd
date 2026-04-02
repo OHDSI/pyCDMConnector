@@ -1,0 +1,7 @@
+# SourceError { #cdmconnector.SourceError }
+
+```python
+SourceError()
+```
+
+Raised when source/connection operations fail.

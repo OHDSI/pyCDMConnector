@@ -1,0 +1,7 @@
+# CohortError { #cdmconnector.CohortError }
+
+```python
+CohortError()
+```
+
+Raised when cohort operations or validation fail.

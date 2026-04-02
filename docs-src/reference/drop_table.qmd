@@ -1,0 +1,14 @@
+# drop_table { #cdmconnector.drop_table }
+
+```python
+drop_table(cdm, name)
+```
+
+Drop one or more tables from the write schema.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type               | Description                              | Default    |
+|--------|--------------------|------------------------------------------|------------|
+| cdm    | Cdm                | CDM reference (must be database-backed). | _required_ |
+| name   | str or list\[str\] | Logical table name(s) to drop.           | _required_ |

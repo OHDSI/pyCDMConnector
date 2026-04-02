@@ -1,0 +1,14 @@
+# cdm_disconnect { #cdmconnector.cdm_disconnect }
+
+```python
+cdm_disconnect(cdm, drop_write_schema=False)
+```
+
+Disconnect the CDM's source.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type   | Description                                                             | Default    |
+|-------------------|--------|-------------------------------------------------------------------------|------------|
+| cdm               | Cdm    | CDM reference.                                                          | _required_ |
+| drop_write_schema | bool   | If True, drop write-schema tables before disconnecting (default False). | `False`    |

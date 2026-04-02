@@ -1,0 +1,113 @@
+# Quarto website — pkgdown-style: source in docs-src, output in docs/
+project:
+  type: website
+  output-dir: ../docs
+
+# Quarto reads quartodoc-generated sidebar and CSS
+metadata-files:
+  - reference/_sidebar.yml
+format:
+  html:
+    highlight-style: github
+    css:
+      - stylesheets/extra.css
+      - reference/_styles-quartodoc.css
+    toc: true
+
+# quartodoc: API reference from cdmconnector package (see quartodoc build)
+quartodoc:
+  package: cdmconnector
+  sidebar: reference/_sidebar.yml
+  css: reference/_styles-quartodoc.css
+  sections:
+    - title: CDM & connection
+      desc: Core CDM object and connection helpers.
+      contents:
+        - Cdm
+        - cdm_from_con
+        - cdm_from_tables
+        - cdm_tables
+        - collect
+        - compute
+        - insert_table
+        - drop_table
+    - title: Cohorts
+      desc: Cohort set generation.
+      contents:
+        - generate_cohort_set
+    - title: Eunomia
+      desc: Example datasets and download helpers.
+      contents:
+        - download_eunomia_data
+        - eunomia_dir
+        - eunomia_is_available
+        - example_datasets
+        - require_eunomia
+    - title: Patient profiles
+      desc: Demographics and summarise helpers.
+      contents:
+        - add_age
+        - add_demographics
+        - add_sex
+    - title: Results
+      desc: Result container and export.
+      contents:
+        - Result
+    - title: Exceptions
+      desc: Errors raised by the package.
+      contents:
+        - CDMConnectorError
+        - CDMValidationError
+        - CohortError
+        - EunomiaError
+        - SourceError
+        - TableNotFoundError
+
+website:
+  title: CDMConnector
+  site-url: https://darwin-eu.github.io/CDMConnector/
+  repo-url: https://github.com/darwin-eu/CDMConnector
+  repo-actions: [edit, issue]
+  sidebar:
+    - href: index.qmd
+      text: Home
+    - href: contents.qmd
+      text: Site contents
+    - text: Tutorials
+      contents:
+        - href: notebooks/index.qmd
+          text: Overview
+        - href: tutorials/wasm_example_analysis.qmd
+          text: Interactive (WASM) Example
+        - href: notebooks/00_welcome_your_first_cdm.ipynb
+          text: Welcome / first CDM
+        - href: notebooks/01_lazy_queries_and_pipelines.ipynb
+          text: Lazy queries
+        - href: notebooks/02_understanding_omop_people_time_domains.ipynb
+          text: OMOP overview
+        - href: notebooks/03_story_gibleed_end_to_end.ipynb
+          text: GiBleed story
+        - href: notebooks/04_measurement_distributions_with_guardrails.ipynb
+          text: Measurements
+        - href: notebooks/05_cohorts_101_tables_attrition_counts.ipynb
+          text: Cohorts
+        - href: notebooks/06_cohorts_from_json_circe_atlas.ipynb
+          text: Cohorts from JSON / Circe Atlas
+        - href: notebooks/07_cohort_characterization_table1.ipynb
+          text: Cohort characterization / Table 1
+        - href: notebooks/08_performance_pushdown_and_materialization.ipynb
+          text: Performance, pushdown, materialization
+        - href: notebooks/09_exporting_results_and_tables.ipynb
+          text: Exporting results and tables
+        - href: notebooks/10_pedagogical_omop_gibleed.qmd
+          text: Pedagogical OMOP (GiBleed)
+    - text: Reference
+      contents:
+        - href: reference/index.qmd
+          text: API index
+    - text: Contributing
+      contents:
+        - href: contributing.qmd
+          text: Contributing
+        - href: development.qmd
+          text: Development

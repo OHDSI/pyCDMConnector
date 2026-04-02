@@ -1,0 +1,23 @@
+# collect { #cdmconnector.collect }
+
+```python
+collect(expr, *, limit=None)
+```
+
+Materialize an Ibis expression to a pandas DataFrame.
+
+This is the only function (with compute and Result.collect) that triggers execution.
+Scalar expressions (e.g. table.count()) are returned as a 1x1 DataFrame.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type        | Description                                   | Default    |
+|--------|-------------|-----------------------------------------------|------------|
+| expr   | Any         | Ibis table or scalar expression to execute.   | _required_ |
+| limit  | int or None | If set, apply .limit(limit) before executing. | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                          |
+|--------|------------------|------------------------------------------------------|
+|        | pandas.DataFrame | Materialized result (table rows or 1x1 for scalars). |

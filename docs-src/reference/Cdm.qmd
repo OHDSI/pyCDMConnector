@@ -1,0 +1,205 @@
+# Cdm { #cdmconnector.Cdm }
+
+```python
+Cdm(
+    tables,
+    *,
+    cdm_name,
+    cdm_version=None,
+    cdm_schema=None,
+    write_schema=None,
+    achilles_schema=None,
+    source,
+)
+```
+
+OMOP CDM reference: holds a mapping of table names to Ibis table expressions
+plus metadata (name, version, schemas, source).
+
+## Attributes
+
+| Name | Description |
+| --- | --- |
+| [achilles_schema](#cdmconnector.Cdm.achilles_schema) | Schema for Achilles tables (optional). |
+| [cdm_schema](#cdmconnector.Cdm.cdm_schema) | Schema where CDM tables live. |
+| [name](#cdmconnector.Cdm.name) | CDM name (e.g. from cdm_source or user). |
+| [source](#cdmconnector.Cdm.source) | Source (connection) for this CDM. |
+| [tables](#cdmconnector.Cdm.tables) | List of table names in this CDM. |
+| [version](#cdmconnector.Cdm.version) | OMOP CDM version (5.3 or 5.4). |
+| [write_schema](#cdmconnector.Cdm.write_schema) | Schema for write/cohort tables. |
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [disconnect](#cdmconnector.Cdm.disconnect) | Disconnect the underlying source. |
+| [flatten](#cdmconnector.Cdm.flatten) | Flatten the CDM into a single observation table. |
+| [sample](#cdmconnector.Cdm.sample) | Subset the CDM to a random sample of n persons. |
+| [select_tables](#cdmconnector.Cdm.select_tables) | Return a new Cdm with only the given tables (subset). |
+| [snapshot](#cdmconnector.Cdm.snapshot) | Snapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame. |
+| [subset](#cdmconnector.Cdm.subset) | Subset the CDM to a set of person IDs. |
+| [subset_cohort](#cdmconnector.Cdm.subset_cohort) | Subset the CDM to individuals in one or more cohorts. |
+
+### disconnect { #cdmconnector.Cdm.disconnect }
+
+```python
+Cdm.disconnect(drop_write_schema=False)
+```
+
+Disconnect the underlying source.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type   | Description                                                             | Default   |
+|-------------------|--------|-------------------------------------------------------------------------|-----------|
+| drop_write_schema | bool   | If True, drop write-schema tables before disconnecting (default False). | `False`   |
+
+### flatten { #cdmconnector.Cdm.flatten }
+
+```python
+Cdm.flatten(domain=None, include_concept_name=True)
+```
+
+Flatten the CDM into a single observation table.
+
+Transforms selected domain tables into a common schema (person_id,
+observation_concept_id, start_date, end_date, type_concept_id, domain)
+and unions them. Recommended only for filtered or small CDMs.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name                 | Type                | Description                                                                                                                                                                                                                                | Default   |
+|----------------------|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| domain               | list\[str\] or None | Domains to include. Must be a subset of: "condition_occurrence", "drug_exposure", "procedure_occurrence", "measurement", "visit_occurrence", "death", "observation". Default is condition_occurrence, drug_exposure, procedure_occurrence. | `None`    |
+| include_concept_name | bool                | If True (default), add observation_concept_name and type_concept_name via the concept table.                                                                                                                                               | `True`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                                          |
+|--------|-----------------------|------------------------------------------------------|
+|        | ibis.expr.types.Table | Lazy table expression; use collect() to materialize. |
+
+### sample { #cdmconnector.Cdm.sample }
+
+```python
+Cdm.sample(n, seed=None, name='person_sample')
+```
+
+Subset the CDM to a random sample of n persons.
+
+Persons are drawn from the person table. The sample table is
+inserted into the write schema under the given name and all
+clinical tables are filtered to those persons.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type        | Description                                                                 | Default           |
+|--------|-------------|-----------------------------------------------------------------------------|-------------------|
+| n      | int         | Number of persons to include.                                               | _required_        |
+| seed   | int or None | Random seed for reproducibility; None uses a random seed.                   | `None`            |
+| name   | str         | Name of the table storing the sampled person_ids (default "person_sample"). | `'person_sample'` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                                     |
+|--------|--------|---------------------------------------------------------------------------------|
+|        | Cdm    | New CDM with tables subset to the sampled persons (and the sample table added). |
+
+### select_tables { #cdmconnector.Cdm.select_tables }
+
+```python
+Cdm.select_tables(*names)
+```
+
+Return a new Cdm with only the given tables (subset).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type   | Description          | Default   |
+|--------|--------|----------------------|-----------|
+| *names | str    | Table names to keep. | `()`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                    |
+|--------|--------|--------------------------------|
+|        | Cdm    | New CDM with subset of tables. |
+
+#### Raises {.doc-section .doc-section-raises}
+
+| Name   | Type               | Description                     |
+|--------|--------------------|---------------------------------|
+|        | TableNotFoundError | If any name is not in this CDM. |
+
+### snapshot { #cdmconnector.Cdm.snapshot }
+
+```python
+Cdm.snapshot(compute_data_hash=False)
+```
+
+Snapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.
+
+Requires person, observation_period, cdm_source, and vocabulary tables.
+Does not execute until Result.collect() is called.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name              | Type   | Description                                             | Default   |
+|-------------------|--------|---------------------------------------------------------|-----------|
+| compute_data_hash | bool   | If True, include data hash in snapshot (default False). | `False`   |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                           |
+|--------|--------|-------------------------------------------------------|
+|        | Result | Lazy result; call .collect() to get pandas.DataFrame. |
+
+### subset { #cdmconnector.Cdm.subset }
+
+```python
+Cdm.subset(person_id)
+```
+
+Subset the CDM to a set of person IDs.
+
+Returns a new CDM where all clinical tables are filtered to rows
+whose person_id (or subject_id) is in the given set. Requires
+a database-backed CDM with write_schema.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                        | Description            | Default    |
+|-----------|-----------------------------|------------------------|------------|
+| person_id | list\[int\] or array - like | Person IDs to include. | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                      |
+|--------|--------|--------------------------------------------------|
+|        | Cdm    | New CDM with tables subset to the given persons. |
+
+### subset_cohort { #cdmconnector.Cdm.subset_cohort }
+
+```python
+Cdm.subset_cohort(cohort_table='cohort', cohort_id=None, verbose=False)
+```
+
+Subset the CDM to individuals in one or more cohorts.
+
+Returns a new CDM where all clinical tables are filtered to persons
+present in the given cohort table (optionally restricted by cohort_id).
+Subset is lazy until tables are used.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                       | Description                                                             | Default    |
+|--------------|----------------------------|-------------------------------------------------------------------------|------------|
+| cohort_table | str                        | Name of the cohort table in this CDM (default "cohort").                | `'cohort'` |
+| cohort_id    | int or list\[int\] or None | Cohort definition ID(s) to include; None uses all cohorts in the table. | `None`     |
+| verbose      | bool                       | If True, log subset size (default False).                               | `False`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                       |
+|--------|--------|-----------------------------------|
+|        | Cdm    | New CDM subset to cohort persons. |

@@ -1,0 +1,66 @@
+# add_demographics { #cdmconnector.add_demographics }
+
+```python
+add_demographics(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    age=True,
+    age_name='age',
+    age_missing_month=1,
+    age_missing_day=1,
+    age_impose_month=False,
+    age_impose_day=False,
+    age_group=None,
+    missing_age_group_value='None',
+    sex=True,
+    sex_name='sex',
+    missing_sex_value='None',
+    prior_observation=True,
+    prior_observation_name='prior_observation',
+    prior_observation_type='days',
+    future_observation=True,
+    future_observation_name='future_observation',
+    future_observation_type='days',
+    date_of_birth=False,
+    date_of_birth_name='date_of_birth',
+)
+```
+
+Add demographic characteristics to a table: age, sex, prior/future observation, optional date_of_birth.
+
+Table must have person_id or subject_id and an index date column. Joins person and observation_period.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                    | Type         | Description                                                                       | Default               |
+|-------------------------|--------------|-----------------------------------------------------------------------------------|-----------------------|
+| table                   | Any          | Ibis table with person_id or subject_id and index_date column.                    | _required_            |
+| cdm                     | Cdm          | CDM reference (person, observation_period).                                       | _required_            |
+| index_date              | str          | Column name for index date (default "cohort_start_date").                         | `'cohort_start_date'` |
+| age                     | bool         | Which demographics to add.                                                        | `True`                |
+| sex                     | bool         | Which demographics to add.                                                        | `True`                |
+| prior_observation       | bool         | Which demographics to add.                                                        | `True`                |
+| future_observation      | bool         | Which demographics to add.                                                        | `True`                |
+| date_of_birth           | bool         | Which demographics to add.                                                        | `True`                |
+| age_name                | str          | Output column names.                                                              | `'age'`               |
+| sex_name                | str          | Output column names.                                                              | `'age'`               |
+| prior_observation_name  | str          | Output column names.                                                              | `'age'`               |
+| future_observation_name | str          | Output column names.                                                              | `'age'`               |
+| date_of_birth_name      | str          | Output column names.                                                              | `'age'`               |
+| age_group               | list or None | Optional age groups as (col_name, (low, high)) or (col_name, label, (low, high)). | `None`                |
+| age_missing_month       | int          | Default month/day when missing.                                                   | `1`                   |
+| age_missing_day         | int          | Default month/day when missing.                                                   | `1`                   |
+| age_impose_month        | bool         | Force default month/day.                                                          | `False`               |
+| age_impose_day          | bool         | Force default month/day.                                                          | `False`               |
+| missing_age_group_value | str          | Value for missing/unknown.                                                        | `'None'`              |
+| missing_sex_value       | str          | Value for missing/unknown.                                                        | `'None'`              |
+| prior_observation_type  | str          | "days" or "date".                                                                 | `'days'`              |
+| future_observation_type | str          | "days" or "date".                                                                 | `'days'`              |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                           |
+|--------|-----------------------|---------------------------------------|
+|        | ibis.expr.types.Table | Table with added demographic columns. |

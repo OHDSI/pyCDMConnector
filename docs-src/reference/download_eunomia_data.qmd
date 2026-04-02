@@ -1,0 +1,27 @@
+# download_eunomia_data { #cdmconnector.download_eunomia_data }
+
+```python
+download_eunomia_data(
+    dataset_name='GiBleed',
+    cdm_version='5.4',
+    path=None,
+    overwrite=False,
+)
+```
+
+Download Eunomia data from CDMConnector blob storage (or GitHub for Synthea27NjParquet).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                | Description                                                     | Default     |
+|--------------|---------------------|-----------------------------------------------------------------|-------------|
+| dataset_name | str                 | One of example_datasets() (default "GiBleed").                  | `'GiBleed'` |
+| cdm_version  | str                 | "5.3" or "5.4" (default "5.4").                                 | `'5.4'`     |
+| path         | str or Path or None | Directory to save the ZIP; default EUNOMIA_DATA_FOLDER env var. | `None`      |
+| overwrite    | bool                | If True, overwrite existing ZIP (default False).                | `False`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                 |
+|--------|--------|---------------------------------------------|
+|        | str    | Path to the directory where data is stored. |

@@ -1,0 +1,7 @@
+# CDMConnectorError { #cdmconnector.CDMConnectorError }
+
+```python
+CDMConnectorError()
+```
+
+Base exception for CDMConnector.

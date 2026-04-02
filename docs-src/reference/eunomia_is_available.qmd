@@ -1,0 +1,27 @@
+# eunomia_is_available { #cdmconnector.eunomia_is_available }
+
+```python
+eunomia_is_available(dataset_name='GiBleed', cdm_version='5.3', path=None)
+```
+
+Return True if the Eunomia dataset ZIP is present in the data folder.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                | Description                                   | Default     |
+|--------------|---------------------|-----------------------------------------------|-------------|
+| dataset_name | str                 | Dataset name (default "GiBleed").             | `'GiBleed'` |
+| cdm_version  | str                 | "5.3" or "5.4" (default "5.3").               | `'5.3'`     |
+| path         | str or Path or None | Data folder; default EUNOMIA_DATA_FOLDER env. | `None`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                              |
+|--------|--------|----------------------------------------------------------|
+|        | bool   | True if {dataset_name}_{cdm_version}.zip exists in path. |
+
+## Raises {.doc-section .doc-section-raises}
+
+| Name   | Type         | Description                                                 |
+|--------|--------------|-------------------------------------------------------------|
+|        | EunomiaError | If EUNOMIA_DATA_FOLDER is not set and path is not provided. |

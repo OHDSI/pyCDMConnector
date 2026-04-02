@@ -1,0 +1,75 @@
+---
+title: "Site contents"
+---
+
+Complete list of pages on this site.
+
+## Home
+
+- [CDMConnector](index.qmd) — package overview, install, quick example
+
+## Tutorials
+
+- [Notebooks overview](notebooks/index.qmd)
+- [00 — Welcome / first CDM](notebooks/00_welcome_your_first_cdm.ipynb)
+- [01 — Lazy queries and pipelines](notebooks/01_lazy_queries_and_pipelines.ipynb)
+- [02 — Understanding OMOP people & time domains](notebooks/02_understanding_omop_people_time_domains.ipynb)
+- [03 — Story GiBleed end to end](notebooks/03_story_gibleed_end_to_end.ipynb)
+- [04 — Measurement distributions with guardrails](notebooks/04_measurement_distributions_with_guardrails.ipynb)
+- [05 — Cohorts 101: tables, attrition, counts](notebooks/05_cohorts_101_tables_attrition_counts.ipynb)
+- [06 — Cohorts from JSON / Circe Atlas](notebooks/06_cohorts_from_json_circe_atlas.ipynb)
+- [07 — Cohort characterization / Table 1](notebooks/07_cohort_characterization_table1.ipynb)
+- [08 — Performance, pushdown, materialization](notebooks/08_performance_pushdown_and_materialization.ipynb)
+- [09 — Exporting results and tables](notebooks/09_exporting_results_and_tables.ipynb)
+- [10 — Pedagogical OMOP (GiBleed)](notebooks/10_pedagogical_omop_gibleed.qmd)
+
+## Reference (API)
+
+- [API index](reference/index.qmd)
+
+### CDM & connection
+
+- [Cdm](reference/Cdm.qmd)
+- [cdm_from_con](reference/cdm_from_con.qmd)
+- [cdm_from_tables](reference/cdm_from_tables.qmd)
+- [cdm_tables](reference/cdm_tables.qmd)
+- [collect](reference/collect.qmd)
+- [compute](reference/compute.qmd)
+- [insert_table](reference/insert_table.qmd)
+- [drop_table](reference/drop_table.qmd)
+
+### Cohorts
+
+- [generate_cohort_set](reference/generate_cohort_set.qmd)
+
+### Eunomia
+
+- [download_eunomia_data](reference/download_eunomia_data.qmd)
+- [eunomia_dir](reference/eunomia_dir.qmd)
+- [eunomia_is_available](reference/eunomia_is_available.qmd)
+- [example_datasets](reference/example_datasets.qmd)
+- [require_eunomia](reference/require_eunomia.qmd)
+
+### Patient profiles
+
+- [add_age](reference/add_age.qmd)
+- [add_demographics](reference/add_demographics.qmd)
+- [add_sex](reference/add_sex.qmd)
+
+### Results
+
+- [Result](reference/Result.qmd)
+
+### Exceptions
+
+- [CDMConnectorError](reference/CDMConnectorError.qmd)
+- [CDMValidationError](reference/CDMValidationError.qmd)
+- [CohortError](reference/CohortError.qmd)
+- [EunomiaError](reference/EunomiaError.qmd)
+- [SourceError](reference/SourceError.qmd)
+- [TableNotFoundError](reference/TableNotFoundError.qmd)
+
+## Contributing
+
+- [Contributing](contributing.qmd)
+- [Development](development.qmd)

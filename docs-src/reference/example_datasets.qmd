@@ -1,0 +1,13 @@
+# example_datasets { #cdmconnector.example_datasets }
+
+```python
+example_datasets()
+```
+
+Return the list of available Eunomia example dataset names.
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description                                                   |
+|--------|-------------------|---------------------------------------------------------------|
+|        | tuple\[str, ...\] | Dataset names (e.g. "GiBleed", "synthea-allergies-10k", ...). |

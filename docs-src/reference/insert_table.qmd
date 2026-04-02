@@ -1,0 +1,22 @@
+# insert_table { #cdmconnector.insert_table }
+
+```python
+insert_table(cdm, name, table, *, overwrite=True)
+```
+
+Insert a table (Ibis expr or pyarrow/pandas) into the write schema and return Ibis table ref.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type   | Description                                                | Default    |
+|-----------|--------|------------------------------------------------------------|------------|
+| cdm       | Cdm    | CDM reference (must be database-backed).                   | _required_ |
+| name      | str    | Logical table name in write schema.                        | _required_ |
+| table     | Any    | Ibis table expression, pyarrow.Table, or pandas.DataFrame. | _required_ |
+| overwrite | bool   | If True, replace existing table (default True).            | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                                 |
+|--------|-----------------------|---------------------------------------------|
+|        | ibis.expr.types.Table | Ibis table reference to the inserted table. |

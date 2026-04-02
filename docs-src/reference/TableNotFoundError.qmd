@@ -1,0 +1,7 @@
+# TableNotFoundError { #cdmconnector.TableNotFoundError }
+
+```python
+TableNotFoundError()
+```
+
+Raised when a requested table does not exist in the CDM.

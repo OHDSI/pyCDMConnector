@@ -1,0 +1,1549 @@
+[
+  {
+    "objectID": "reference/eunomia_is_available.html",
+    "href": "reference/eunomia_is_available.html",
+    "title": "eunomia_is_available",
+    "section": "",
+    "text": "eunomia_is_available(dataset_name='GiBleed', cdm_version='5.3', path=None)\nReturn True if the Eunomia dataset ZIP is present in the data folder.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nDataset name (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.3”).\n'5.3'\n\n\npath\nstr or Path or None\nData folder; default EUNOMIA_DATA_FOLDER env.\nNone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nbool\nTrue if {dataset_name}_{cdm_version}.zip exists in path.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nEunomiaError\nIf EUNOMIA_DATA_FOLDER is not set and path is not provided."
+  },
+  {
+    "objectID": "reference/eunomia_is_available.html#parameters",
+    "href": "reference/eunomia_is_available.html#parameters",
+    "title": "eunomia_is_available",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nDataset name (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.3”).\n'5.3'\n\n\npath\nstr or Path or None\nData folder; default EUNOMIA_DATA_FOLDER env.\nNone"
+  },
+  {
+    "objectID": "reference/eunomia_is_available.html#returns",
+    "href": "reference/eunomia_is_available.html#returns",
+    "title": "eunomia_is_available",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nbool\nTrue if {dataset_name}_{cdm_version}.zip exists in path."
+  },
+  {
+    "objectID": "reference/eunomia_is_available.html#raises",
+    "href": "reference/eunomia_is_available.html#raises",
+    "title": "eunomia_is_available",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nEunomiaError\nIf EUNOMIA_DATA_FOLDER is not set and path is not provided."
+  },
+  {
+    "objectID": "reference/EunomiaError.html",
+    "href": "reference/EunomiaError.html",
+    "title": "EunomiaError",
+    "section": "",
+    "text": "EunomiaError\nEunomiaError()\nRaised when Eunomia download or path operations fail."
+  },
+  {
+    "objectID": "reference/cdm_from_con.html",
+    "href": "reference/cdm_from_con.html",
+    "title": "cdm_from_con",
+    "section": "",
+    "text": "cdm_from_con(\n    con,\n    cdm_schema,\n    write_schema=None,\n    *,\n    cohort_tables=None,\n    cdm_version=None,\n    cdm_name=None,\n    achilles_schema=None,\n    write_prefix=None,\n)\nCreate a CDM reference from an Ibis connection.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncon\nAny\nIbis backend (e.g. ibis.duckdb.connect(…)).\nrequired\n\n\ncdm_schema\nstr or dict\nSchema/database where CDM tables live.\nrequired\n\n\nwrite_schema\nstr or dict or None\nSchema for cohort/write tables (default: same as cdm_schema).\nNone\n\n\ncohort_tables\nlist[str] or None\nOptional list of cohort table names to include.\nNone\n\n\ncdm_version\nstr or None\n“5.3” or “5.4”; if None, inferred from cdm_source.\nNone\n\n\ncdm_name\nstr or None\nCDM name; if None, inferred from cdm_source.\nNone\n\n\nachilles_schema\nstr or dict or None\nOptional schema for Achilles tables.\nNone\n\n\nwrite_prefix\nstr or None\nOptional prefix for tables created in write_schema.\nNone\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nCDM reference with tables from the connection."
+  },
+  {
+    "objectID": "reference/cdm_from_con.html#parameters",
+    "href": "reference/cdm_from_con.html#parameters",
+    "title": "cdm_from_con",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncon\nAny\nIbis backend (e.g. ibis.duckdb.connect(…)).\nrequired\n\n\ncdm_schema\nstr or dict\nSchema/database where CDM tables live.\nrequired\n\n\nwrite_schema\nstr or dict or None\nSchema for cohort/write tables (default: same as cdm_schema).\nNone\n\n\ncohort_tables\nlist[str] or None\nOptional list of cohort table names to include.\nNone\n\n\ncdm_version\nstr or None\n“5.3” or “5.4”; if None, inferred from cdm_source.\nNone\n\n\ncdm_name\nstr or None\nCDM name; if None, inferred from cdm_source.\nNone\n\n\nachilles_schema\nstr or dict or None\nOptional schema for Achilles tables.\nNone\n\n\nwrite_prefix\nstr or None\nOptional prefix for tables created in write_schema.\nNone"
+  },
+  {
+    "objectID": "reference/cdm_from_con.html#returns",
+    "href": "reference/cdm_from_con.html#returns",
+    "title": "cdm_from_con",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nCdm\nCDM reference with tables from the connection."
+  },
+  {
+    "objectID": "reference/add_demographics.html",
+    "href": "reference/add_demographics.html",
+    "title": "add_demographics",
+    "section": "",
+    "text": "add_demographics(\n    table,\n    cdm,\n    *,\n    index_date='cohort_start_date',\n    age=True,\n    age_name='age',\n    age_missing_month=1,\n    age_missing_day=1,\n    age_impose_month=False,\n    age_impose_day=False,\n    age_group=None,\n    missing_age_group_value='None',\n    sex=True,\n    sex_name='sex',\n    missing_sex_value='None',\n    prior_observation=True,\n    prior_observation_name='prior_observation',\n    prior_observation_type='days',\n    future_observation=True,\n    future_observation_name='future_observation',\n    future_observation_type='days',\n    date_of_birth=False,\n    date_of_birth_name='date_of_birth',\n)\nAdd demographic characteristics to a table: age, sex, prior/future observation, optional date_of_birth.\nTable must have person_id or subject_id and an index date column. Joins person and observation_period.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntable\nAny\nIbis table with person_id or subject_id and index_date column.\nrequired\n\n\ncdm\nCdm\nCDM reference (person, observation_period).\nrequired\n\n\nindex_date\nstr\nColumn name for index date (default “cohort_start_date”).\n'cohort_start_date'\n\n\nage\nbool\nWhich demographics to add.\nTrue\n\n\nsex\nbool\nWhich demographics to add.\nTrue\n\n\nprior_observation\nbool\nWhich demographics to add.\nTrue\n\n\nfuture_observation\nbool\nWhich demographics to add.\nTrue\n\n\ndate_of_birth\nbool\nWhich demographics to add.\nTrue\n\n\nage_name\nstr\nOutput column names.\n'age'\n\n\nsex_name\nstr\nOutput column names.\n'age'\n\n\nprior_observation_name\nstr\nOutput column names.\n'age'\n\n\nfuture_observation_name\nstr\nOutput column names.\n'age'\n\n\ndate_of_birth_name\nstr\nOutput column names.\n'age'\n\n\nage_group\nlist or None\nOptional age groups as (col_name, (low, high)) or (col_name, label, (low, high)).\nNone\n\n\nage_missing_month\nint\nDefault month/day when missing.\n1\n\n\nage_missing_day\nint\nDefault month/day when missing.\n1\n\n\nage_impose_month\nbool\nForce default month/day.\nFalse\n\n\nage_impose_day\nbool\nForce default month/day.\nFalse\n\n\nmissing_age_group_value\nstr\nValue for missing/unknown.\n'None'\n\n\nmissing_sex_value\nstr\nValue for missing/unknown.\n'None'\n\n\nprior_observation_type\nstr\n“days” or “date”.\n'days'\n\n\nfuture_observation_type\nstr\n“days” or “date”.\n'days'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nTable with added demographic columns."
+  },
+  {
+    "objectID": "reference/add_demographics.html#parameters",
+    "href": "reference/add_demographics.html#parameters",
+    "title": "add_demographics",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntable\nAny\nIbis table with person_id or subject_id and index_date column.\nrequired\n\n\ncdm\nCdm\nCDM reference (person, observation_period).\nrequired\n\n\nindex_date\nstr\nColumn name for index date (default “cohort_start_date”).\n'cohort_start_date'\n\n\nage\nbool\nWhich demographics to add.\nTrue\n\n\nsex\nbool\nWhich demographics to add.\nTrue\n\n\nprior_observation\nbool\nWhich demographics to add.\nTrue\n\n\nfuture_observation\nbool\nWhich demographics to add.\nTrue\n\n\ndate_of_birth\nbool\nWhich demographics to add.\nTrue\n\n\nage_name\nstr\nOutput column names.\n'age'\n\n\nsex_name\nstr\nOutput column names.\n'age'\n\n\nprior_observation_name\nstr\nOutput column names.\n'age'\n\n\nfuture_observation_name\nstr\nOutput column names.\n'age'\n\n\ndate_of_birth_name\nstr\nOutput column names.\n'age'\n\n\nage_group\nlist or None\nOptional age groups as (col_name, (low, high)) or (col_name, label, (low, high)).\nNone\n\n\nage_missing_month\nint\nDefault month/day when missing.\n1\n\n\nage_missing_day\nint\nDefault month/day when missing.\n1\n\n\nage_impose_month\nbool\nForce default month/day.\nFalse\n\n\nage_impose_day\nbool\nForce default month/day.\nFalse\n\n\nmissing_age_group_value\nstr\nValue for missing/unknown.\n'None'\n\n\nmissing_sex_value\nstr\nValue for missing/unknown.\n'None'\n\n\nprior_observation_type\nstr\n“days” or “date”.\n'days'\n\n\nfuture_observation_type\nstr\n“days” or “date”.\n'days'"
+  },
+  {
+    "objectID": "reference/add_demographics.html#returns",
+    "href": "reference/add_demographics.html#returns",
+    "title": "add_demographics",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nTable with added demographic columns."
+  },
+  {
+    "objectID": "reference/eunomia_dir.html",
+    "href": "reference/eunomia_dir.html",
+    "title": "eunomia_dir",
+    "section": "",
+    "text": "eunomia_dir(\n    dataset_name='GiBleed',\n    cdm_version='5.3',\n    path=None,\n    database_file=None,\n)\nReturn path to a DuckDB file containing the Eunomia dataset.\nEUNOMIA_DATA_FOLDER must be set; it is the cache location (zip and DuckDB). If the dataset is not yet available, downloads it. If the DuckDB file does not exist, creates it from the ZIP. Always returns a path to a copy of the DB. path (or database_file) is where to copy the DB; if None, a temp file is used.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nOne of example_datasets() (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.3”).\n'5.3'\n\n\npath\nstr or Path or None\nWhere to copy the DuckDB file (file or directory); if None, a temp file.\nNone\n\n\ndatabase_file\nstr or Path or None\nAlias for path (where to copy the DB). path takes precedence.\nNone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nPath to a copy of the DuckDB database file (cached DB is never returned)."
+  },
+  {
+    "objectID": "reference/eunomia_dir.html#parameters",
+    "href": "reference/eunomia_dir.html#parameters",
+    "title": "eunomia_dir",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nOne of example_datasets() (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.3”).\n'5.3'\n\n\npath\nstr or Path or None\nWhere to copy the DuckDB file (file or directory); if None, a temp file.\nNone\n\n\ndatabase_file\nstr or Path or None\nAlias for path (where to copy the DB). path takes precedence.\nNone"
+  },
+  {
+    "objectID": "reference/eunomia_dir.html#returns",
+    "href": "reference/eunomia_dir.html#returns",
+    "title": "eunomia_dir",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nPath to a copy of the DuckDB database file (cached DB is never returned)."
+  },
+  {
+    "objectID": "reference/download_eunomia_data.html",
+    "href": "reference/download_eunomia_data.html",
+    "title": "download_eunomia_data",
+    "section": "",
+    "text": "download_eunomia_data(\n    dataset_name='GiBleed',\n    cdm_version='5.4',\n    path=None,\n    overwrite=False,\n)\nDownload Eunomia data from CDMConnector blob storage (or GitHub for Synthea27NjParquet).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nOne of example_datasets() (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.4”).\n'5.4'\n\n\npath\nstr or Path or None\nDirectory to save the ZIP; default EUNOMIA_DATA_FOLDER env var.\nNone\n\n\noverwrite\nbool\nIf True, overwrite existing ZIP (default False).\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nPath to the directory where data is stored."
+  },
+  {
+    "objectID": "reference/download_eunomia_data.html#parameters",
+    "href": "reference/download_eunomia_data.html#parameters",
+    "title": "download_eunomia_data",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nOne of example_datasets() (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.4”).\n'5.4'\n\n\npath\nstr or Path or None\nDirectory to save the ZIP; default EUNOMIA_DATA_FOLDER env var.\nNone\n\n\noverwrite\nbool\nIf True, overwrite existing ZIP (default False).\nFalse"
+  },
+  {
+    "objectID": "reference/download_eunomia_data.html#returns",
+    "href": "reference/download_eunomia_data.html#returns",
+    "title": "download_eunomia_data",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nPath to the directory where data is stored."
+  },
+  {
+    "objectID": "reference/Cdm.html",
+    "href": "reference/Cdm.html",
+    "title": "Cdm",
+    "section": "",
+    "text": "Cdm(\n    tables,\n    *,\n    cdm_name,\n    cdm_version=None,\n    cdm_schema=None,\n    write_schema=None,\n    achilles_schema=None,\n    source,\n)\nOMOP CDM reference: holds a mapping of table names to Ibis table expressions plus metadata (name, version, schemas, source).\n\n\n\n\n\nName\nDescription\n\n\n\n\nachilles_schema\nSchema for Achilles tables (optional).\n\n\ncdm_schema\nSchema where CDM tables live.\n\n\nname\nCDM name (e.g. from cdm_source or user).\n\n\nsource\nSource (connection) for this CDM.\n\n\ntables\nList of table names in this CDM.\n\n\nversion\nOMOP CDM version (5.3 or 5.4).\n\n\nwrite_schema\nSchema for write/cohort tables.\n\n\n\n\n\n\n\n\n\nName\nDescription\n\n\n\n\ndisconnect\nDisconnect the underlying source.\n\n\nflatten\nFlatten the CDM into a single observation table.\n\n\nsample\nSubset the CDM to a random sample of n persons.\n\n\nselect_tables\nReturn a new Cdm with only the given tables (subset).\n\n\nsnapshot\nSnapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.\n\n\nsubset\nSubset the CDM to a set of person IDs.\n\n\nsubset_cohort\nSubset the CDM to individuals in one or more cohorts.\n\n\n\n\n\nCdm.disconnect(drop_write_schema=False)\nDisconnect the underlying source.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndrop_write_schema\nbool\nIf True, drop write-schema tables before disconnecting (default False).\nFalse\n\n\n\n\n\n\n\nCdm.flatten(domain=None, include_concept_name=True)\nFlatten the CDM into a single observation table.\nTransforms selected domain tables into a common schema (person_id, observation_concept_id, start_date, end_date, type_concept_id, domain) and unions them. Recommended only for filtered or small CDMs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndomain\nlist[str] or None\nDomains to include. Must be a subset of: “condition_occurrence”, “drug_exposure”, “procedure_occurrence”, “measurement”, “visit_occurrence”, “death”, “observation”. Default is condition_occurrence, drug_exposure, procedure_occurrence.\nNone\n\n\ninclude_concept_name\nbool\nIf True (default), add observation_concept_name and type_concept_name via the concept table.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nLazy table expression; use collect() to materialize.\n\n\n\n\n\n\n\nCdm.sample(n, seed=None, name='person_sample')\nSubset the CDM to a random sample of n persons.\nPersons are drawn from the person table. The sample table is inserted into the write schema under the given name and all clinical tables are filtered to those persons.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nn\nint\nNumber of persons to include.\nrequired\n\n\nseed\nint or None\nRandom seed for reproducibility; None uses a random seed.\nNone\n\n\nname\nstr\nName of the table storing the sampled person_ids (default “person_sample”).\n'person_sample'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM with tables subset to the sampled persons (and the sample table added).\n\n\n\n\n\n\n\nCdm.select_tables(*names)\nReturn a new Cdm with only the given tables (subset).\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*names\nstr\nTable names to keep.\n()\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM with subset of tables.\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nTableNotFoundError\nIf any name is not in this CDM.\n\n\n\n\n\n\n\nCdm.snapshot(compute_data_hash=False)\nSnapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.\nRequires person, observation_period, cdm_source, and vocabulary tables. Does not execute until Result.collect() is called.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncompute_data_hash\nbool\nIf True, include data hash in snapshot (default False).\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nResult\nLazy result; call .collect() to get pandas.DataFrame.\n\n\n\n\n\n\n\nCdm.subset(person_id)\nSubset the CDM to a set of person IDs.\nReturns a new CDM where all clinical tables are filtered to rows whose person_id (or subject_id) is in the given set. Requires a database-backed CDM with write_schema.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nperson_id\nlist[int] or array - like\nPerson IDs to include.\nrequired\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM with tables subset to the given persons.\n\n\n\n\n\n\n\nCdm.subset_cohort(cohort_table='cohort', cohort_id=None, verbose=False)\nSubset the CDM to individuals in one or more cohorts.\nReturns a new CDM where all clinical tables are filtered to persons present in the given cohort table (optionally restricted by cohort_id). Subset is lazy until tables are used.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncohort_table\nstr\nName of the cohort table in this CDM (default “cohort”).\n'cohort'\n\n\ncohort_id\nint or list[int] or None\nCohort definition ID(s) to include; None uses all cohorts in the table.\nNone\n\n\nverbose\nbool\nIf True, log subset size (default False).\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM subset to cohort persons."
+  },
+  {
+    "objectID": "reference/Cdm.html#attributes",
+    "href": "reference/Cdm.html#attributes",
+    "title": "Cdm",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nachilles_schema\nSchema for Achilles tables (optional).\n\n\ncdm_schema\nSchema where CDM tables live.\n\n\nname\nCDM name (e.g. from cdm_source or user).\n\n\nsource\nSource (connection) for this CDM.\n\n\ntables\nList of table names in this CDM.\n\n\nversion\nOMOP CDM version (5.3 or 5.4).\n\n\nwrite_schema\nSchema for write/cohort tables."
+  },
+  {
+    "objectID": "reference/Cdm.html#methods",
+    "href": "reference/Cdm.html#methods",
+    "title": "Cdm",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\ndisconnect\nDisconnect the underlying source.\n\n\nflatten\nFlatten the CDM into a single observation table.\n\n\nsample\nSubset the CDM to a random sample of n persons.\n\n\nselect_tables\nReturn a new Cdm with only the given tables (subset).\n\n\nsnapshot\nSnapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.\n\n\nsubset\nSubset the CDM to a set of person IDs.\n\n\nsubset_cohort\nSubset the CDM to individuals in one or more cohorts.\n\n\n\n\n\nCdm.disconnect(drop_write_schema=False)\nDisconnect the underlying source.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndrop_write_schema\nbool\nIf True, drop write-schema tables before disconnecting (default False).\nFalse\n\n\n\n\n\n\n\nCdm.flatten(domain=None, include_concept_name=True)\nFlatten the CDM into a single observation table.\nTransforms selected domain tables into a common schema (person_id, observation_concept_id, start_date, end_date, type_concept_id, domain) and unions them. Recommended only for filtered or small CDMs.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndomain\nlist[str] or None\nDomains to include. Must be a subset of: “condition_occurrence”, “drug_exposure”, “procedure_occurrence”, “measurement”, “visit_occurrence”, “death”, “observation”. Default is condition_occurrence, drug_exposure, procedure_occurrence.\nNone\n\n\ninclude_concept_name\nbool\nIf True (default), add observation_concept_name and type_concept_name via the concept table.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nLazy table expression; use collect() to materialize.\n\n\n\n\n\n\n\nCdm.sample(n, seed=None, name='person_sample')\nSubset the CDM to a random sample of n persons.\nPersons are drawn from the person table. The sample table is inserted into the write schema under the given name and all clinical tables are filtered to those persons.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nn\nint\nNumber of persons to include.\nrequired\n\n\nseed\nint or None\nRandom seed for reproducibility; None uses a random seed.\nNone\n\n\nname\nstr\nName of the table storing the sampled person_ids (default “person_sample”).\n'person_sample'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM with tables subset to the sampled persons (and the sample table added).\n\n\n\n\n\n\n\nCdm.select_tables(*names)\nReturn a new Cdm with only the given tables (subset).\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*names\nstr\nTable names to keep.\n()\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM with subset of tables.\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nTableNotFoundError\nIf any name is not in this CDM.\n\n\n\n\n\n\n\nCdm.snapshot(compute_data_hash=False)\nSnapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.\nRequires person, observation_period, cdm_source, and vocabulary tables. Does not execute until Result.collect() is called.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncompute_data_hash\nbool\nIf True, include data hash in snapshot (default False).\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nResult\nLazy result; call .collect() to get pandas.DataFrame.\n\n\n\n\n\n\n\nCdm.subset(person_id)\nSubset the CDM to a set of person IDs.\nReturns a new CDM where all clinical tables are filtered to rows whose person_id (or subject_id) is in the given set. Requires a database-backed CDM with write_schema.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nperson_id\nlist[int] or array - like\nPerson IDs to include.\nrequired\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM with tables subset to the given persons.\n\n\n\n\n\n\n\nCdm.subset_cohort(cohort_table='cohort', cohort_id=None, verbose=False)\nSubset the CDM to individuals in one or more cohorts.\nReturns a new CDM where all clinical tables are filtered to persons present in the given cohort table (optionally restricted by cohort_id). Subset is lazy until tables are used.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncohort_table\nstr\nName of the cohort table in this CDM (default “cohort”).\n'cohort'\n\n\ncohort_id\nint or list[int] or None\nCohort definition ID(s) to include; None uses all cohorts in the table.\nNone\n\n\nverbose\nbool\nIf True, log subset size (default False).\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nNew CDM subset to cohort persons."
+  },
+  {
+    "objectID": "reference/cdm_snapshot.html",
+    "href": "reference/cdm_snapshot.html",
+    "title": "cdm_snapshot",
+    "section": "",
+    "text": "cdm_snapshot(cdm, compute_data_hash=False)\nSnapshot CDM metadata (lazy). Returns a Result; call .collect() to get a DataFrame.\nRequires person, observation_period, cdm_source, and vocabulary tables. Does not execute until Result.collect() is called.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference (must have person, observation_period, cdm_source, vocabulary).\nrequired\n\n\ncompute_data_hash\nbool\nIf True, include data hash in snapshot (default False).\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nResult\nLazy result; call .collect() to get pandas.DataFrame."
+  },
+  {
+    "objectID": "reference/cdm_snapshot.html#parameters",
+    "href": "reference/cdm_snapshot.html#parameters",
+    "title": "cdm_snapshot",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference (must have person, observation_period, cdm_source, vocabulary).\nrequired\n\n\ncompute_data_hash\nbool\nIf True, include data hash in snapshot (default False).\nFalse"
+  },
+  {
+    "objectID": "reference/cdm_snapshot.html#returns",
+    "href": "reference/cdm_snapshot.html#returns",
+    "title": "cdm_snapshot",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nResult\nLazy result; call .collect() to get pandas.DataFrame."
+  },
+  {
+    "objectID": "reference/add_sex.html",
+    "href": "reference/add_sex.html",
+    "title": "add_sex",
+    "section": "",
+    "text": "add_sex(table, cdm, *, sex_name='sex', missing_sex_value='None')\nAdd sex from person (gender_concept_id: 8507 Male, 8532 Female).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntable\nAny\nIbis table with person_id or subject_id.\nrequired\n\n\ncdm\nCdm\nCDM reference (person).\nrequired\n\n\nsex_name\nstr\nOutput column name (default “sex”).\n'sex'\n\n\nmissing_sex_value\nstr\nValue for unknown gender (default “None”).\n'None'\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nTable with sex column."
+  },
+  {
+    "objectID": "reference/add_sex.html#parameters",
+    "href": "reference/add_sex.html#parameters",
+    "title": "add_sex",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntable\nAny\nIbis table with person_id or subject_id.\nrequired\n\n\ncdm\nCdm\nCDM reference (person).\nrequired\n\n\nsex_name\nstr\nOutput column name (default “sex”).\n'sex'\n\n\nmissing_sex_value\nstr\nValue for unknown gender (default “None”).\n'None'"
+  },
+  {
+    "objectID": "reference/add_sex.html#returns",
+    "href": "reference/add_sex.html#returns",
+    "title": "add_sex",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nTable with sex column."
+  },
+  {
+    "objectID": "reference/example_datasets.html",
+    "href": "reference/example_datasets.html",
+    "title": "example_datasets",
+    "section": "",
+    "text": "example_datasets()\nReturn the list of available Eunomia example dataset names.\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\ntuple[str, …]\nDataset names (e.g. “GiBleed”, “synthea-allergies-10k”, …)."
+  },
+  {
+    "objectID": "reference/example_datasets.html#returns",
+    "href": "reference/example_datasets.html#returns",
+    "title": "example_datasets",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\ntuple[str, …]\nDataset names (e.g. “GiBleed”, “synthea-allergies-10k”, …)."
+  },
+  {
+    "objectID": "reference/cdm_tables.html",
+    "href": "reference/cdm_tables.html",
+    "title": "cdm_tables",
+    "section": "",
+    "text": "cdm_tables(cdm)\nReturn available CDM table names (logical names).\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference.\nrequired\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nlist[str]\nTable names in the CDM."
+  },
+  {
+    "objectID": "reference/cdm_tables.html#parameters",
+    "href": "reference/cdm_tables.html#parameters",
+    "title": "cdm_tables",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference.\nrequired"
+  },
+  {
+    "objectID": "reference/cdm_tables.html#returns",
+    "href": "reference/cdm_tables.html#returns",
+    "title": "cdm_tables",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nlist[str]\nTable names in the CDM."
+  },
+  {
+    "objectID": "reference/Result.html",
+    "href": "reference/Result.html",
+    "title": "Result",
+    "section": "",
+    "text": "Result(expr, meta=dict())\nLazy result: holds an Ibis table expression and optional metadata.\nUse .collect(limit=None) to get a pandas DataFrame, or .compute(cdm, name, …) to persist as a table and get an Ibis reference.\n\n\n\n\n\nName\nDescription\n\n\n\n\ncollect\nMaterialize to a pandas DataFrame. Optionally limit rows.\n\n\ncompute\nPersist to a table and return Ibis table reference.\n\n\n\n\n\nResult.collect(limit=None)\nMaterialize to a pandas DataFrame. Optionally limit rows.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nlimit\nint or None\nIf set, limit number of rows (for table expressions).\nNone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\npandas.DataFrame\nMaterialized result (or CDM snapshot if this is a snapshot Result).\n\n\n\n\n\n\n\nResult.compute(cdm, name, *, schema=None, overwrite=False)\nPersist to a table and return Ibis table reference.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm or Any\nCDM reference (must be database-backed for table write).\nrequired\n\n\nname\nstr\nTable name in write schema.\nrequired\n\n\nschema\nstr or dict or None\nOverride schema for write (default: cdm.write_schema).\nNone\n\n\noverwrite\nbool\nIf True, replace existing table (default False).\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nAny\nIbis table reference to the new table."
+  },
+  {
+    "objectID": "reference/Result.html#methods",
+    "href": "reference/Result.html#methods",
+    "title": "Result",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\ncollect\nMaterialize to a pandas DataFrame. Optionally limit rows.\n\n\ncompute\nPersist to a table and return Ibis table reference.\n\n\n\n\n\nResult.collect(limit=None)\nMaterialize to a pandas DataFrame. Optionally limit rows.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nlimit\nint or None\nIf set, limit number of rows (for table expressions).\nNone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\npandas.DataFrame\nMaterialized result (or CDM snapshot if this is a snapshot Result).\n\n\n\n\n\n\n\nResult.compute(cdm, name, *, schema=None, overwrite=False)\nPersist to a table and return Ibis table reference.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm or Any\nCDM reference (must be database-backed for table write).\nrequired\n\n\nname\nstr\nTable name in write schema.\nrequired\n\n\nschema\nstr or dict or None\nOverride schema for write (default: cdm.write_schema).\nNone\n\n\noverwrite\nbool\nIf True, replace existing table (default False).\nFalse\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nAny\nIbis table reference to the new table."
+  },
+  {
+    "objectID": "reference/cdm_from_tables.html",
+    "href": "reference/cdm_from_tables.html",
+    "title": "cdm_from_tables",
+    "section": "",
+    "text": "cdm_from_tables(tables, cdm_name, *, cdm_version='5.3', cohort_tables=None)\nCreate a CDM reference from a dict of (table_name -&gt; Ibis table or DataFrame).\nFor local/in-memory CDMs: if tables are pandas/pyarrow, an in-memory DuckDB is created and tables are registered there; then CDM holds Ibis refs to them.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntables\ndict[str, Any]\nMapping of table name -&gt; Ibis table, pandas.DataFrame, or pyarrow.Table.\nrequired\n\n\ncdm_name\nstr\nDisplay name for this CDM.\nrequired\n\n\ncdm_version\nstr or None\nOMOP CDM version (default “5.3”).\n'5.3'\n\n\ncohort_tables\ndict[str, Any] or None\nOptional cohort tables to attach (name -&gt; table).\nNone\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nCDM reference (local or DuckDB-backed)."
+  },
+  {
+    "objectID": "reference/cdm_from_tables.html#parameters",
+    "href": "reference/cdm_from_tables.html#parameters",
+    "title": "cdm_from_tables",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntables\ndict[str, Any]\nMapping of table name -&gt; Ibis table, pandas.DataFrame, or pyarrow.Table.\nrequired\n\n\ncdm_name\nstr\nDisplay name for this CDM.\nrequired\n\n\ncdm_version\nstr or None\nOMOP CDM version (default “5.3”).\n'5.3'\n\n\ncohort_tables\ndict[str, Any] or None\nOptional cohort tables to attach (name -&gt; table).\nNone"
+  },
+  {
+    "objectID": "reference/cdm_from_tables.html#returns",
+    "href": "reference/cdm_from_tables.html#returns",
+    "title": "cdm_from_tables",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nCdm\nCDM reference (local or DuckDB-backed)."
+  },
+  {
+    "objectID": "reference/SourceError.html",
+    "href": "reference/SourceError.html",
+    "title": "SourceError",
+    "section": "",
+    "text": "SourceError\nSourceError()\nRaised when source/connection operations fail."
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "",
+    "text": "Summarise person demographics, observation period coverage, and visits by type using synpuf-1k."
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#you-will-learn",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#you-will-learn",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to summarise person demographics (counts by sex, age bands)\nHow to summarise observation period coverage (duration, coverage)\nHow to count visits by type and join to concept for domain labels\nThe idea of “domains” and concept joins in the OMOP CDM"
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#story-question",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#story-question",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Story question",
+    "text": "Story question\n“Who is in this cohort (demographics), how much observation time do we have, and what visit types do we see?”"
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#setup",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#setup",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Setup",
+    "text": "Setup\nWe use synpuf-1k for richer, more realistic distributions.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\npath = cc.eunomia_dir(\"synpuf-1k\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#explore-person-demographics-summary",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#explore-person-demographics-summary",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Explore: Person demographics summary",
+    "text": "Explore: Person demographics summary\nCount persons by sex (join to concept for labels) and by age band.\n\nperson = cdm.person\nconcept = cdm.concept\n# Use current year for age (or a fixed reference year for reproducibility)\nimport datetime\nref_year = datetime.date.today().year\nperson_with_age = person.mutate(age = ref_year - person.year_of_birth)\nperson_with_band = person_with_age.mutate(\n    age_band = ibis.case().when(person_with_age.age &lt; 18, \"0-17\")\n    .when(person_with_age.age &lt; 65, \"18-64\")\n    .else_(\"65+\").end()\n)\nby_band = person_with_band.group_by(\"age_band\").aggregate(n=person_with_band.person_id.count())\ncc.collect(by_band.order_by(\"age_band\"))\n\n\n# Count by sex (join to concept for name)\njoined = person.join(concept, person.gender_concept_id == concept.concept_id, how=\"left\")\nby_sex = joined.group_by(concept.concept_name.name(\"sex\")).aggregate(n=person.person_id.count())\ncc.collect(by_sex)"
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#build-observation-period-coverage",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#build-observation-period-coverage",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Build: Observation period coverage",
+    "text": "Build: Observation period coverage\nSummarise observation period duration (e.g. mean/median days per person).\n\nop = cdm.observation_period\n# Duration in days (expression)\nduration_days = op.observation_period_end_date - op.observation_period_start_date\nop_with_dur = op.mutate(duration_days=duration_days)\nsummary = op_with_dur.aggregate(\n    mean_days=op_with_dur.duration_days.mean(),\n    median_days=op_with_dur.duration_days.median(),\n    n_periods=op_with_dur.observation_period_id.count(),\n)\ncc.collect(summary)"
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#interpret-visits-by-type",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#interpret-visits-by-type",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Interpret: Visits by type",
+    "text": "Interpret: Visits by type\nCount visits by visit_concept_id and join to concept to show visit type names (domain-style).\n\nvisit = cdm.visit_occurrence\nconcept = cdm.concept\nvisit_with_name = visit.join(\n    concept,\n    visit.visit_concept_id == concept.concept_id,\n    how=\"left\",\n)\nby_visit_type = visit_with_name.group_by(concept.concept_name.name(\"visit_type\")).aggregate(\n    n=visit.visit_occurrence_id.count()\n).order_by(ibis.desc(\"n\")).limit(10)\ncc.collect(by_visit_type)"
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#exercises",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#exercises",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Exercises",
+    "text": "Exercises\n\nAdd a demographics summary that combines sex and age_band (two-way table).\nCompute the distribution of observation period count per person (how many people have 1, 2, 3+ periods).\nList top 5 visit types by count and show their concept_id and concept_name.\nEmphasise “domains”: condition_occurrence, drug_exposure, measurement each link to concept; try one more domain."
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#what-we-learned",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#what-we-learned",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "What we learned",
+    "text": "What we learned\n\nPerson and observation_period define who is in the CDM and their at-risk time.\nObservation period duration summarises coverage; aggregate with mean/median/count.\nVisit type and other domain tables use concept_id; join to concept for human-readable names and domain understanding."
+  },
+  {
+    "objectID": "notebooks/02_understanding_omop_people_time_domains.html#cleanup",
+    "href": "notebooks/02_understanding_omop_people_time_domains.html#cleanup",
+    "title": "Understanding OMOP: People, Time, and Domains",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html",
+    "href": "notebooks/09_exporting_results_and_tables.html",
+    "title": "Exporting Results and Tables",
+    "section": "",
+    "text": "Export results to CSV/Parquet, save rendered tables (HTML with great-tables), and bundle outputs for reproducibility."
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#you-will-learn",
+    "href": "notebooks/09_exporting_results_and_tables.html#you-will-learn",
+    "title": "Exporting Results and Tables",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to export query results to ./outputs/ (CSV, Parquet)\nHow to save rendered tables (HTML if great-tables installed)\nA simple “results bundle” pattern for reproducible outputs"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#story-question",
+    "href": "notebooks/09_exporting_results_and_tables.html#story-question",
+    "title": "Exporting Results and Tables",
+    "section": "Story question",
+    "text": "Story question\n“How do we save analysis results and tables for sharing or reporting?”"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#setup",
+    "href": "notebooks/09_exporting_results_and_tables.html#setup",
+    "title": "Exporting Results and Tables",
+    "section": "Setup",
+    "text": "Setup\nGiBleed; we create an outputs directory and export a few results.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\nOUTPUT_DIR = Path(\"./outputs\")\nOUTPUT_DIR.mkdir(parents=True, exist_ok=True)\n\npath = cc.eunomia_dir(\"GiBleed\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#explore-export-to-csv-and-parquet",
+    "href": "notebooks/09_exporting_results_and_tables.html#explore-export-to-csv-and-parquet",
+    "title": "Exporting Results and Tables",
+    "section": "Explore: Export to CSV and Parquet",
+    "text": "Explore: Export to CSV and Parquet\nRun a small query, collect to DataFrame, then write to CSV and Parquet.\n\nperson = cdm.person\nresult = person.select(\"person_id\", \"gender_concept_id\", \"year_of_birth\").limit(100)\ndf = cc.collect(result)\ndf.to_csv(OUTPUT_DIR / \"person_preview.csv\", index=False)\ndf.to_parquet(OUTPUT_DIR / \"person_preview.parquet\", index=False)\nprint(\"Exported to\", OUTPUT_DIR)"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#build-rendered-tables-html-with-great-tables",
+    "href": "notebooks/09_exporting_results_and_tables.html#build-rendered-tables-html-with-great-tables",
+    "title": "Exporting Results and Tables",
+    "section": "Build: Rendered tables (HTML with great-tables)",
+    "text": "Build: Rendered tables (HTML with great-tables)\nIf great-tables is installed, build a GT table and save as HTML; otherwise save a plain CSV.\n\ntry:\n    from great_tables import GT\n    gt_tbl = GT(df)\n    html_path = OUTPUT_DIR / \"person_preview.html\"\n    gt_tbl.save(html_path)\n    print(\"Saved HTML table to\", html_path)\nexcept ImportError:\n    print(\"great-tables not installed; skipping HTML export. Use CSV/Parquet.\")\nexcept Exception as e:\n    print(\"great-tables save failed:\", e)"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#interpret-results-bundle-pattern",
+    "href": "notebooks/09_exporting_results_and_tables.html#interpret-results-bundle-pattern",
+    "title": "Exporting Results and Tables",
+    "section": "Interpret: Results bundle pattern",
+    "text": "Interpret: Results bundle pattern\nCreate a timestamped or run-named folder and write all outputs there (cohort membership, top conditions, Table 1) for reproducibility.\n\nfrom datetime import datetime\n\nrun_name = datetime.now().strftime(\"%Y%m%d_%H%M%S\")\nbundle_dir = OUTPUT_DIR / run_name\nbundle_dir.mkdir(parents=True, exist_ok=True)\n# Export cohort membership (skeleton: use actual cohort table if available)\n# cohort_df = cc.collect(cdm[\"cohort\"].limit(100))\n# cohort_df.to_csv(bundle_dir / \"cohort_membership.csv\", index=False)\n# Export top conditions (skeleton)\n# top_cond_df.to_csv(bundle_dir / \"top_conditions.csv\", index=False)\ndf.to_csv(bundle_dir / \"person_preview.csv\", index=False)\nprint(\"Results bundle:\", bundle_dir)"
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#exercises",
+    "href": "notebooks/09_exporting_results_and_tables.html#exercises",
+    "title": "Exporting Results and Tables",
+    "section": "Exercises",
+    "text": "Exercises\n\nExport cohort membership (subject_id, cohort_start_date, cohort_end_date) to CSV and Parquet.\nExport “top conditions” table (concept_id, concept_name, n) to CSV; if great-tables installed, also to HTML.\nAdd a README.txt in the bundle with run timestamp and dataset name (e.g. GiBleed)."
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#what-we-learned",
+    "href": "notebooks/09_exporting_results_and_tables.html#what-we-learned",
+    "title": "Exporting Results and Tables",
+    "section": "What we learned",
+    "text": "What we learned\n\nCSV/Parquet: collect expression to DataFrame, then .to_csv() / .to_parquet() to ./outputs/.\nHTML tables: great_tables.GT(df).save(path) when installed; guard with try/except.\nResults bundle: one folder per run with all outputs for reproducibility."
+  },
+  {
+    "objectID": "notebooks/09_exporting_results_and_tables.html#cleanup",
+    "href": "notebooks/09_exporting_results_and_tables.html#cleanup",
+    "title": "Exporting Results and Tables",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "",
+    "text": "This tutorial is a mini-course in doing observational data analysis directly on an OMOP CDM database using:\n\nCDMConnector: creates a single Cdm object (named CDM table references + metadata).\nIbis + DuckDB: connects to a local database file created from the Eunomia example dataset.\nIbis verbs: filter, select, mutate, group_by, aggregate, order_by, join, etc., executed lazily as SQL.\n\nWe’ll also learn the shape and meaning of core OMOP tables:\n\nperson, visit_occurrence, condition_occurrence, drug_exposure, measurement, and concept.\n\nFinally, we will create a simple cohort and compute:\n\nbaseline characteristics (age/sex),\nevent counts,\na basic time-at-risk rate."
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#what-is-a-cdm-reference",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#what-is-a-cdm-reference",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "4.1 4.1 What is a Cdm reference?",
+    "text": "4.1 4.1 What is a Cdm reference?\nA Cdm behaves like a mapping: cdm.person, cdm[\"condition_occurrence\"], etc. Each element is a lazy table reference (Ibis) that translates your operations into SQL.\ncdm.tables"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#person-who-are-the-individuals",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#person-who-are-the-individuals",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "5.1 5.1 person: who are the individuals?",
+    "text": "5.1 5.1 person: who are the individuals?\ncc.collect(\n    cdm.person.select(\"person_id\", \"gender_concept_id\", \"year_of_birth\", \"month_of_birth\", \"day_of_birth\")\n    .limit(10)\n)\n\n5.1.1 Key OMOP idea: “concept_id everywhere”\nOMOP stores standardized medical vocabulary references as integer IDs. gender_concept_id points to the concept table. Decode gender counts by joining to concept.\njoined = cdm.person.join(\n    cdm.concept.select(concept_id=cdm.concept.concept_id, concept_name=cdm.concept.concept_name),\n    cdm.person.gender_concept_id == cdm.concept.concept_id,\n    how=\"left\",\n)\ngender_counts = (\n    joined.group_by(\"concept_name\")\n    .aggregate(n=joined.person_id.count())\n    .order_by(ibis.desc(\"n\"))\n)\ncc.collect(gender_counts)"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#visits-where-do-records-cluster-in-time",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#visits-where-do-records-cluster-in-time",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "5.2 5.2 Visits: where do records cluster in time?",
+    "text": "5.2 5.2 Visits: where do records cluster in time?\nIn OMOP, many records can be linked to a visit via visit_occurrence_id (when available).\ncc.collect(\n    cdm.visit_occurrence.aggregate(\n        n_visits=cdm.visit_occurrence.count(),\n        n_people=cdm.visit_occurrence.person_id.nunique(),\n        min_date=cdm.visit_occurrence.visit_start_date.min(),\n        max_date=cdm.visit_occurrence.visit_end_date.max(),\n    )\n)"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#exercise-optional",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#exercise-optional",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "7.1 7.1 Exercise (optional)",
+    "text": "7.1 7.1 Exercise (optional)\n\nRepeat this for drug_exposure (drug_concept_id).\nRepeat this for measurement (measurement_concept_id)."
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#define-a-gi-bleed-cohort",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#define-a-gi-bleed-cohort",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "8.1 8.1 Define a “GI bleed” cohort",
+    "text": "8.1 8.1 Define a “GI bleed” cohort\nFirst occurrence of concept 192671 per person; cohort end = start + 10 days.\ngibleed_concept_id = 192671\ncond = cdm.condition_occurrence\nfirst_occurrence = (\n    cond.filter(cond.condition_concept_id == gibleed_concept_id)\n    .group_by(cond.person_id)\n    .aggregate(\n        cohort_start_date=cond.condition_start_date.min(),\n    )\n)\n# cohort_end_date = cohort_start_date + 10 days\nfirst_occurrence = first_occurrence.mutate(\n    cohort_definition_id=ibis.literal(1, type=\"int64\"),\n    cohort_end_date=first_occurrence.cohort_start_date + ibis.interval(days=10),\n)\ncohort_expr = first_occurrence.select(\n    \"cohort_definition_id\",\n    subject_id=first_occurrence.person_id,\n    \"cohort_start_date\",\n    \"cohort_end_date\",\n)\nInsert into the write schema as a cohort table (create empty table, then insert rows).\nimport pyarrow as pa\ncohort_df = cc.collect(cohort_expr)\n# PyArrow date columns for cohort_start_date, cohort_end_date\ncohort_arrow = pa.table({\n    \"cohort_definition_id\": pa.array(cohort_df[\"cohort_definition_id\"], type=pa.int64()),\n    \"subject_id\": pa.array(cohort_df[\"subject_id\"], type=pa.int64()),\n    \"cohort_start_date\": pa.array(cohort_df[\"cohort_start_date\"].dt.date, type=pa.date32()),\n    \"cohort_end_date\": pa.array(cohort_df[\"cohort_end_date\"].dt.date, type=pa.date32()),\n})\ncdm = cc.new_cohort_table(cdm, \"gibleed_cohort\", overwrite=True)\ncdm.source.insert_table(\"gibleed_cohort\", cohort_arrow, overwrite=True)\ncdm[\"gibleed_cohort\"] = cdm.source.table(\"gibleed_cohort\", cdm.write_schema)\nA cohort table has (at minimum): cohort_definition_id, subject_id, cohort_start_date, cohort_end_date.\ncc.collect(cdm[\"gibleed_cohort\"].select(\"cohort_definition_id\", \"subject_id\", \"cohort_start_date\", \"cohort_end_date\").limit(10))"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#cohort-size-and-person-time",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#cohort-size-and-person-time",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "8.2 8.2 Cohort size and person-time",
+    "text": "8.2 8.2 Cohort size and person-time\ncohort_tbl = cdm[\"gibleed_cohort\"]\ncc.collect(\n    cohort_tbl.aggregate(\n        n_entries=cohort_tbl.count(),\n        n_people=cohort_tbl.subject_id.nunique(),\n        min_start=cohort_tbl.cohort_start_date.min(),\n        max_start=cohort_tbl.cohort_start_date.max(),\n    )\n)\nCompute crude person-time (days) inside cohort:\ncohort_tbl = cdm[\"gibleed_cohort\"]\ntar_days_expr = cohort_tbl.cohort_end_date - cohort_tbl.cohort_start_date\ncohort_with_tar = cohort_tbl.mutate(tar_days=tar_days_expr)\npt = cohort_with_tar.aggregate(\n    total_tar_days=cohort_with_tar.tar_days.sum(),\n    mean_tar_days=cohort_with_tar.tar_days.mean(),\n)\ncc.collect(pt)"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#death-during-cohort-window-if-available",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#death-during-cohort-window-if-available",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "10.1 10.1 Death during cohort window (if available)",
+    "text": "10.1 10.1 Death during cohort window (if available)\nif \"death\" in cdm.tables:\n    death_tbl = cdm.death\n    cohort_tbl = cdm[\"gibleed_cohort\"]\n    death_joined = cohort_tbl.join(\n        death_tbl.select(\"person_id\", \"death_date\"),\n        cohort_tbl.subject_id == death_tbl.person_id,\n        how=\"left\",\n    )\n    death_joined = death_joined.mutate(\n        death_in_window=(\n            death_joined.death_date.isnull().not()\n            & (death_joined.death_date &gt;= death_joined.cohort_start_date)\n            & (death_joined.death_date &lt;= death_joined.cohort_end_date)\n        )\n    )\n    death_in_tar = death_joined.group_by(\"cohort_definition_id\").aggregate(\n        n_entries=death_joined.count(),\n        n_deaths_in_window=death_joined.death_in_window.sum(),\n    )\n    cc.collect(death_in_tar)\nelse:\n    print(\"No death table found in this CDM.\")"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#condition-outcome-during-cohort-window-general-pattern",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#condition-outcome-during-cohort-window-general-pattern",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "10.2 10.2 Condition outcome during cohort window (general pattern)",
+    "text": "10.2 10.2 Condition outcome during cohort window (general pattern)\nJoin cohort to condition_occurrence, filter condition dates within TAR, then summarise.\ncohort_tbl = cdm[\"gibleed_cohort\"]\ncond = cdm.condition_occurrence\nconcept_outcome = 192671\noutcome_joined = cohort_tbl.join(\n    cond.select(\"person_id\", \"condition_concept_id\", \"condition_start_date\"),\n    cohort_tbl.subject_id == cond.person_id,\n    how=\"inner\",\n)\noutcome_joined = outcome_joined.filter(\n    outcome_joined.condition_concept_id == concept_outcome,\n    outcome_joined.condition_start_date &gt;= outcome_joined.cohort_start_date,\n    outcome_joined.condition_start_date &lt;= outcome_joined.cohort_end_date,\n)\noutcome_counts = outcome_joined.aggregate(\n    n_events=outcome_joined.count(),\n    n_people_with_event=outcome_joined.subject_id.nunique(),\n)\ncc.collect(outcome_counts)"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#semi_join-to-restrict-to-a-cohort",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#semi_join-to-restrict-to-a-cohort",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "12.1 12.1 semi_join to restrict to a cohort",
+    "text": "12.1 12.1 semi_join to restrict to a cohort\nFilter any CDM table to individuals in your cohort using a join + filter (semi_join pattern: keep only rows that match cohort subjects).\ncohort_subjects = cdm[\"gibleed_cohort\"].select(\"subject_id\").distinct()\ndrugs_cohort_j = cdm.drug_exposure.join(\n    cohort_subjects, cdm.drug_exposure.person_id == cohort_subjects.subject_id, how=\"inner\"\n)\ndrugs_in_cohort = (\n    drugs_cohort_j.group_by(\"drug_concept_id\")\n    .aggregate(n=drugs_cohort_j.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(10)\n)\ndrugs_with_names = drugs_in_cohort.join(\n    cdm.concept.select(\"concept_id\", \"concept_name\"),\n    drugs_in_cohort.drug_concept_id == cdm.concept.concept_id,\n    how=\"left\",\n).select(\"drug_concept_id\", \"concept_name\", \"n\")\ncc.collect(drugs_with_names)"
+  },
+  {
+    "objectID": "notebooks/10_pedagogical_omop_gibleed.html#time-window-joins-a-core-observational-pattern",
+    "href": "notebooks/10_pedagogical_omop_gibleed.html#time-window-joins-a-core-observational-pattern",
+    "title": "Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)",
+    "section": "12.2 12.2 Time-window joins (a core observational pattern)",
+    "text": "12.2 12.2 Time-window joins (a core observational pattern)\nRestrict drug exposures to the cohort TAR window:\ncohort_tbl = cdm[\"gibleed_cohort\"]\ndrugs_tar_joined = cohort_tbl.join(\n    cdm.drug_exposure.select(\"person_id\", \"drug_concept_id\", \"drug_exposure_start_date\"),\n    cohort_tbl.subject_id == cdm.drug_exposure.person_id,\n    how=\"inner\",\n)\ndrugs_tar_joined = drugs_tar_joined.filter(\n    drugs_tar_joined.drug_exposure_start_date &gt;= drugs_tar_joined.cohort_start_date,\n    drugs_tar_joined.drug_exposure_start_date &lt;= drugs_tar_joined.cohort_end_date,\n)\ndrugs_in_tar = (\n    drugs_tar_joined.group_by(\"drug_concept_id\")\n    .aggregate(n=drugs_tar_joined.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(10)\n)\ndrugs_in_tar_named = drugs_in_tar.join(\n    cdm.concept.select(\"concept_id\", \"concept_name\"),\n    drugs_in_tar.drug_concept_id == cdm.concept.concept_id,\n    how=\"left\",\n).select(\"drug_concept_id\", \"concept_name\", \"n\")\ncc.collect(drugs_in_tar_named)"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html",
+    "href": "notebooks/03_story_gibleed_end_to_end.html",
+    "title": "Story: GiBleed End-to-End",
+    "section": "",
+    "text": "Define a simple GI bleed cohort, index date per person, and windowed analysis ±30 days."
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#you-will-learn",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#you-will-learn",
+    "title": "Story: GiBleed End-to-End",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to define a simple GI bleed cohort from condition concepts (discover or use placeholder concept IDs)\nHow to define an index date per person (first condition occurrence)\nHow to run windowed analysis ±30 days (conditions, visits, measurements)\nHow to output “top events around index” tables (skeleton)"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#story-question",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#story-question",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Story question",
+    "text": "Story question\n“What conditions, visits, and measurements occur in the 30 days before and after a person’s first GI bleed?”"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#setup",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#setup",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Setup",
+    "text": "Setup\nGiBleed dataset; connect and obtain cdm.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\npath = cc.eunomia_dir(\"GiBleed\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#explore-gi-bleed-concepts",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#explore-gi-bleed-concepts",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Explore: GI bleed concept(s)",
+    "text": "Explore: GI bleed concept(s)\nDiscover GI bleed condition concept IDs from the concept table (or use known IDs). Placeholder: 192671 (Gastrointestinal hemorrhage) and descendants.\n\nconcept = cdm.concept\n# Optionally discover GI bleed concepts by name (e.g. filter concept_name containing \"hemorrhage\" or \"bleed\")\n# gibleed_concepts = concept.filter(concept.concept_name.str.contains(\"Gastrointestinal hemorrhage\", regex=False))\n# cc.collect(gibleed_concepts.select(\"concept_id\", \"concept_name\").limit(5))\n# For this notebook we use a known concept_id (Gastrointestinal hemorrhage)\ngibleed_concept_id = 192671\ncond = cdm.condition_occurrence\ngibleed_cond = cond.filter(cond.condition_concept_id == gibleed_concept_id)"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#build-index-date-per-person",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#build-index-date-per-person",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Build: Index date per person",
+    "text": "Build: Index date per person\nFirst GI bleed date per person = index date.\n\n# First occurrence per person (index date)\nindex_dates = (\n    gibleed_cond\n    .group_by(cond.person_id)\n    .aggregate(index_date=cond.condition_start_date.min())\n)\ncc.collect(index_dates.limit(10))"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#build-windowed-analysis-30-days",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#build-windowed-analysis-30-days",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Build: Windowed analysis ±30 days",
+    "text": "Build: Windowed analysis ±30 days\nJoin index_dates to condition_occurrence / visit_occurrence / measurement and filter to ±30 days from index_date. Skeleton: conditions in window.\n\n# Conditions in ±30-day window (join to index_dates, filter by date range)\ncond_all = cdm.condition_occurrence\njoined = cond_all.join(index_dates, cond_all.person_id == index_dates.person_id, how=\"inner\")\nin_window = joined.filter(\n    joined.condition_start_date &gt;= joined.index_date - ibis.interval(days=30),\n    joined.condition_start_date &lt;= joined.index_date + ibis.interval(days=30),\n)\n# Aggregate to \"top conditions in window\" (count by concept_id)\ntop_conditions = (\n    in_window\n    .group_by(cond_all.condition_concept_id)\n    .aggregate(n=cond_all.condition_occurrence_id.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(10)\n)\ncc.collect(top_conditions)"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#interpret-top-events-around-index-skeleton",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#interpret-top-events-around-index-skeleton",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Interpret: Top events around index (skeleton)",
+    "text": "Interpret: Top events around index (skeleton)\nOptionally join top_conditions to concept for names; same pattern for visits and measurements (skeleton).\n\n# Join top_conditions to concept for condition names\ntop_conditions_with_names = top_conditions.join(\n    concept, top_conditions.condition_concept_id == concept.concept_id, how=\"left\"\n).select(\"condition_concept_id\", concept.concept_name.name(\"condition_name\"), \"n\")\ncc.collect(top_conditions_with_names)\n\n# Top visits in ±30-day window\nvisit_all = cdm.visit_occurrence\njoined_visits = visit_all.join(index_dates, visit_all.person_id == index_dates.person_id, how=\"inner\")\nin_window_visits = joined_visits.filter(\n    joined_visits.visit_start_date &gt;= joined_visits.index_date - ibis.interval(days=30),\n    joined_visits.visit_start_date &lt;= joined_visits.index_date + ibis.interval(days=30),\n)\ntop_visits = (\n    in_window_visits.group_by(visit_all.visit_concept_id)\n    .aggregate(n=visit_all.visit_occurrence_id.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(10)\n)\ntop_visits_with_names = top_visits.join(\n    concept, top_visits.visit_concept_id == concept.concept_id, how=\"left\"\n).select(\"visit_concept_id\", concept.concept_name.name(\"visit_type\"), \"n\")\ncc.collect(top_visits_with_names)\n\n# Top measurements in ±30-day window\nmeas_all = cdm.measurement\njoined_meas = meas_all.join(index_dates, meas_all.person_id == index_dates.person_id, how=\"inner\")\nin_window_meas = joined_meas.filter(\n    joined_meas.measurement_date &gt;= joined_meas.index_date - ibis.interval(days=30),\n    joined_meas.measurement_date &lt;= joined_meas.index_date + ibis.interval(days=30),\n)\ntop_measurements = (\n    in_window_meas.group_by(meas_all.measurement_concept_id)\n    .aggregate(n=meas_all.measurement_id.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(10)\n)\ntop_meas_with_names = top_measurements.join(\n    concept, top_measurements.measurement_concept_id == concept.concept_id, how=\"left\"\n).select(\"measurement_concept_id\", concept.concept_name.name(\"measurement_name\"), \"n\")\ncc.collect(top_meas_with_names)"
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#exercises",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#exercises",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Exercises",
+    "text": "Exercises\n\nChange the window to ±14 days or ±60 days and compare counts.\nStratify top conditions by sex (join to person, group by sex and condition_concept_id).\nShow the compiled SQL for the “conditions in window” query using .compile()."
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#what-we-learned",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#what-we-learned",
+    "title": "Story: GiBleed End-to-End",
+    "section": "What we learned",
+    "text": "What we learned\n\nDefine a cohort by a condition (e.g. GI bleed) and take first occurrence as index date.\nWindowed analysis: join index_dates to domain tables and filter by date range (±N days).\nAggregate to “top events” (count by concept_id) and join to concept for names."
+  },
+  {
+    "objectID": "notebooks/03_story_gibleed_end_to_end.html#cleanup",
+    "href": "notebooks/03_story_gibleed_end_to_end.html#cleanup",
+    "title": "Story: GiBleed End-to-End",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "",
+    "text": "Load cohort definition JSON from file, render SQL (CIRCE), and materialise a cohort table."
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#you-will-learn",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#you-will-learn",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to load cohort definition JSON from the repo (e.g. docs-src/assets/cohort_json/)\nHow to render cohort SQL using cdmconnector’s CIRCE-style API (build_cohort_query, render_cohort_sql)\nHow to run the rendered SQL to materialise a cohort table (skeleton)\nHow to use SQLGlot to translate cohort SQL to different dialects (e.g. Postgres) when using another backend"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#story-question",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#story-question",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Story question",
+    "text": "Story question\n“How do we go from an Atlas/CIRCE JSON export to a cohort table in our CDM?”"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#setup",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#setup",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Setup",
+    "text": "Setup\nWe use GiBleed and/or synpuf-1k; cohort JSONs live in docs-src/assets/cohort_json/ (e.g. gibleed_simple.json, concept_set_example.json). Paths are relative to repo root or notebook location.\n\nfrom pathlib import Path\nimport json\nimport cdmconnector as cc\nimport ibis\n\n# Path to cohort JSONs: run from repo root, or set COHORT_JSON_DIR to docs-src/assets/cohort_json\nCOHORT_JSON_DIR = Path(\"docs-src/assets/cohort_json\").resolve()\nif not COHORT_JSON_DIR.exists():\n    COHORT_JSON_DIR = Path(\".\").resolve() / \"docs-src\" / \"assets\" / \"cohort_json\"\ngibleed_json_path = COHORT_JSON_DIR / \"gibleed_simple.json\"\n\npath = cc.eunomia_dir(\"GiBleed\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#explore-load-json-from-file",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#explore-load-json-from-file",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Explore: Load JSON from file",
+    "text": "Explore: Load JSON from file\nRead the cohort definition JSON (CIRCE/Atlas format).\n\nwith open(gibleed_json_path) as f:\n    cohort_json_str = f.read()\ncohort_expression = json.loads(cohort_json_str)\nprint(\"Keys:\", list(cohort_expression.keys()))"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#build-render-cohort-sql",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#build-render-cohort-sql",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Build: Render cohort SQL",
+    "text": "Build: Render cohort SQL\nUse cdmconnector’s internal CIRCE API: build_cohort_query (requires Circepy) returns SQL with @placeholders; render_cohort_sql replaces placeholders with schema/table names. If Circepy is not installed, wrap in try/except and raise NotImplementedError with a clear message.\n\nfrom cdmconnector._circe import (\n    build_cohort_query,\n    create_generate_options,\n    render_cohort_sql,\n)\n\ntry:\n    opts = create_generate_options(\n        cdm_schema=\"main\",\n        target_table=\"cohort\",\n        result_schema=\"main\",\n        cohort_id=1,\n        generate_stats=True,\n    )\n    sql_with_placeholders = build_cohort_query(cohort_json_str, opts)\n    rendered_sql = render_cohort_sql(\n        sql_with_placeholders,\n        cdm_database_schema=\"main\",\n        target_database_schema=\"main\",\n        target_cohort_table=\"cohort\",\n        target_cohort_id=1,\n        cohort_stem=\"cohort\",\n    )\n    print(rendered_sql[:500] + \"...\" if len(rendered_sql) &gt; 500 else rendered_sql)\nexcept NotImplementedError as e:\n    # Circepy not available or API not implemented\n    print(\"Circepy not available:\", e)\n    raise NotImplementedError(\n        \"Cohort SQL generation requires Circepy. Install with: pip install 'CDMConnector[duckdb]' or use a cohort_definition_set with a 'sql' column.\"\n    ) from e"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#translate-sql-with-sqlglot-generic-sql-different-dialects",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#translate-sql-with-sqlglot-generic-sql-different-dialects",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Translate SQL with SQLGlot (generic SQL → different dialects)",
+    "text": "Translate SQL with SQLGlot (generic SQL → different dialects)\nCIRCE returns SQL in one dialect (e.g. DuckDB). To run the same cohort logic on Postgres, Spark, or another backend, use SQLGlot to translate the SQL. Prefer Ibis for most queries; use SQLGlot when you have existing SQL (e.g. from CIRCE) and need dialect-specific output.\n\n# pip install sqlglot\ntry:\n    import sqlglot\n    # Parse as DuckDB (CIRCE default), translate to Postgres for use on PostgreSQL\n    if \"rendered_sql\" in dir() and rendered_sql.strip():\n        parsed = sqlglot.parse_one(rendered_sql.strip().split(\";\")[0], dialect=\"duckdb\")\n        postgres_sql = parsed.sql(dialect=\"postgres\")\n        print(\"Translated first statement to Postgres:\")\n        print(postgres_sql[:400] + \"...\" if len(postgres_sql) &gt; 400 else postgres_sql)\nexcept ImportError:\n    print(\"SQLGlot not installed. Install with: pip install sqlglot\")"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#interpret-run-sql-to-materialise-cohort-table-skeleton",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#interpret-run-sql-to-materialise-cohort-table-skeleton",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Interpret: Run SQL to materialise cohort table (skeleton)",
+    "text": "Interpret: Run SQL to materialise cohort table (skeleton)\nExecute the rendered SQL against the connection to create/insert into the cohort table. Backend-specific (DuckDB: con.raw_sql or similar).\n\n# Execute rendered_sql against the DuckDB connection (run the previous cell first to get rendered_sql)\nimport re\ncon = cdm.source.con\nraw_sql = getattr(con, \"raw_sql\", None)\nif raw_sql is not None and \"rendered_sql\" in dir():\n    statements = [\n        s.strip() + \";\" if s.strip() and not s.strip().startswith(\"--\") else \"\"\n        for s in re.split(r\";\\s*\", rendered_sql)\n    ]\n    statements = [s for s in statements if s and s != \";\"]\n    for stmt in statements:\n        stmt = stmt.strip()\n        if stmt and not stmt.startswith(\"--\"):\n            if not stmt.endswith(\";\"):\n                stmt = stmt + \";\"\n            raw_sql(stmt)\n    # Reload table reference and show first rows (cohort table name may include schema/prefix)\n    if \"cohort\" in cdm:\n        cc.collect(cdm[\"cohort\"].limit(10))\nelse:\n    # Run the previous cell first to get rendered_sql; or use cc.generate_cohort_set(cdm, cohort_set_df, name=\"cohort\", overwrite=True) to build and run in one step\n    if \"cohort\" in cdm:\n        cc.collect(cdm[\"cohort\"].limit(10))"
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#exercises",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#exercises",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Exercises",
+    "text": "Exercises\n\nEdit the JSON (e.g. change concept set or primary criteria), save to a new file, rerun render and compare cohort counts.\nLoad concept_set_example.json (concept set only) and document how it fits into a full cohort definition.\nCompare counts: run the same JSON on GiBleed vs synpuf-1k and summarise differences."
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#what-we-learned",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#what-we-learned",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "What we learned",
+    "text": "What we learned\n\nLoad JSON from file (e.g. Atlas export); build_cohort_query (Circepy) turns it into SQL with @placeholders.\nrender_cohort_sql replaces placeholders with cdm_schema, target_cohort_table, target_cohort_id, etc.\nRun SQL to materialise the cohort table; generate_cohort_set can do both (build + run) from a cohort_definition_set DataFrame.\nSQLGlot: when you have SQL (e.g. from CIRCE), use sqlglot.parse_one(sql, dialect=\"duckdb\").sql(dialect=\"postgres\") to translate to another backend. Prefer Ibis for most queries; use SQLGlot for existing SQL strings."
+  },
+  {
+    "objectID": "notebooks/06_cohorts_from_json_circe_atlas.html#cleanup",
+    "href": "notebooks/06_cohorts_from_json_circe_atlas.html#cleanup",
+    "title": "Cohorts from JSON: CIRCE / Atlas",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "",
+    "text": "Summarise numeric measurements: missingness, outliers, summary stats, and optional unit handling."
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#you-will-learn",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#you-will-learn",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to focus on numeric-only measurements (value_as_number)\nHow to summarise missingness and outliers\nSummary stats and quantiles for one measurement concept\nOptional unit handling (placeholder if units absent)"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#story-question",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#story-question",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Story question",
+    "text": "Story question\n“What is the distribution of a key measurement (e.g. a lab) in this population, and how much is missing or extreme?”"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#setup",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#setup",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Setup",
+    "text": "Setup\nsynpuf-1k for richer measurement data.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\npath = cc.eunomia_dir(\"synpuf-1k\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#explore-measurement-table-and-one-concept",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#explore-measurement-table-and-one-concept",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Explore: Measurement table and one concept",
+    "text": "Explore: Measurement table and one concept\nPick one measurement_concept_id (e.g. a common lab). Filter to rows with non-null value_as_number.\n\nmeas = cdm.measurement\n# Discover a common measurement_concept_id (top by count with non-null value_as_number)\ntop_concepts = (\n    meas.filter(meas.value_as_number.notnull())\n    .group_by(meas.measurement_concept_id)\n    .aggregate(n=meas.measurement_id.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(1)\n)\nmeasurement_concept_id = cc.collect(top_concepts)[\"measurement_concept_id\"].iloc[0]\n# Or use a fixed concept_id (e.g. 3004249 = Serum glucose): measurement_concept_id = 3004249\nmeas_one = meas.filter(\n    meas.measurement_concept_id == measurement_concept_id,\n    meas.value_as_number.notnull(),\n)"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#build-missingness-and-summary-stats",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#build-missingness-and-summary-stats",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Build: Missingness and summary stats",
+    "text": "Build: Missingness and summary stats\nCount rows with/without value_as_number; then summary stats and quantiles for numeric values.\n\n# All rows for this concept (for missingness)\nmeas_all = meas.filter(meas.measurement_concept_id == measurement_concept_id)\nn_total = meas_all.measurement_id.count()\nn_with_value = meas_all.filter(meas_all.value_as_number.notnull()).measurement_id.count()\n# Execute and show n_total, n_with_value (missingness)\ncc.collect(meas_all.aggregate(n_total=n_total, n_with_value=n_with_value))\n\n\n# Summary stats and quantiles (numeric only)\nsummary = meas_one.aggregate(\n    n=meas_one.measurement_id.count(),\n    mean_val=meas_one.value_as_number.mean(),\n    std_val=meas_one.value_as_number.std(),\n    min_val=meas_one.value_as_number.min(),\n    q25=meas_one.value_as_number.quantile(0.25),\n    median_val=meas_one.value_as_number.median(),\n    q75=meas_one.value_as_number.quantile(0.75),\n    max_val=meas_one.value_as_number.max(),\n)\ncc.collect(summary)"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#interpret-outliers-and-optional-unit-handling",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#interpret-outliers-and-optional-unit-handling",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Interpret: Outliers and optional unit handling",
+    "text": "Interpret: Outliers and optional unit handling\nOutliers: e.g. filter to IQR-based range or flag. Unit handling: placeholder if unit_concept_id / value_as_concept_id absent.\n\n# Optional unit handling: filter by unit_concept_id or join to concept for unit names\n# If unit_concept_id is present, you can restrict to a specific unit (e.g. mg/dL):\n# meas_one_unit = meas_one.filter(meas_one.unit_concept_id == 8718)  # 8718 = mg/dL\n# Or join to concept to show unit names: meas_one.join(cdm.concept, meas_one.unit_concept_id == cdm.concept.concept_id)\nconcept = cdm.concept\nmeas_with_unit_name = meas_one.join(\n    concept, meas_one.unit_concept_id == concept.concept_id, how=\"left\"\n).select(\"measurement_id\", \"value_as_number\", concept.concept_name.name(\"unit_name\"))\ncc.collect(meas_with_unit_name.limit(5))\n\n# Outliers: exclude outside [Q1 - 1.5*IQR, Q3 + 1.5*IQR] (e.g. compute q25/q75 from summary, then filter in Ibis or post-collect)"
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#exercises",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#exercises",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Exercises",
+    "text": "Exercises\n\nRestrict to a population subset (e.g. persons with at least one condition_occurrence in a given year) and recompute summary stats.\nPer-person summaries: mean value_as_number per person_id for this measurement concept; then summarise that distribution.\nAdd a second measurement concept and compare distributions (side-by-side or separate tables)."
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#what-we-learned",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#what-we-learned",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "What we learned",
+    "text": "What we learned\n\nNumeric-only measurements: filter to non-null value_as_number for stats.\nMissingness: count rows with/without value; summary stats and quantiles describe distribution.\nOutliers and units: handle with IQR or domain rules; unit_concept_id when available."
+  },
+  {
+    "objectID": "notebooks/04_measurement_distributions_with_guardrails.html#cleanup",
+    "href": "notebooks/04_measurement_distributions_with_guardrails.html#cleanup",
+    "title": "Measurement Distributions with Guardrails",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html",
+    "href": "tutorials/wasm_example_analysis.html",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "",
+    "text": "NoteView over HTTP\n\n\n\nServe the built docs folder (e.g. cd docs && python -m http.server 4522), then open http://localhost:4522/tutorials/wasm_example_analysis.html. Run each code cell in order.\nThis page is a pedagogical mini-course in doing observational data analysis on an OMOP CDM. Code runs in your browser (Pyodide + Ibis + DuckDB + pandas). We use synthetic GiBleed-style data so you can try the full workflow without installing anything. For real data, use Eunomia and CDMConnector locally."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#what-is-a-cdm-reference",
+    "href": "tutorials/wasm_example_analysis.html#what-is-a-cdm-reference",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "4.1 4.1 What is a “CDM reference”?",
+    "text": "4.1 4.1 What is a “CDM reference”?\nIn CDMConnector you get a single object (e.g. cdm) whose elements are lazy Ibis table references. Here we have an Ibis connection and table names; we query them with Ibis expressions (filter, select, join, etc.). Same idea: one place to hold “the CDM.”\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#person-who-are-the-individuals",
+    "href": "tutorials/wasm_example_analysis.html#person-who-are-the-individuals",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "5.1 5.1 person: who are the individuals?",
+    "text": "5.1 5.1 person: who are the individuals?\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\n5.1.1 Key OMOP idea: “concept_id everywhere”\nOMOP stores vocabulary as integer IDs. gender_concept_id points to the concept table. Decode gender by joining to concept.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#visits-where-do-records-cluster-in-time",
+    "href": "tutorials/wasm_example_analysis.html#visits-where-do-records-cluster-in-time",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "5.2 5.2 Visits: where do records cluster in time?",
+    "text": "5.2 5.2 Visits: where do records cluster in time?\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#define-a-gi-bleed-cohort",
+    "href": "tutorials/wasm_example_analysis.html#define-a-gi-bleed-cohort",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "8.1 8.1 Define a “GI bleed” cohort",
+    "text": "8.1 8.1 Define a “GI bleed” cohort\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\nA cohort table has at minimum: cohort_definition_id, subject_id, cohort_start_date, cohort_end_date.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#cohort-size-and-person-time",
+    "href": "tutorials/wasm_example_analysis.html#cohort-size-and-person-time",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "8.2 8.2 Cohort size and person-time",
+    "text": "8.2 8.2 Cohort size and person-time\n\nPlease enable JavaScript to experience the dynamic code cell content on this page.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#death-during-cohort-window-if-available",
+    "href": "tutorials/wasm_example_analysis.html#death-during-cohort-window-if-available",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "10.1 10.1 Death during cohort window (if available)",
+    "text": "10.1 10.1 Death during cohort window (if available)\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#condition-outcome-during-cohort-window",
+    "href": "tutorials/wasm_example_analysis.html#condition-outcome-during-cohort-window",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "10.2 10.2 Condition outcome during cohort window",
+    "text": "10.2 10.2 Condition outcome during cohort window\nJoin cohort to condition_occurrence, filter condition dates within TAR, then summarise. (Here we use the same concept 192671 as a toy outcome.)\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#semi_join-restrict-to-cohort-members",
+    "href": "tutorials/wasm_example_analysis.html#semi_join-restrict-to-cohort-members",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "12.1 12.1 semi_join: restrict to cohort members",
+    "text": "12.1 12.1 semi_join: restrict to cohort members\nFilter any CDM table to people in your cohort. Example: drug exposures among cohort members (any time).\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "tutorials/wasm_example_analysis.html#time-window-joins",
+    "href": "tutorials/wasm_example_analysis.html#time-window-joins",
+    "title": "Pedagogical OMOP in Your Browser (GiBleed-style)",
+    "section": "12.2 12.2 Time-window joins",
+    "text": "12.2 12.2 Time-window joins\nRestrict drug exposures to the cohort TAR window: drug_exposure_start_date between cohort_start_date and cohort_end_date.\n\nPlease enable JavaScript to experience the dynamic code cell content on this page."
+  },
+  {
+    "objectID": "contents.html",
+    "href": "contents.html",
+    "title": "Site contents",
+    "section": "",
+    "text": "Complete list of pages on this site."
+  },
+  {
+    "objectID": "contents.html#home",
+    "href": "contents.html#home",
+    "title": "Site contents",
+    "section": "Home",
+    "text": "Home\n\nCDMConnector — package overview, install, quick example"
+  },
+  {
+    "objectID": "contents.html#tutorials",
+    "href": "contents.html#tutorials",
+    "title": "Site contents",
+    "section": "Tutorials",
+    "text": "Tutorials\n\nNotebooks overview\n00 — Welcome / first CDM\n01 — Lazy queries and pipelines\n02 — Understanding OMOP people & time domains\n03 — Story GiBleed end to end\n04 — Measurement distributions with guardrails\n05 — Cohorts 101: tables, attrition, counts\n06 — Cohorts from JSON / Circe Atlas\n07 — Cohort characterization / Table 1\n08 — Performance, pushdown, materialization\n09 — Exporting results and tables\n10 — Pedagogical OMOP (GiBleed)"
+  },
+  {
+    "objectID": "contents.html#reference-api",
+    "href": "contents.html#reference-api",
+    "title": "Site contents",
+    "section": "Reference (API)",
+    "text": "Reference (API)\n\nAPI index\n\n\nCDM & connection\n\nCdm\ncdm_from_con\ncdm_from_tables\ncdm_tables\ncollect\ncompute\ninsert_table\ndrop_table\n\n\n\nCohorts\n\ngenerate_cohort_set\n\n\n\nEunomia\n\ndownload_eunomia_data\neunomia_dir\neunomia_is_available\nexample_datasets\nrequire_eunomia\n\n\n\nPatient profiles\n\nadd_age\nadd_demographics\nadd_sex\n\n\n\nResults\n\nResult\n\n\n\nExceptions\n\nCDMConnectorError\nCDMValidationError\nCohortError\nEunomiaError\nSourceError\nTableNotFoundError"
+  },
+  {
+    "objectID": "contents.html#contributing",
+    "href": "contents.html#contributing",
+    "title": "Site contents",
+    "section": "Contributing",
+    "text": "Contributing\n\nContributing\nDevelopment"
+  },
+  {
+    "objectID": "contributing.html",
+    "href": "contributing.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "Thank you for your interest in contributing to CDMConnector. This page covers how to get the development environment set up and run tests."
+  },
+  {
+    "objectID": "contributing.html#installation",
+    "href": "contributing.html#installation",
+    "title": "Contributing",
+    "section": "Installation",
+    "text": "Installation\n\nEnvironment setup\n\nCreate a virtual environment (recommended):\npython -m venv .venv\nsource .venv/bin/activate   # Windows: .venv\\Scripts\\activate\nOr use pyenv to manage Python versions, then create a venv with your chosen version.\nEditable install (from the repository root):\npip install -e \".[dev,docs]\"\nThis installs the package in editable mode so code changes take effect without reinstalling. The dev extra adds pytest, ruff, mypy; docs adds quartodoc and any other doc-build dependencies.\nOptional backends (e.g. DuckDB for Eunomia and tutorials):\npip install -e \".[dev,docs,duckdb]\""
+  },
+  {
+    "objectID": "contributing.html#running-tests",
+    "href": "contributing.html#running-tests",
+    "title": "Contributing",
+    "section": "Running tests",
+    "text": "Running tests\nFrom the repository root:\npytest tests -v --tb=short\nRun with coverage:\npytest tests -v --cov=src/cdmconnector --cov-report=term-missing\nTo skip integration tests (if marked):\npytest tests -v -m \"not integration\""
+  },
+  {
+    "objectID": "contributing.html#linting",
+    "href": "contributing.html#linting",
+    "title": "Contributing",
+    "section": "Linting",
+    "text": "Linting\nruff check src tests"
+  },
+  {
+    "objectID": "contributing.html#type-checking",
+    "href": "contributing.html#type-checking",
+    "title": "Contributing",
+    "section": "Type checking",
+    "text": "Type checking\nmypy src/cdmconnector"
+  },
+  {
+    "objectID": "contributing.html#documentation",
+    "href": "contributing.html#documentation",
+    "title": "Contributing",
+    "section": "Documentation",
+    "text": "Documentation\nSee Development for how to rebuild the docs (quartodoc + Quarto) and update notebooks."
+  },
+  {
+    "objectID": "contributing.html#getting-help",
+    "href": "contributing.html#getting-help",
+    "title": "Contributing",
+    "section": "Getting help",
+    "text": "Getting help\n\nOpen an issue for bugs or feature requests.\nCheck existing issues and discussions before opening a new one."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CDMConnector",
+    "section": "",
+    "text": "CDMConnector is a Python port of the R CDMConnector and omopgenerics packages. It provides tools for working with observational health data in the OMOP Common Data Model format using Ibis for lazy SQL pushdown (replacing dplyr/dbplyr in R)."
+  },
+  {
+    "objectID": "index.html#what-it-does",
+    "href": "index.html#what-it-does",
+    "title": "CDMConnector",
+    "section": "What it does",
+    "text": "What it does\n\nCdm: A single object holding OMOP table references (Ibis tables) plus metadata (name, version, schemas).\nCdmSource / DbCdmSource: Backed by an Ibis connection (DuckDB, Postgres, etc.) with write-schema support.\nCohort tables: OMOP cohort structure (cohort_definition_id, subject_id, cohort_start_date, cohort_end_date), attrition, cohort counts.\nEunomia: Helpers to download and use example OMOP datasets (e.g. GiBleed).\nSchema-aware: cdm_schema, write_schema, optional achilles_schema; works with Ibis backends."
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "CDMConnector",
+    "section": "Install",
+    "text": "Install\npip install CDMConnector\nWith optional backends:\npip install \"CDMConnector[postgres]\"\npip install \"CDMConnector[dev,docs]\""
+  },
+  {
+    "objectID": "index.html#quick-example",
+    "href": "index.html#quick-example",
+    "title": "CDMConnector",
+    "section": "Quick example",
+    "text": "Quick example\nimport cdmconnector as cc\nimport ibis\n\n# From an Ibis DuckDB connection\ncon = ibis.duckdb.connect(\"path/to/cdm.duckdb\")\ncdm = cc.cdm_from_con(\n    con,\n    cdm_schema=\"main\",\n    write_schema=\"main\",\n    cdm_name=\"My CDM\",\n)\n\n# Access tables (Ibis expressions)\nperson = cdm.person\nperson = cdm[\"person\"]\n\n# Lazy query (Ibis)\nresult = (\n    cdm.person\n    .filter(cdm.person.year_of_birth &gt;= 1990)\n    .select(\"person_id\", \"year_of_birth\")\n)\n# Execute: result.execute() or materialize with cc.compute(...)"
+  },
+  {
+    "objectID": "index.html#next-steps",
+    "href": "index.html#next-steps",
+    "title": "CDMConnector",
+    "section": "Next steps",
+    "text": "Next steps\n\nSite contents — Complete list of all pages on this site.\nTutorials — Try the Interactive (WASM) Example in your browser, or start with Welcome / first CDM and work through the notebooks.\nReference — Full API documentation for the cdmconnector package."
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "CDMConnector",
+    "section": "License",
+    "text": "License\nApache 2.0."
+  },
+  {
+    "objectID": "development.html",
+    "href": "development.html",
+    "title": "Development",
+    "section": "",
+    "text": "This page describes the developer workflow: updating notebooks, rebuilding the documentation site, and the release checklist."
+  },
+  {
+    "objectID": "development.html#developer-workflow",
+    "href": "development.html#developer-workflow",
+    "title": "Development",
+    "section": "Developer workflow",
+    "text": "Developer workflow\n\nClone and install (see Contributing).\nMake changes in src/cdmconnector/ or in docs-src/ (notebooks, .qmd pages).\nRun tests: pytest tests -v\nLint: ruff check src tests\nRebuild docs when you change API or narrative content (see below)."
+  },
+  {
+    "objectID": "development.html#updating-notebooks",
+    "href": "development.html#updating-notebooks",
+    "title": "Development",
+    "section": "Updating notebooks",
+    "text": "Updating notebooks\n\nNotebooks live in docs-src/notebooks/ as .ipynb files.\nRun Jupyter from the repository root so paths like docs-src/assets/cohort_json resolve.\nOutputs can be pre-rendered; Quarto renders notebooks without executing by default (execute is controlled in _quarto.yml or per-file YAML if needed).\nAfter editing a notebook, run quarto render docs-src/ to regenerate HTML in docs/."
+  },
+  {
+    "objectID": "development.html#rebuilding-docs",
+    "href": "development.html#rebuilding-docs",
+    "title": "Development",
+    "section": "Rebuilding docs",
+    "text": "Rebuilding docs\nFrom the repository root:\n# 1. Generate API reference (writes into docs-src/reference/)\nquartodoc build\n\n# 2. Render website into docs/\nquarto render docs-src/\nEnsure Quarto CLI is installed (quarto.org); it is not installed via pip. After a successful build, docs/ contains the full site (index, tutorials, reference, contributing, development). Commit the updated docs/ if your workflow uses committed HTML for GitHub Pages."
+  },
+  {
+    "objectID": "development.html#release-checklist-pypi",
+    "href": "development.html#release-checklist-pypi",
+    "title": "Development",
+    "section": "Release checklist (PyPI)",
+    "text": "Release checklist (PyPI)\nBefore publishing to PyPI:\n\nVersion — Bump version in pyproject.toml and src/cdmconnector/__init__.py (or use single source from pyproject).\nTests — pip install -e \".[dev]\" && pytest tests -v; ensure supported Python versions (CI covers these).\nLint — ruff check src tests; fix any issues.\nDocs — Run quartodoc build and quarto render docs-src/; confirm no broken links or missing API pages.\nBuild — pip install build && python -m build; check dist/ for .whl and .tar.gz.\nPublish — pip install twine && twine upload dist/* (use Test PyPI first: twine upload --repository testpypi dist/*).\nChangelog — Update CHANGELOG.md with the release date and any last-minute notes.\n\nOptional: exclude tests/docs from the wheel if needed; current config packages only src/cdmconnector."
+  },
+  {
+    "objectID": "notebooks/index.html",
+    "href": "notebooks/index.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "This section contains Jupyter notebooks that teach the cdmconnector package through a story-driven path. Each notebook follows: Setup → Explore → Build → Interpret → Exercises → What we learned."
+  },
+  {
+    "objectID": "notebooks/index.html#recommended-order",
+    "href": "notebooks/index.html#recommended-order",
+    "title": "Tutorials",
+    "section": "Recommended order",
+    "text": "Recommended order\n\n\n\n#\nNotebook\nTopic\n\n\n\n\n00\nWelcome: Your first CDM\nConnect, list tables, person count, preview\n\n\n01\nLazy queries and pipelines\nfilter/select/join, compile SQL\n\n\n02\nOMOP people, time, domains\nDemographics, observation period, visits\n\n\n03\nStory: GiBleed end-to-end\nCohort, index date, windowed analysis\n\n\n04\nMeasurement distributions\nNumeric stats, missingness, guardrails\n\n\n05\nCohorts 101\nTables, attrition, counts\n\n\n10\nPedagogical OMOP (GiBleed)\nMini-course: cohort, baseline, time-at-risk, outcome rates"
+  },
+  {
+    "objectID": "notebooks/index.html#running-locally",
+    "href": "notebooks/index.html#running-locally",
+    "title": "Tutorials",
+    "section": "Running locally",
+    "text": "Running locally\n\nEnvironment: Create a venv and install the package with DuckDB: pip install -e \".[duckdb]\" (or pip install CDMConnector and ibis-framework[duckdb]).\nEunomia: Example data is downloaded on first use via cc.eunomia_dir(\"GiBleed\"), or run cc.download_eunomia_data(\"GiBleed\") in advance.\nPaths: Run Jupyter from the repository root so docs-src/assets/cohort_json and other paths resolve.\n\nSee Contributing for full setup; see Development for rebuilding the docs after editing notebooks."
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html",
+    "href": "notebooks/07_cohort_characterization_table1.html",
+    "title": "Cohort Characterization: Table 1",
+    "section": "",
+    "text": "Compute a Table 1 (demographics + baseline comorbidities) from a cohort table using synpuf-1k."
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#you-will-learn",
+    "href": "notebooks/07_cohort_characterization_table1.html#you-will-learn",
+    "title": "Cohort Characterization: Table 1",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to take a cohort table / membership set and join to person and observation_period\nHow to compute Table 1: sex, age, observation period duration\nHow to add baseline comorbidities (top 10 conditions in baseline window)\nOptional: pretty output via great-tables (guard with try/except and fallback to plain DataFrame)"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#story-question",
+    "href": "notebooks/07_cohort_characterization_table1.html#story-question",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Story question",
+    "text": "Story question\n“What do cohort members look like (demographics) and what are the top baseline conditions?”"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#setup",
+    "href": "notebooks/07_cohort_characterization_table1.html#setup",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Setup",
+    "text": "Setup\nsynpuf-1k; we assume a cohort table exists (e.g. from generate_cohort_set or a pre-built cohort). For skeleton we use the first N persons as a “cohort” or an existing cohort table.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\npath = cc.eunomia_dir(\"synpuf-1k\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#explore-cohort-membership",
+    "href": "notebooks/07_cohort_characterization_table1.html#explore-cohort-membership",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Explore: Cohort membership",
+    "text": "Explore: Cohort membership\nIf a cohort table exists (e.g. “cohort”), use it. Otherwise define a minimal cohort set (e.g. first 100 person_ids with observation_period) for demo.\n\n# Option A: use existing cohort table if present\n# cohort_members = cdm[\"cohort\"]\n# Option B: define demo cohort = persons with at least one observation_period (limit 100)\nperson = cdm.person\nop = cdm.observation_period\n# Simplified: cohort_demo = persons with observation_period and index_date = obs start\ncohort_demo = op.group_by(op.person_id).aggregate(\n    index_date=op.observation_period_start_date.min(),\n    obs_end=op.observation_period_end_date.max(),\n).limit(100)\ncc.collect(cohort_demo.limit(5))"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#build-table-1-sex-age-observation-period-duration",
+    "href": "notebooks/07_cohort_characterization_table1.html#build-table-1-sex-age-observation-period-duration",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Build: Table 1 — sex, age, observation period duration",
+    "text": "Build: Table 1 — sex, age, observation period duration\nJoin cohort to person and observation_period; compute age at index, sex (join to concept), and obs period duration.\n\nperson = cdm.person\nconcept = cdm.concept\nref_year = 2020\ncohort_with_person = cohort_demo.join(person, cohort_demo.person_id == person.person_id, how=\"left\")\ncohort_with_person = cohort_with_person.mutate(\n    age_at_index=ref_year - cohort_with_person.year_of_birth\n)\ncohort_with_sex = cohort_with_person.join(\n    concept,\n    cohort_with_person.gender_concept_id == concept.concept_id,\n    how=\"left\",\n)\ntable1_expr = cohort_with_sex.aggregate(\n    n=cohort_with_sex.person_id.count(),\n    mean_age=cohort_with_sex.age_at_index.mean(),\n    median_age=cohort_with_sex.age_at_index.median(),\n)\n# Duration: use obs_end - index_date from cohort_demo\nduration_days = cohort_demo.obs_end - cohort_demo.index_date\nduration_summary = cohort_demo.mutate(duration_days=duration_days).aggregate(\n    mean_duration_days=duration_days.mean(),\n)\ncc.collect(table1_expr)\ncc.collect(duration_summary)"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#interpret-baseline-comorbidities-top-10-conditions",
+    "href": "notebooks/07_cohort_characterization_table1.html#interpret-baseline-comorbidities-top-10-conditions",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Interpret: Baseline comorbidities (top 10 conditions)",
+    "text": "Interpret: Baseline comorbidities (top 10 conditions)\nConditions in the baseline window (e.g. before index_date). Join to concept for names.\n\ncond = cdm.condition_occurrence\nconcept = cdm.concept\n# Conditions that start before cohort index_date (baseline)\nbaseline_cond = cond.join(cohort_demo, cond.person_id == cohort_demo.person_id, how=\"inner\")\nbaseline_cond = baseline_cond.filter(cond.condition_start_date &lt; cohort_demo.index_date)  # baseline = before index\ntop_conditions = (\n    baseline_cond\n    .group_by(cond.condition_concept_id)\n    .aggregate(n=cond.condition_occurrence_id.count())\n    .order_by(ibis.desc(\"n\"))\n    .limit(10)\n)\ntop_with_name = top_conditions.join(\n    concept,\n    top_conditions.condition_concept_id == concept.concept_id,\n    how=\"left\",\n)\ncc.collect(top_with_name.select(\"condition_concept_id\", \"concept_name\", \"n\"))"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#optional-pretty-output-with-great-tables",
+    "href": "notebooks/07_cohort_characterization_table1.html#optional-pretty-output-with-great-tables",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Optional: Pretty output with great-tables",
+    "text": "Optional: Pretty output with great-tables\nIf great-tables is installed, render Table 1 as a styled table; otherwise show plain DataFrame.\n\ntry:\n    from great_tables import GT\n    # df = cc.collect(table1_expr)  # or combine demographics into one DataFrame\n    # GT(df)  # render as HTML table\n    pass\nexcept ImportError:\n    pass  # fallback: use plain pandas DataFrame display\n# For skeleton we skip actual GT() call; use cc.collect(...) and display(df)"
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#exercises",
+    "href": "notebooks/07_cohort_characterization_table1.html#exercises",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Exercises",
+    "text": "Exercises\n\nAdd more Table 1 columns: race, ethnicity (join to concept), and year of birth distribution.\nDefine baseline as -365 to 0 days before index and recompute top conditions.\nExport Table 1 to CSV and (if great-tables) to HTML."
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#what-we-learned",
+    "href": "notebooks/07_cohort_characterization_table1.html#what-we-learned",
+    "title": "Cohort Characterization: Table 1",
+    "section": "What we learned",
+    "text": "What we learned\n\nTable 1: join cohort to person and observation_period; compute sex (concept), age at index, obs period duration.\nBaseline comorbidities: filter condition_occurrence to before index_date; aggregate by condition_concept_id; join to concept for names.\ngreat-tables: optional pretty tables; guard with try/except and fall back to plain DataFrame."
+  },
+  {
+    "objectID": "notebooks/07_cohort_characterization_table1.html#cleanup",
+    "href": "notebooks/07_cohort_characterization_table1.html#cleanup",
+    "title": "Cohort Characterization: Table 1",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "",
+    "text": "Avoid anti-patterns (execute too early, pull to pandas); use compile, defer execution, and materialize intermediates."
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#you-will-learn",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#you-will-learn",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "You will learn",
+    "text": "You will learn\n\nAnti-patterns: calling .execute() or collect() too early, pulling large tables to pandas\nPatterns: compile SQL, defer execution until the end\nHow to materialize intermediate results (temp table / snapshot) when supported\nHow to refactor a “bad” pipeline into a lazy pipeline"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#story-question",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#story-question",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Story question",
+    "text": "Story question\n“How do we keep work in the database and avoid unnecessary data transfer?”"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#setup",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#setup",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Setup",
+    "text": "Setup\nsynpuf-1k for realistic-sized queries.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\npath = cc.eunomia_dir(\"synpuf-1k\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#explore-anti-patterns",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#explore-anti-patterns",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Explore: Anti-patterns",
+    "text": "Explore: Anti-patterns\nBad: Execute early (e.g. collect a large table), then do pandas operations. Good: Build one lazy pipeline and execute once at the end.\n\n# Anti-pattern: pull entire table to pandas then filter in Python\n# df = cc.collect(cdm.person)  # unnecessary transfer\n# df = df[df[\"year_of_birth\"] &gt;= 1990]  # work done in Python\n\n# Good: filter in the database, then collect only the result\nperson = cdm.person\nexpr = person.filter(person.year_of_birth &gt;= 1990).select(\"person_id\", \"year_of_birth\").limit(10)\ncc.collect(expr)"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#build-defer-execution-and-compile-sql",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#build-defer-execution-and-compile-sql",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Build: Defer execution and compile SQL",
+    "text": "Build: Defer execution and compile SQL\nBuild a multi-step pipeline (join, filter, aggregate) without executing; show compiled SQL.\n\nperson = cdm.person\nop = cdm.observation_period\npipeline = (\n    person\n    .join(op, person.person_id == op.person_id, how=\"inner\")\n    .filter(person.year_of_birth &gt;= 1950)\n    .select(person.person_id, person.year_of_birth, op.observation_period_start_date, op.observation_period_end_date)\n    .limit(100)\n)\nprint(pipeline.compile())\ncc.collect(pipeline)"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#interpret-materialize-intermediate-results",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#interpret-materialize-intermediate-results",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Interpret: Materialize intermediate results",
+    "text": "Interpret: Materialize intermediate results\nWhen a sub-result is reused many times, materialize it in the write schema with cdm.insert_table. You can pass an Ibis expression or a pandas/pyarrow table. Use cdm.drop_table to remove tables when no longer needed.\n\n# Materialize an intermediate table in the write schema with insert_table.\n# Example: persons born &gt;= 1950, so downstream queries can join to it without recomputing.\nperson = cdm.person\nsubset_expr = person.filter(person.year_of_birth &gt;= 1950).select(\n    \"person_id\", \"year_of_birth\", \"gender_concept_id\"\n)\ncdm.insert_table(\"persons_1950_plus\", subset_expr, overwrite=True)\n\n# Use the new table (it is now in cdm)\ncc.collect(cdm[\"persons_1950_plus\"].count())\n\n# Drop the table when no longer needed\ncdm.drop_table(\"persons_1950_plus\")"
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#exercises",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#exercises",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Exercises",
+    "text": "Exercises\n\nRefactor a “bad” pipeline: take a workflow that does collect() in the middle and rewrite it as one lazy expression + single collect() at the end.\nCompare compile() output for a query with vs without an unnecessary .limit(1000) in the middle.\nUse cdm.snapshot() (if available) to capture CDM metadata without pulling large tables."
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#what-we-learned",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#what-we-learned",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "What we learned",
+    "text": "What we learned\n\nExecute only at the end: avoid collect()/execute() until you have the final expression.\nPushdown: filter, join, aggregate in the database; use expr.compile() to inspect SQL.\nMaterialize heavy intermediates when reused: use cdm.insert_table to write an Ibis expression or DataFrame into the write schema, then cdm.drop_table when done."
+  },
+  {
+    "objectID": "notebooks/08_performance_pushdown_and_materialization.html#cleanup",
+    "href": "notebooks/08_performance_pushdown_and_materialization.html#cleanup",
+    "title": "Performance: Pushdown and Materialization",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html",
+    "href": "notebooks/00_welcome_your_first_cdm.html",
+    "title": "Welcome: Your First CDM",
+    "section": "",
+    "text": "Connect to an OMOP CDM and inspect tables and row counts."
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#you-will-learn",
+    "href": "notebooks/00_welcome_your_first_cdm.html#you-will-learn",
+    "title": "Welcome: Your First CDM",
+    "section": "You will learn",
+    "text": "You will learn\n\nWhat the CDM reference object (cdm) is and how it holds OMOP tables\nHow to list CDM tables and access them by name\nHow to get person count and preview a few rows\nHow to clean up the connection when done"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#story-question",
+    "href": "notebooks/00_welcome_your_first_cdm.html#story-question",
+    "title": "Welcome: Your First CDM",
+    "section": "Story question",
+    "text": "Story question\n“How many people are in this database, and what do the first few person rows look like?”"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#setup",
+    "href": "notebooks/00_welcome_your_first_cdm.html#setup",
+    "title": "Welcome: Your First CDM",
+    "section": "Setup",
+    "text": "Setup\nWe use the GiBleed Eunomia example dataset and connect via DuckDB.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\n# Optional: ensure Eunomia GiBleed is available (downloads if missing)\npath = cc.eunomia_dir(\"GiBleed\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#explore-cdm-reference-and-table-listing",
+    "href": "notebooks/00_welcome_your_first_cdm.html#explore-cdm-reference-and-table-listing",
+    "title": "Welcome: Your First CDM",
+    "section": "Explore: CDM reference and table listing",
+    "text": "Explore: CDM reference and table listing\nThe cdm object holds a mapping of table names to Ibis table expressions. List available tables.\n\n# List CDM table names\ncdm.tables"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#build-person-count-and-preview",
+    "href": "notebooks/00_welcome_your_first_cdm.html#build-person-count-and-preview",
+    "title": "Welcome: Your First CDM",
+    "section": "Build: Person count and preview",
+    "text": "Build: Person count and preview\nUse cc.collect() to execute an expression and get a pandas DataFrame. For a scalar (e.g. count), the result is a small DataFrame.\n\n# Person count (execute only here)\nperson_count = cc.collect(cdm.person.count())\nperson_count\n\n\n# Preview a few rows (limit to avoid large output)\npreview = cc.collect(cdm.person.limit(5))\npreview"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#interpret",
+    "href": "notebooks/00_welcome_your_first_cdm.html#interpret",
+    "title": "Welcome: Your First CDM",
+    "section": "Interpret",
+    "text": "Interpret\nYou now have the total number of persons and a small preview. Use this pattern for any table: cdm[\"table_name\"] or cdm.table_name."
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#cleanup",
+    "href": "notebooks/00_welcome_your_first_cdm.html#cleanup",
+    "title": "Welcome: Your First CDM",
+    "section": "Cleanup",
+    "text": "Cleanup\nDisconnect the CDM reference when done (releases resources).\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#exercises",
+    "href": "notebooks/00_welcome_your_first_cdm.html#exercises",
+    "title": "Welcome: Your First CDM",
+    "section": "Exercises",
+    "text": "Exercises\n\nList only the first five table names (slicing or sorted(cdm.tables)[:5]).\nPreview 3 rows from observation_period instead of person.\nUse cdm[\"person\"] and cdm.person and confirm they are the same table.\nPrint cdm.name and cdm.version."
+  },
+  {
+    "objectID": "notebooks/00_welcome_your_first_cdm.html#what-we-learned",
+    "href": "notebooks/00_welcome_your_first_cdm.html#what-we-learned",
+    "title": "Welcome: Your First CDM",
+    "section": "What we learned",
+    "text": "What we learned\n\ncdm is a CDM reference holding OMOP tables as Ibis expressions.\ncdm.tables lists table names; access via cdm.person or cdm[“person”].\ncc.collect(expr) runs the query and returns a pandas DataFrame; use .limit(N) to cap rows.\ncdm.disconnect() cleans up the connection.\n\n\n\nTroubleshooting\nIf eunomia_dir(\"GiBleed\") fails, ensure the package can download data (network access). Use cdm.download_eunomia_data(\"GiBleed\") first if needed."
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "",
+    "text": "Create a cohort table in the write schema, insert minimal synthetic data, and record attrition."
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#you-will-learn",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#you-will-learn",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "You will learn",
+    "text": "You will learn\n\nHow to use empty_cdm and create synthetic minimal tables (person, observation_period, condition_occurrence) or insert minimal cohort rows\nHow to create a cohort table in the write schema (cdmconnector helper or Ibis DDL)\nHow to record attrition steps (if supported) or use the attrition table pattern\nHow to get cohort counts from cohort_attrition"
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#story-question",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#story-question",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Story question",
+    "text": "Story question\n“How do we create a cohort table, add membership rows, and track attrition?”"
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#setup",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#setup",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Setup",
+    "text": "Setup\nWe use empty_cdm and optionally insert minimal synthetic data into the write schema (DuckDB).\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\nimport pyarrow as pa\nimport datetime\n\npath = cc.eunomia_dir(\"empty_cdm\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#explore-create-cohort-table-in-write-schema",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#explore-create-cohort-table-in-write-schema",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Explore: Create cohort table in write schema",
+    "text": "Explore: Create cohort table in write schema\nUse new_cohort_table from cdmconnector.cohorts to create an empty cohort table (and cohort_set, cohort_attrition).\n\nfrom cdmconnector.cohorts import new_cohort_table\n\n# Create empty cohort table \"my_cohort\" in write schema\ncdm = new_cohort_table(cdm, \"my_cohort\", overwrite=True)\n# Access the new table\ncohort_tbl = cdm[\"my_cohort\"]\ncc.collect(cohort_tbl.limit(5))"
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#build-synthetic-minimal-cohort-rows",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#build-synthetic-minimal-cohort-rows",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Build: Synthetic minimal cohort rows",
+    "text": "Build: Synthetic minimal cohort rows\nInsert minimal cohort rows (cohort_definition_id, subject_id, cohort_start_date, cohort_end_date) using cdm.insert_table. We overwrite the empty table with one that contains the synthetic rows.\n\n# Build a small Arrow table with cohort rows and insert into write schema (overwrites empty table)\ncohort_rows = pa.table({\n    \"cohort_definition_id\": pa.array([1, 1], type=pa.int64()),\n    \"subject_id\": pa.array([1, 2], type=pa.int64()),\n    \"cohort_start_date\": pa.array([datetime.date(2020, 1, 1), datetime.date(2020, 1, 1)], type=pa.date32()),\n    \"cohort_end_date\": pa.array([datetime.date(2020, 12, 31), datetime.date(2020, 12, 31)], type=pa.date32()),\n})\ncdm.insert_table(\"my_cohort\", cohort_rows, overwrite=True)\n# Populate cohort_set so the definition is registered (optional but useful for reporting)\ncdm.insert_table(\"my_cohort_set\", pa.table({\n    \"cohort_definition_id\": pa.array([1], type=pa.int64()),\n    \"cohort_name\": pa.array([\"Demo cohort\"], type=pa.string()),\n}), overwrite=True)\n# Show the inserted cohort rows\ncc.collect(cdm[\"my_cohort\"])"
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#interpret-attrition-and-cohort-counts",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#interpret-attrition-and-cohort-counts",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Interpret: Attrition and cohort counts",
+    "text": "Interpret: Attrition and cohort counts\nIf cohort_attrition is populated (e.g. by generate_cohort_set), use cdm.cohort_count and cdm.attrition from cdmconnector.cohorts. Otherwise placeholder for attrition table pattern.\n\nfrom cdmconnector.cohorts import cohort_count, attrition, record_cohort_attrition\n\n# cohort_count and attrition expect a cohort object with cohort_attrition attribute\n# (e.g. result of generate_cohort_set attaches cohort_set and cohort_attrition to the returned table).\n# For a manually created cohort we can read counts and attrition tables directly:\ncc.collect(cdm[\"my_cohort\"].aggregate(n_subjects=cdm[\"my_cohort\"].subject_id.count()))\ncc.collect(cdm[\"my_cohort_set\"])\ncc.collect(cdm[\"my_cohort_attrition\"])\n\n# If the cohort object has cohort_attrition attached (e.g. from generate_cohort_set), use:\n# counts = cohort_count(cdm[\"cohort\"])   # requires cohort to have .cohort_attrition\n# attr_df = attrition(cdm[\"cohort\"])\ntry:\n    cohort_count(cdm[\"my_cohort\"])\nexcept Exception as e:\n    print(\"cohort_count requires cohort_attrition attribute:\", type(e).__name__, str(e)[:80])"
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#exercises",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#exercises",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Exercises",
+    "text": "Exercises\n\nAdd exclusions: e.g. filter out persons with no observation_period before inserting cohort rows; record as an attrition step.\nAdd more attrition steps using record_cohort_attrition (reason string, optional cohort_id).\nPopulate cohort_set (cohort_definition_id, cohort_name) and cohort_attrition (reason_id, reason, number_subjects, number_records, excluded_*) so cohort_count returns meaningful counts."
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#what-we-learned",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#what-we-learned",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "What we learned",
+    "text": "What we learned\n\nnew_cohort_table(cdm, name) creates an empty cohort table plus cohort_set and cohort_attrition in the write schema.\nCohort rows: cohort_definition_id, subject_id, cohort_start_date, cohort_end_date; insert via backend or cdm.insert_table.\nAttrition: record steps with record_cohort_attrition; cohort_count and attrition read from cohort_attrition when attached."
+  },
+  {
+    "objectID": "notebooks/05_cohorts_101_tables_attrition_counts.html#cleanup",
+    "href": "notebooks/05_cohorts_101_tables_attrition_counts.html#cleanup",
+    "title": "Cohorts 101: Tables, Attrition, and Counts",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html",
+    "title": "Lazy Queries and Pipelines",
+    "section": "",
+    "text": "Build Ibis pipelines with filter, select, mutate, group_by, aggregate, and join to concept."
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#you-will-learn",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#you-will-learn",
+    "title": "Lazy Queries and Pipelines",
+    "section": "You will learn",
+    "text": "You will learn\n\nThe difference between lazy expressions and execution (collect / execute)\nHow to chain filter, select, mutate, group_by, aggregate, order_by, limit\nHow to join to the concept table for human-readable names\nHow to inspect compiled SQL with .compile()"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#story-question",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#story-question",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Story question",
+    "text": "Story question\n“What does the data look like when we filter persons, add demographics, and join to concept names?”"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#setup",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#setup",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Setup",
+    "text": "Setup\nGiBleed dataset; connect and obtain cdm.\n\nfrom pathlib import Path\nimport cdmconnector as cc\nimport ibis\n\npath = cc.eunomia_dir(\"GiBleed\", cdm_version=\"5.3\")\ncon = ibis.duckdb.connect(path)\ncdm = cc.cdm_from_con(con, cdm_schema=\"main\", write_schema=\"main\", cdm_name=\"eunomia\")"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#explore-lazy-vs-execution",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#explore-lazy-vs-execution",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Explore: Lazy vs execution",
+    "text": "Explore: Lazy vs execution\nBuilding a pipeline returns an Ibis expression; nothing runs until we call cc.collect(expr) or expr.execute().\n\nperson = cdm.person\n# Lazy pipeline: filter, select, limit (no execution yet)\nexpr = (\n    person\n    .filter(person.year_of_birth &gt;= 1950)\n    .select(\"person_id\", \"gender_concept_id\", \"year_of_birth\")\n    .limit(10)\n)\n# Execute to get a DataFrame\ncc.collect(expr)"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#build-join-to-concept-for-human-readable-names",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#build-join-to-concept-for-human-readable-names",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Build: Join to concept for human-readable names",
+    "text": "Build: Join to concept for human-readable names\nJoin person to concept on gender_concept_id so we can show concept names instead of IDs.\n\nperson = cdm.person\nconcept = cdm.concept\njoined = person.join(\n    concept,\n    person.gender_concept_id == concept.concept_id,\n    how=\"left\",\n)\nexpr = (\n    joined\n    .filter(person.year_of_birth &gt;= 1950)\n    .select(\n        person.person_id,\n        person.year_of_birth,\n        concept.concept_name.name(\"gender\"),\n    )\n    .order_by(person.year_of_birth.desc())\n    .limit(10)\n)\ncc.collect(expr)"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#interpret-compiled-sql",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#interpret-compiled-sql",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Interpret: Compiled SQL",
+    "text": "Interpret: Compiled SQL\nShow the SQL that would be run (database pushdown). To use this query on a different backend (e.g. Postgres), use SQLGlot to translate: sqlglot.parse_one(compiled, dialect=\"duckdb\").sql(dialect=\"postgres\"). Prefer Ibis for most queries; use SQLGlot when you need to translate existing SQL strings.\n\n# Compile to SQL (backend-specific)\ncompiled = expr.compile()\nprint(compiled)"
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#exercises",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#exercises",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Exercises",
+    "text": "Exercises\n\nStratify person count by sex: group_by gender_concept_id, aggregate count, then join to concept for labels.\nAdd age bands: mutate a column age_band (e.g. 0–17, 18–64, 65+) from year_of_birth and summarise counts by band.\nBuild a pipeline that filters to one gender_concept_id, selects three columns, and limits to 5; show its .compile().\nUse order_by with two columns (e.g. year_of_birth, person_id) and execute."
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#what-we-learned",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#what-we-learned",
+    "title": "Lazy Queries and Pipelines",
+    "section": "What we learned",
+    "text": "What we learned\n\nPipelines are lazy: filter/select/mutate/group_by/aggregate/order_by/limit return expressions; execute only at the end via cc.collect(expr).\nJoin to concept to get human-readable names for concept_id columns.\nexpr.compile() shows the SQL sent to the database (pushdown). Use SQLGlot to translate that SQL to another dialect when needed."
+  },
+  {
+    "objectID": "notebooks/01_lazy_queries_and_pipelines.html#cleanup",
+    "href": "notebooks/01_lazy_queries_and_pipelines.html#cleanup",
+    "title": "Lazy Queries and Pipelines",
+    "section": "Cleanup",
+    "text": "Cleanup\n\ncdm.disconnect()"
+  },
+  {
+    "objectID": "reference/insert_table.html",
+    "href": "reference/insert_table.html",
+    "title": "insert_table",
+    "section": "",
+    "text": "insert_table(cdm, name, table, *, overwrite=True)\nInsert a table (Ibis expr or pyarrow/pandas) into the write schema and return Ibis table ref.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference (must be database-backed).\nrequired\n\n\nname\nstr\nLogical table name in write schema.\nrequired\n\n\ntable\nAny\nIbis table expression, pyarrow.Table, or pandas.DataFrame.\nrequired\n\n\noverwrite\nbool\nIf True, replace existing table (default True).\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nIbis table reference to the inserted table."
+  },
+  {
+    "objectID": "reference/insert_table.html#parameters",
+    "href": "reference/insert_table.html#parameters",
+    "title": "insert_table",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference (must be database-backed).\nrequired\n\n\nname\nstr\nLogical table name in write schema.\nrequired\n\n\ntable\nAny\nIbis table expression, pyarrow.Table, or pandas.DataFrame.\nrequired\n\n\noverwrite\nbool\nIf True, replace existing table (default True).\nTrue"
+  },
+  {
+    "objectID": "reference/insert_table.html#returns",
+    "href": "reference/insert_table.html#returns",
+    "title": "insert_table",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nIbis table reference to the inserted table."
+  },
+  {
+    "objectID": "reference/CDMConnectorError.html",
+    "href": "reference/CDMConnectorError.html",
+    "title": "CDMConnectorError",
+    "section": "",
+    "text": "CDMConnectorError\nCDMConnectorError()\nBase exception for CDMConnector."
+  },
+  {
+    "objectID": "reference/generate_cohort_set.html",
+    "href": "reference/generate_cohort_set.html",
+    "title": "generate_cohort_set",
+    "section": "",
+    "text": "generate_cohort_set(\n    cdm,\n    cohort_definition_set,\n    *,\n    name='cohort',\n    overwrite=True,\n    compute_attrition=True,\n)\nGenerate a cohort set from a cohort definition set (CIRCE JSON or equivalent).\nUses internal CIRCE-style functions (cohort_expression_from_json, create_generate_options, build_cohort_query) backed by Circepy. SQL generation requires Circepy (a package dependency). Alternatively provide cohort_definition_set with a “sql” column (pre-generated SQL). Creates the cohort table, cohort_set, and cohort_attrition in the CDM write schema and runs the cohort SQL.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm reference (from cdm_from_con with write_schema).\n\nrequired\n\n\ncohort_definition_set\nDataFrame with cohort_definition_id, cohort_name, and\neither “json” (CIRCE JSON strings) or “sql” (pre-generated SQL). May include “cohort” (parsed dicts). From read_cohort_set() or equivalent.\nrequired\n\n\nname\nName of the cohort table (lowercase, letters/numbers/underscores). Default \"cohort\".\n\n'cohort'\n\n\noverwrite\nIf True, overwrite existing cohort tables. Default True.\n\nTrue\n\n\ncompute_attrition\nIf True, CIRCE generates inclusion-rule stats (requires\nCIRCE SQL to create inclusion/inclusion_result tables). Default True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCdm\nCDM with the new cohort table and cohort_set/cohort_attrition populated.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nCohortError\nIf CDM has no database source, cohort_definition_set is invalid, or SQL execution fails.\n\n\n\nNotImplementedError\nIf Circepy is not installed and no “sql” column is provided."
+  },
+  {
+    "objectID": "reference/generate_cohort_set.html#parameters",
+    "href": "reference/generate_cohort_set.html#parameters",
+    "title": "generate_cohort_set",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm reference (from cdm_from_con with write_schema).\n\nrequired\n\n\ncohort_definition_set\nDataFrame with cohort_definition_id, cohort_name, and\neither “json” (CIRCE JSON strings) or “sql” (pre-generated SQL). May include “cohort” (parsed dicts). From read_cohort_set() or equivalent.\nrequired\n\n\nname\nName of the cohort table (lowercase, letters/numbers/underscores). Default \"cohort\".\n\n'cohort'\n\n\noverwrite\nIf True, overwrite existing cohort tables. Default True.\n\nTrue\n\n\ncompute_attrition\nIf True, CIRCE generates inclusion-rule stats (requires\nCIRCE SQL to create inclusion/inclusion_result tables). Default True.\nTrue"
+  },
+  {
+    "objectID": "reference/generate_cohort_set.html#returns",
+    "href": "reference/generate_cohort_set.html#returns",
+    "title": "generate_cohort_set",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nCdm\nCDM with the new cohort table and cohort_set/cohort_attrition populated."
+  },
+  {
+    "objectID": "reference/generate_cohort_set.html#raises",
+    "href": "reference/generate_cohort_set.html#raises",
+    "title": "generate_cohort_set",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nCohortError\nIf CDM has no database source, cohort_definition_set is invalid, or SQL execution fails.\n\n\n\nNotImplementedError\nIf Circepy is not installed and no “sql” column is provided."
+  },
+  {
+    "objectID": "reference/compute.html",
+    "href": "reference/compute.html",
+    "title": "compute",
+    "section": "",
+    "text": "compute(cdm, expr, name, *, schema=None, overwrite=True)\nMaterialize an Ibis expression into a table in the CDM’s write schema.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm reference (database-backed).\n\nrequired\n\n\nexpr\nIbis table expression to materialize.\n\nrequired\n\n\nname\nName of the new table.\n\nrequired\n\n\nschema\nIf set, write to this schema instead of cdm.write_schema.\n\nNone\n\n\noverwrite\nIf True, replace existing table.\n\nTrue\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nIbis table reference to the new table."
+  },
+  {
+    "objectID": "reference/compute.html#parameters",
+    "href": "reference/compute.html#parameters",
+    "title": "compute",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm reference (database-backed).\n\nrequired\n\n\nexpr\nIbis table expression to materialize.\n\nrequired\n\n\nname\nName of the new table.\n\nrequired\n\n\nschema\nIf set, write to this schema instead of cdm.write_schema.\n\nNone\n\n\noverwrite\nIf True, replace existing table.\n\nTrue"
+  },
+  {
+    "objectID": "reference/compute.html#returns",
+    "href": "reference/compute.html#returns",
+    "title": "compute",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nIbis table reference to the new table."
+  },
+  {
+    "objectID": "reference/collect.html",
+    "href": "reference/collect.html",
+    "title": "collect",
+    "section": "",
+    "text": "collect(expr, *, limit=None)\nMaterialize an Ibis expression to a pandas DataFrame.\nThis is the only function (with compute and Result.collect) that triggers execution. Scalar expressions (e.g. table.count()) are returned as a 1x1 DataFrame.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nexpr\nAny\nIbis table or scalar expression to execute.\nrequired\n\n\nlimit\nint or None\nIf set, apply .limit(limit) before executing.\nNone\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\npandas.DataFrame\nMaterialized result (table rows or 1x1 for scalars)."
+  },
+  {
+    "objectID": "reference/collect.html#parameters",
+    "href": "reference/collect.html#parameters",
+    "title": "collect",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\nexpr\nAny\nIbis table or scalar expression to execute.\nrequired\n\n\nlimit\nint or None\nIf set, apply .limit(limit) before executing.\nNone"
+  },
+  {
+    "objectID": "reference/collect.html#returns",
+    "href": "reference/collect.html#returns",
+    "title": "collect",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\npandas.DataFrame\nMaterialized result (table rows or 1x1 for scalars)."
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "Function reference",
+    "section": "",
+    "text": "Core CDM object and connection helpers.\n\n\n\nCdm\nOMOP CDM reference: holds a mapping of table names to Ibis table expressions\n\n\ncdm_from_con\nCreate a CDM reference from an Ibis connection.\n\n\ncdm_from_tables\nCreate a CDM reference from a dict of (table_name -&gt; Ibis table or DataFrame).\n\n\ncdm_tables\nReturn available CDM table names (logical names).\n\n\ncollect\nMaterialize an Ibis expression to a pandas DataFrame.\n\n\ncompute\nMaterialize an Ibis expression into a table in the CDM’s write schema.\n\n\ninsert_table\nInsert a table (Ibis expr or pyarrow/pandas) into the write schema and return Ibis table ref.\n\n\ndrop_table\nDrop one or more tables from the write schema.\n\n\n\n\n\n\nCohort set generation.\n\n\n\ngenerate_cohort_set\nGenerate a cohort set from a cohort definition set (CIRCE JSON or equivalent).\n\n\n\n\n\n\nExample datasets and download helpers.\n\n\n\ndownload_eunomia_data\nDownload Eunomia data from CDMConnector blob storage (or GitHub for Synthea27NjParquet).\n\n\neunomia_dir\nReturn path to a DuckDB file containing the Eunomia dataset.\n\n\neunomia_is_available\nReturn True if the Eunomia dataset ZIP is present in the data folder.\n\n\nexample_datasets\nReturn the list of available Eunomia example dataset names.\n\n\nrequire_eunomia\nEnsure the Eunomia dataset is available; download if needed.\n\n\n\n\n\n\nDemographics and summarise helpers.\n\n\n\nadd_age\nAdd age at index_date (and optional age groups).\n\n\nadd_demographics\nAdd demographic characteristics to a table: age, sex, prior/future observation, optional date_of_birth.\n\n\nadd_sex\nAdd sex from person (gender_concept_id: 8507 Male, 8532 Female).\n\n\n\n\n\n\nResult container and export.\n\n\n\nResult\nLazy result: holds an Ibis table expression and optional metadata.\n\n\n\n\n\n\nErrors raised by the package.\n\n\n\nCDMConnectorError\nBase exception for CDMConnector.\n\n\nCDMValidationError\nRaised when CDM or table validation fails.\n\n\nCohortError\nRaised when cohort operations or validation fail.\n\n\nEunomiaError\nRaised when Eunomia download or path operations fail.\n\n\nSourceError\nRaised when source/connection operations fail.\n\n\nTableNotFoundError\nRaised when a requested table does not exist in the CDM."
+  },
+  {
+    "objectID": "reference/index.html#cdm-connection",
+    "href": "reference/index.html#cdm-connection",
+    "title": "Function reference",
+    "section": "",
+    "text": "Core CDM object and connection helpers.\n\n\n\nCdm\nOMOP CDM reference: holds a mapping of table names to Ibis table expressions\n\n\ncdm_from_con\nCreate a CDM reference from an Ibis connection.\n\n\ncdm_from_tables\nCreate a CDM reference from a dict of (table_name -&gt; Ibis table or DataFrame).\n\n\ncdm_tables\nReturn available CDM table names (logical names).\n\n\ncollect\nMaterialize an Ibis expression to a pandas DataFrame.\n\n\ncompute\nMaterialize an Ibis expression into a table in the CDM’s write schema.\n\n\ninsert_table\nInsert a table (Ibis expr or pyarrow/pandas) into the write schema and return Ibis table ref.\n\n\ndrop_table\nDrop one or more tables from the write schema."
+  },
+  {
+    "objectID": "reference/index.html#cohorts",
+    "href": "reference/index.html#cohorts",
+    "title": "Function reference",
+    "section": "",
+    "text": "Cohort set generation.\n\n\n\ngenerate_cohort_set\nGenerate a cohort set from a cohort definition set (CIRCE JSON or equivalent)."
+  },
+  {
+    "objectID": "reference/index.html#eunomia",
+    "href": "reference/index.html#eunomia",
+    "title": "Function reference",
+    "section": "",
+    "text": "Example datasets and download helpers.\n\n\n\ndownload_eunomia_data\nDownload Eunomia data from CDMConnector blob storage (or GitHub for Synthea27NjParquet).\n\n\neunomia_dir\nReturn path to a DuckDB file containing the Eunomia dataset.\n\n\neunomia_is_available\nReturn True if the Eunomia dataset ZIP is present in the data folder.\n\n\nexample_datasets\nReturn the list of available Eunomia example dataset names.\n\n\nrequire_eunomia\nEnsure the Eunomia dataset is available; download if needed."
+  },
+  {
+    "objectID": "reference/index.html#patient-profiles",
+    "href": "reference/index.html#patient-profiles",
+    "title": "Function reference",
+    "section": "",
+    "text": "Demographics and summarise helpers.\n\n\n\nadd_age\nAdd age at index_date (and optional age groups).\n\n\nadd_demographics\nAdd demographic characteristics to a table: age, sex, prior/future observation, optional date_of_birth.\n\n\nadd_sex\nAdd sex from person (gender_concept_id: 8507 Male, 8532 Female)."
+  },
+  {
+    "objectID": "reference/index.html#results",
+    "href": "reference/index.html#results",
+    "title": "Function reference",
+    "section": "",
+    "text": "Result container and export.\n\n\n\nResult\nLazy result: holds an Ibis table expression and optional metadata."
+  },
+  {
+    "objectID": "reference/index.html#exceptions",
+    "href": "reference/index.html#exceptions",
+    "title": "Function reference",
+    "section": "",
+    "text": "Errors raised by the package.\n\n\n\nCDMConnectorError\nBase exception for CDMConnector.\n\n\nCDMValidationError\nRaised when CDM or table validation fails.\n\n\nCohortError\nRaised when cohort operations or validation fail.\n\n\nEunomiaError\nRaised when Eunomia download or path operations fail.\n\n\nSourceError\nRaised when source/connection operations fail.\n\n\nTableNotFoundError\nRaised when a requested table does not exist in the CDM."
+  },
+  {
+    "objectID": "reference/CDMValidationError.html",
+    "href": "reference/CDMValidationError.html",
+    "title": "CDMValidationError",
+    "section": "",
+    "text": "CDMValidationError\nCDMValidationError()\nRaised when CDM or table validation fails."
+  },
+  {
+    "objectID": "reference/CohortError.html",
+    "href": "reference/CohortError.html",
+    "title": "CohortError",
+    "section": "",
+    "text": "CohortError\nCohortError()\nRaised when cohort operations or validation fail."
+  },
+  {
+    "objectID": "reference/require_eunomia.html",
+    "href": "reference/require_eunomia.html",
+    "title": "require_eunomia",
+    "section": "",
+    "text": "require_eunomia(dataset_name='GiBleed', cdm_version='5.3', path=None)\nEnsure the Eunomia dataset is available; download if needed.\nSets EUNOMIA_DATA_FOLDER to a temp directory if unset. Creates the folder if it does not exist. Downloads the dataset if not present (matches R requireEunomia / eunomiaDir behavior).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nOne of example_datasets() (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.3”).\n'5.3'\n\n\npath\nstr or Path or None\nOverride data folder (default: use EUNOMIA_DATA_FOLDER env).\nNone\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nPath to the data folder."
+  },
+  {
+    "objectID": "reference/require_eunomia.html#parameters",
+    "href": "reference/require_eunomia.html#parameters",
+    "title": "require_eunomia",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ndataset_name\nstr\nOne of example_datasets() (default “GiBleed”).\n'GiBleed'\n\n\ncdm_version\nstr\n“5.3” or “5.4” (default “5.3”).\n'5.3'\n\n\npath\nstr or Path or None\nOverride data folder (default: use EUNOMIA_DATA_FOLDER env).\nNone"
+  },
+  {
+    "objectID": "reference/require_eunomia.html#returns",
+    "href": "reference/require_eunomia.html#returns",
+    "title": "require_eunomia",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nPath to the data folder."
+  },
+  {
+    "objectID": "reference/TableNotFoundError.html",
+    "href": "reference/TableNotFoundError.html",
+    "title": "TableNotFoundError",
+    "section": "",
+    "text": "TableNotFoundError\nTableNotFoundError()\nRaised when a requested table does not exist in the CDM."
+  },
+  {
+    "objectID": "reference/cdm_disconnect.html",
+    "href": "reference/cdm_disconnect.html",
+    "title": "cdm_disconnect",
+    "section": "",
+    "text": "cdm_disconnect(cdm, drop_write_schema=False)\nDisconnect the CDM’s source.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference.\nrequired\n\n\ndrop_write_schema\nbool\nIf True, drop write-schema tables before disconnecting (default False).\nFalse"
+  },
+  {
+    "objectID": "reference/cdm_disconnect.html#parameters",
+    "href": "reference/cdm_disconnect.html#parameters",
+    "title": "cdm_disconnect",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference.\nrequired\n\n\ndrop_write_schema\nbool\nIf True, drop write-schema tables before disconnecting (default False).\nFalse"
+  },
+  {
+    "objectID": "reference/drop_table.html",
+    "href": "reference/drop_table.html",
+    "title": "drop_table",
+    "section": "",
+    "text": "drop_table(cdm, name)\nDrop one or more tables from the write schema.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference (must be database-backed).\nrequired\n\n\nname\nstr or list[str]\nLogical table name(s) to drop.\nrequired"
+  },
+  {
+    "objectID": "reference/drop_table.html#parameters",
+    "href": "reference/drop_table.html#parameters",
+    "title": "drop_table",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ncdm\nCdm\nCDM reference (must be database-backed).\nrequired\n\n\nname\nstr or list[str]\nLogical table name(s) to drop.\nrequired"
+  },
+  {
+    "objectID": "reference/add_age.html",
+    "href": "reference/add_age.html",
+    "title": "add_age",
+    "section": "",
+    "text": "add_age(\n    table,\n    cdm,\n    *,\n    index_date='cohort_start_date',\n    age_name='age',\n    age_group=None,\n    age_missing_month=1,\n    age_missing_day=1,\n    age_impose_month=False,\n    age_impose_day=False,\n    missing_age_group_value='None',\n)\nAdd age at index_date (and optional age groups).\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntable\nAny\nIbis table with person_id or subject_id and index_date column.\nrequired\n\n\ncdm\nCdm\nCDM reference (person).\nrequired\n\n\nindex_date\nstr\nColumn name for index date (default “cohort_start_date”).\n'cohort_start_date'\n\n\nage_name\nstr\nOutput column name (default “age”).\n'age'\n\n\nage_group\nlist or None\nOptional age groups (col_name, (low, high)) or (col_name, label, (low, high)).\nNone\n\n\nage_missing_month\nint\nDefault month/day when missing.\n1\n\n\nage_missing_day\nint\nDefault month/day when missing.\n1\n\n\nage_impose_month\nbool\nForce default month/day.\nFalse\n\n\nage_impose_day\nbool\nForce default month/day.\nFalse\n\n\nmissing_age_group_value\nstr\nValue for missing/unknown group.\n'None'\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nTable with age (and optional age_group) columns."
+  },
+  {
+    "objectID": "reference/add_age.html#parameters",
+    "href": "reference/add_age.html#parameters",
+    "title": "add_age",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntable\nAny\nIbis table with person_id or subject_id and index_date column.\nrequired\n\n\ncdm\nCdm\nCDM reference (person).\nrequired\n\n\nindex_date\nstr\nColumn name for index date (default “cohort_start_date”).\n'cohort_start_date'\n\n\nage_name\nstr\nOutput column name (default “age”).\n'age'\n\n\nage_group\nlist or None\nOptional age groups (col_name, (low, high)) or (col_name, label, (low, high)).\nNone\n\n\nage_missing_month\nint\nDefault month/day when missing.\n1\n\n\nage_missing_day\nint\nDefault month/day when missing.\n1\n\n\nage_impose_month\nbool\nForce default month/day.\nFalse\n\n\nage_impose_day\nbool\nForce default month/day.\nFalse\n\n\nmissing_age_group_value\nstr\nValue for missing/unknown group.\n'None'"
+  },
+  {
+    "objectID": "reference/add_age.html#returns",
+    "href": "reference/add_age.html#returns",
+    "title": "add_age",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nibis.expr.types.Table\nTable with age (and optional age_group) columns."
+  }
+]

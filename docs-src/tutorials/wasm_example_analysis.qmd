@@ -1,0 +1,554 @@
+---
+title: "Pedagogical OMOP in Your Browser (GiBleed-style)"
+description: "Mini-course: observational data analysis on an OMOP CDM using Ibis and DuckDB in-browser—joins, cohort construction, time-at-risk, and outcome counting."
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-copy: true
+    code-tools: true
+    include-in-header: wasm_debug_header.html
+filters:
+  - pyodide
+pyodide:
+  packages: ["ibis-framework[duckdb]"]
+execute:
+  echo: true
+---
+
+::: {.callout-note}
+## View over HTTP
+Serve the **built `docs`** folder (e.g. `cd docs && python -m http.server 4522`), then open **http://localhost:4522/tutorials/wasm_example_analysis.html**. Run each code cell in order.
+:::
+
+This page is a **pedagogical mini-course** in doing observational data analysis on an OMOP CDM. Code runs in your browser (Pyodide + Ibis + DuckDB + pandas). We use **synthetic GiBleed-style data** so you can try the full workflow without installing anything. For real data, use [Eunomia](https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html) and [CDMConnector](https://github.com/darwin-eu/CDMConnector) locally.
+
+---
+
+# 1. What you'll learn
+
+This tutorial teaches:
+
+- **Ibis + DuckDB**: lazy, backend-agnostic table operations that compile to SQL when you execute.
+- **Core OMOP tables**: `person`, `visit_occurrence`, `condition_occurrence`, `drug_exposure`, `measurement`, and `concept`.
+- **Observational workflow**: define a cohort (e.g. GI bleed), time-at-risk, baseline characteristics, outcome counts, and rates.
+- **Patterns**: joins to `concept`, cohort construction, time-window joins, and a small "study report" function.
+- **SQL when needed**: using **SQLGlot** to translate SQL between dialects (e.g. DuckDB → Postgres).
+
+# 2. Prerequisites
+
+You should be comfortable with:
+
+- basic Python
+- basic pandas or Ibis for tables and joins
+
+Everything else is taught as we go.
+
+# 3. Install and load packages
+
+In the browser we use **Pyodide** plus **micropip** to install Ibis (not included in the default Pyodide bundle). Run the cell below once; it installs `ibis-framework[duckdb]` then imports Ibis and pandas. Locally you would use `cdmconnector` and Ibis; here we use **Ibis** and **DuckDB** with pandas for execution.
+
+```{pyodide-python}
+import micropip
+await micropip.install("ibis-framework[duckdb]")
+import ibis
+import pandas as pd
+```
+
+# 4. Get the GiBleed-style example and connect
+
+Eunomia provides synthetic OMOP CDM datasets; CDMConnector's `eunomia_dir()` creates a DuckDB copy. **In this browser demo** we build a small **in-memory synthetic CDM** with the same shape so you can run the full lesson.
+
+```{pyodide-python}
+# Synthetic person (with birth components for age at cohort entry)
+person = pd.DataFrame({
+    "person_id": [1, 2, 3, 4, 5, 6, 7, 8],
+    "gender_concept_id": [8532, 8507, 8532, 8507, 8532, 8507, 8532, 8507],
+    "year_of_birth": [1980, 1975, 1990, 1985, 1970, 1982, 1995, 1988],
+    "month_of_birth": [6, 3, 1, 7, 12, 5, 9, 11],
+    "day_of_birth": [15, 20, 1, 14, 31, 10, 5, 22],
+})
+
+# Concept table (IDs → names); 192671 = Gastrointestinal hemorrhage (GiBleed)
+concept = pd.DataFrame({
+    "concept_id": [192671, 313217, 316866, 319843, 8532, 8507, 3004249, 3012888, 9201, 9202, 40228110],
+    "concept_name": [
+        "Gastrointestinal hemorrhage", "Atrial fibrillation", "Type 2 diabetes", "Hypertension",
+        "Female", "Male", "Systolic BP", "Diastolic BP", "Inpatient", "Outpatient", "Aspirin"
+    ],
+    "domain_id": ["Condition", "Condition", "Condition", "Condition", "Gender", "Gender", "Measurement", "Measurement", "Visit", "Visit", "Drug"],
+    "vocabulary_id": ["SNOMED", "SNOMED", "SNOMED", "SNOMED", "Gender", "Gender", "LOINC", "LOINC", "Visit", "Visit", "RxNorm"],
+})
+
+# Visits with date range
+visit_occurrence = pd.DataFrame({
+    "visit_occurrence_id": [1, 2, 3, 4, 5, 6, 7],
+    "person_id": [1, 1, 2, 3, 4, 5, 6],
+    "visit_concept_id": [9201, 9202, 9201, 9202, 9201, 9202, 9201],
+    "visit_start_date": ["2020-01-10", "2020-03-01", "2020-02-10", "2020-04-20", "2020-02-01", "2020-03-15", "2020-01-05"],
+    "visit_end_date": ["2020-01-12", "2020-03-02", "2020-02-12", "2020-04-22", "2020-02-03", "2020-03-17", "2020-01-07"],
+})
+
+# Conditions: include GI bleed (192671) for cohort; others for variety
+condition_occurrence = pd.DataFrame({
+    "condition_occurrence_id": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "person_id": [1, 1, 2, 2, 3, 4, 4, 5, 6, 7],
+    "condition_concept_id": [192671, 316866, 192671, 319843, 192671, 313217, 192671, 192671, 319843, 192671],
+    "condition_start_date": ["2020-01-15", "2020-03-01", "2020-02-10", "2020-04-20", "2020-01-05", "2020-02-28", "2020-05-01", "2020-03-15", "2020-04-05", "2020-02-20"],
+})
+
+# Drug exposures (for semi_join and time-window examples)
+drug_exposure = pd.DataFrame({
+    "drug_exposure_id": [1, 2, 3, 4, 5, 6],
+    "person_id": [1, 1, 2, 4, 5, 6],
+    "drug_concept_id": [40228110, 40228110, 40228110, 40228110, 40228110, 40228110],
+    "drug_exposure_start_date": ["2020-01-01", "2020-01-20", "2020-02-01", "2020-02-25", "2020-03-10", "2020-04-01"],
+})
+
+measurement = pd.DataFrame({
+    "person_id": [1, 1, 2, 3, 4, 5],
+    "measurement_concept_id": [3004249, 3012888, 3004249, 3012888, 3004249, 3012888],
+    "value_as_number": [120.5, 80.2, 118.0, 82.1, 121.0, 79.5],
+})
+
+# Optional death table (sparse)
+death = pd.DataFrame({
+    "person_id": [2],
+    "death_date": ["2020-02-15"],
+})
+```
+
+```{pyodide-python}
+# Ibis + DuckDB in-memory: create tables from pandas DataFrames
+con = ibis.duckdb.connect()
+con.create_table("person", person, overwrite=True)
+con.create_table("concept", concept, overwrite=True)
+con.create_table("visit_occurrence", visit_occurrence, overwrite=True)
+con.create_table("condition_occurrence", condition_occurrence, overwrite=True)
+con.create_table("drug_exposure", drug_exposure, overwrite=True)
+con.create_table("measurement", measurement, overwrite=True)
+con.create_table("death", death, overwrite=True)
+print("CDM tables created.")
+```
+
+## 4.1 What is a "CDM reference"?
+
+In CDMConnector you get a single object (e.g. `cdm`) whose elements are lazy Ibis table references. Here we have an **Ibis connection** and table names; we query them with Ibis expressions (filter, select, join, etc.). Same idea: one place to hold "the CDM."
+
+```{pyodide-python}
+cdm_tables = ["person", "concept", "visit_occurrence", "condition_occurrence", "drug_exposure", "measurement", "death"]
+print("Tables:", cdm_tables)
+```
+
+# 5. First contact with OMOP data
+
+## 5.1 person: who are the individuals?
+
+```{pyodide-python}
+person_t = con.table("person")
+out = person_t.select(
+    "person_id", "gender_concept_id", "year_of_birth", "month_of_birth", "day_of_birth"
+).limit(10)
+print(con.to_pandas(out).to_string(index=False))
+```
+
+### Key OMOP idea: "concept_id everywhere"
+
+OMOP stores vocabulary as integer IDs. `gender_concept_id` points to the `concept` table. Decode gender by joining to `concept`.
+
+```{pyodide-python}
+concept_t = con.table("concept")
+joined = person_t.join(
+    concept_t.select(concept_t.concept_id, concept_t.concept_name),
+    person_t.gender_concept_id == concept_t.concept_id,
+    how="left",
+)
+gender_counts = (
+    joined.group_by("concept_name")
+    .aggregate(n=joined.person_id.count())
+    .order_by(ibis.desc("n"))
+)
+print(con.to_pandas(gender_counts).to_string(index=False))
+```
+
+## 5.2 Visits: where do records cluster in time?
+
+```{pyodide-python}
+visit_t = con.table("visit_occurrence")
+visit_summary = visit_t.aggregate(
+    n_visits=visit_t.count(),
+    n_people=visit_t.person_id.nunique(),
+    min_date=visit_t.visit_start_date.min(),
+    max_date=visit_t.visit_end_date.max(),
+)
+print(con.to_pandas(visit_summary).to_string(index=False))
+```
+
+# 6. Ibis on a database: mental model
+
+When you build an Ibis expression, nothing runs until you execute it (e.g. `con.to_pandas(expr)`). In a real CDM you call `collect()` or `execute()`. Same idea: **query first, execute when needed.** You can inspect the compiled SQL; here we show a typical filter.
+
+```{pyodide-python}
+cond_t = con.table("condition_occurrence")
+q = (
+    cond_t.filter(cond_t.condition_start_date >= "2000-01-01")
+    .select("person_id", "condition_concept_id", "condition_start_date")
+)
+print("Compiled SQL (DuckDB):")
+print(q.compile())
+out = con.to_pandas(q)
+print("Rows:", len(out))
+```
+
+# 7. A first descriptive analysis: "Top conditions"
+
+Most frequent condition concepts, then decode to names.
+
+```{pyodide-python}
+cond_t = con.table("condition_occurrence")
+concept_t = con.table("concept")
+by_concept = (
+    cond_t.group_by("condition_concept_id")
+    .aggregate(n=cond_t.count())
+    .order_by(ibis.desc("n"))
+)
+top_conditions = (
+    by_concept.join(
+        concept_t.select("concept_id", "concept_name", "domain_id", "vocabulary_id"),
+        by_concept.condition_concept_id == concept_t.concept_id,
+        how="left",
+    )
+    .select("condition_concept_id", "concept_name", "domain_id", "vocabulary_id", "n")
+    .limit(15)
+)
+print(con.to_pandas(top_conditions).to_string(index=False))
+```
+
+# 8. The observational workflow: define a cohort, then analyze
+
+Common pattern:
+
+1. Define an **index event** (cohort entry).
+2. Optional inclusion/exclusion.
+3. Define **time-at-risk** (TAR).
+4. Estimate outcomes, covariates, rates.
+
+We build a **GI bleed** cohort from condition concept **192671** (Gastrointestinal hemorrhage): first occurrence per person, cohort end = start + 10 days.
+
+## 8.1 Define a "GI bleed" cohort
+
+```{pyodide-python}
+cond_t = con.table("condition_occurrence")
+first_date = (
+    cond_t.filter(cond_t.condition_concept_id == 192671)
+    .group_by("person_id")
+    .aggregate(first_date=cond_t.condition_start_date.min())
+)
+gibleed_cohort_expr = first_date.select(
+    cohort_definition_id=ibis.literal(1, type="int64"),
+    subject_id=first_date.person_id,
+    cohort_start_date=first_date.first_date.cast("date"),
+    cohort_end_date=(first_date.first_date.cast("date") + ibis.interval(days=10)),
+)
+con.create_table("gibleed_cohort", gibleed_cohort_expr, overwrite=True)
+print("Cohort table created.")
+```
+
+A cohort table has at minimum: `cohort_definition_id`, `subject_id`, `cohort_start_date`, `cohort_end_date`.
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+peek = con.to_pandas(gibleed_t.limit(10))
+print(peek.to_string(index=False))
+```
+
+## 8.2 Cohort size and person-time
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+cohort_summary = gibleed_t.aggregate(
+    n_entries=gibleed_t.count(),
+    n_people=gibleed_t.subject_id.nunique(),
+    min_start=gibleed_t.cohort_start_date.min(),
+    max_start=gibleed_t.cohort_start_date.max(),
+)
+print(con.to_pandas(cohort_summary).to_string(index=False))
+```
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+tar_days = (gibleed_t.cohort_end_date - gibleed_t.cohort_start_date).cast("int64")
+with_tar = gibleed_t.mutate(tar_days=tar_days)
+pt = with_tar.aggregate(
+    total_tar_days=with_tar.tar_days.sum(),
+    mean_tar_days=with_tar.tar_days.mean(),
+)
+print("Person-time (days):")
+print(con.to_pandas(pt).to_string(index=False))
+```
+
+# 9. Baseline characteristics at cohort entry
+
+Age and sex at `cohort_start_date`. We approximate age from year/month/day of birth.
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+person_t = con.table("person")
+joined = gibleed_t.join(person_t, gibleed_t.subject_id == person_t.person_id)
+baseline = joined.select(
+    joined.subject_id,
+    joined.cohort_start_date,
+    joined.gender_concept_id,
+    age=joined.cohort_start_date.year() - joined.year_of_birth,
+)
+print(con.to_pandas(baseline.limit(10)).to_string(index=False))
+```
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+person_t = con.table("person")
+concept_t = con.table("concept")
+joined = gibleed_t.join(person_t, gibleed_t.subject_id == person_t.person_id)
+age_expr = joined.cohort_start_date.year() - joined.year_of_birth
+baseline_summary = joined.aggregate(
+    n_people=joined.subject_id.nunique(),
+    age_mean=age_expr.mean(),
+    age_sd=age_expr.std(),
+)
+print(con.to_pandas(baseline_summary).to_string(index=False))
+
+joined_sex = joined.join(
+    concept_t.select(concept_t.concept_id, concept_t.concept_name),
+    person_t.gender_concept_id == concept_t.concept_id,
+    how="left",
+)
+sex_summary = (
+    joined_sex.group_by("concept_name")
+    .aggregate(n=joined_sex.subject_id.count())
+    .order_by(ibis.desc("n"))
+)
+print("Sex breakdown:")
+print(con.to_pandas(sex_summary).to_string(index=False))
+```
+
+# 10. Outcomes: count events during time-at-risk
+
+For each cohort entry, look for records between `cohort_start_date` and `cohort_end_date`.
+
+## 10.1 Death during cohort window (if available)
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+death_t = con.table("death")
+joined = gibleed_t.join(death_t, gibleed_t.subject_id == death_t.person_id, how="left")
+in_window = (
+    joined.death_date.notnull()
+    & (joined.death_date >= joined.cohort_start_date)
+    & (joined.death_date <= joined.cohort_end_date)
+)
+death_in_tar = joined.group_by(joined.cohort_definition_id).aggregate(
+    n_entries=joined.count(),
+    n_deaths_in_window=ibis.ifelse(in_window, 1, 0).sum(),
+)
+print(con.to_pandas(death_in_tar).to_string(index=False))
+```
+
+## 10.2 Condition outcome during cohort window
+
+Join cohort to `condition_occurrence`, filter condition dates within TAR, then summarise. (Here we use the same concept 192671 as a toy outcome.)
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+cond_t = con.table("condition_occurrence")
+concept_outcome = 192671
+joined = gibleed_t.join(
+    cond_t,
+    (gibleed_t.subject_id == cond_t.person_id)
+    & (cond_t.condition_concept_id == concept_outcome)
+    & (cond_t.condition_start_date >= gibleed_t.cohort_start_date)
+    & (cond_t.condition_start_date <= gibleed_t.cohort_end_date),
+)
+outcome_counts = joined.aggregate(
+    n_events=joined.count(),
+    n_people_with_event=joined.subject_id.nunique(),
+)
+print(con.to_pandas(outcome_counts).to_string(index=False))
+```
+
+# 11. Rates: events per person-time
+
+Crude incidence rate = events / total time-at-risk (e.g. per person-year).
+
+$$\text{rate} = \frac{\text{events}}{\text{total time-at-risk (years)}}$$
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+cond_t = con.table("condition_occurrence")
+tar_days_expr = (gibleed_t.cohort_end_date - gibleed_t.cohort_start_date).cast("float64")
+with_tar = gibleed_t.mutate(tar_days=tar_days_expr)
+total_tar = con.to_pandas(with_tar.aggregate(total_tar_days=with_tar.tar_days.sum()))
+joined = gibleed_t.join(
+    cond_t,
+    (gibleed_t.subject_id == cond_t.person_id)
+    & (cond_t.condition_concept_id == 192671)
+    & (cond_t.condition_start_date >= gibleed_t.cohort_start_date)
+    & (cond_t.condition_start_date <= gibleed_t.cohort_end_date),
+)
+events_df = con.to_pandas(joined.aggregate(n_events=joined.count()))
+total_tar_days = total_tar["total_tar_days"].iloc[0]
+n_events = events_df["n_events"].iloc[0]
+total_tar_years = total_tar_days / 365.25
+rate_per_py = n_events / total_tar_years if total_tar_years > 0 else 0
+print(f"Total TAR (days): {total_tar_days:.0f}, TAR (years): {total_tar_years:.2f}")
+print(f"Events: {n_events}, Rate per person-year: {rate_per_py:.4f}")
+```
+
+# 12. Practical Ibis-on-CDM skills
+
+## 12.1 semi_join: restrict to cohort members
+
+Filter any CDM table to **people in your cohort**. Example: drug exposures among cohort members (any time).
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+drug_t = con.table("drug_exposure")
+concept_t = con.table("concept")
+cohort_subjects = gibleed_t.select("subject_id").distinct()
+joined = drug_t.join(cohort_subjects, drug_t.person_id == cohort_subjects.subject_id)
+joined = joined.join(
+    concept_t.select(concept_t.concept_id, concept_t.concept_name),
+    joined.drug_concept_id == concept_t.concept_id,
+    how="left",
+)
+drugs_in_cohort = (
+    joined.group_by("drug_concept_id", "concept_name")
+    .aggregate(n=joined.count())
+    .order_by(ibis.desc("n"))
+    .limit(10)
+)
+print(con.to_pandas(drugs_in_cohort).to_string(index=False))
+```
+
+## 12.2 Time-window joins
+
+Restrict drug exposures to the cohort TAR window: `drug_exposure_start_date` between `cohort_start_date` and `cohort_end_date`.
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+drug_t = con.table("drug_exposure")
+concept_t = con.table("concept")
+joined = gibleed_t.join(
+    drug_t,
+    (gibleed_t.subject_id == drug_t.person_id)
+    & (drug_t.drug_exposure_start_date >= gibleed_t.cohort_start_date)
+    & (drug_t.drug_exposure_start_date <= gibleed_t.cohort_end_date),
+)
+joined = joined.join(
+    concept_t.select(concept_t.concept_id, concept_t.concept_name),
+    joined.drug_concept_id == concept_t.concept_id,
+    how="left",
+)
+drugs_in_tar = (
+    joined.group_by("drug_concept_id", "concept_name")
+    .aggregate(n=joined.count())
+    .order_by(ibis.desc("n"))
+    .limit(10)
+)
+print(con.to_pandas(drugs_in_tar).to_string(index=False))
+```
+
+# 13. When you have SQL: translate with SQLGlot
+
+When you do have raw SQL (e.g. from CIRCE cohort definitions or legacy scripts), use **SQLGlot** to keep it generic and translate between dialects (DuckDB, Postgres, Spark, etc.). That way one SQL source can run on different backends.
+
+```{pyodide-python}
+# If sqlglot is available in your environment: pip install sqlglot
+try:
+    import sqlglot
+except ImportError:
+    sqlglot = None
+
+if sqlglot is not None:
+    # Example: generic SQL (DuckDB-style here)
+    generic_sql = """
+        SELECT person_id, condition_concept_id, condition_start_date
+        FROM condition_occurrence
+        WHERE condition_start_date >= DATE '2000-01-01'
+    """
+    parsed = sqlglot.parse_one(generic_sql, dialect="duckdb")
+    # Translate to Postgres dialect for use on PostgreSQL
+    postgres_sql = parsed.sql(dialect="postgres")
+    print("Original (DuckDB):")
+    print(generic_sql.strip())
+    print("\nTranslated (Postgres):")
+    print(postgres_sql)
+else:
+    print("SQLGlot not installed. Install with: pip install sqlglot")
+    print("Then you can parse SQL and translate: sqlglot.parse_one(sql, dialect='duckdb').sql(dialect='postgres')")
+```
+
+Use **Ibis** as the primary way to express queries (backend-agnostic, composable). Use **SQLGlot** when you need to work with existing SQL strings and run them on another dialect.
+
+# 14. Materializing intermediate results
+
+On large CDMs you keep queries lazy and **materialize** only when reusing. Here we create a table from an Ibis expression for reuse.
+
+```{pyodide-python}
+gibleed_t = con.table("gibleed_cohort")
+drug_t = con.table("drug_exposure")
+joined = gibleed_t.join(
+    drug_t,
+    (gibleed_t.subject_id == drug_t.person_id)
+    & (drug_t.drug_exposure_start_date >= gibleed_t.cohort_start_date)
+    & (drug_t.drug_exposure_start_date <= gibleed_t.cohort_end_date),
+)
+tar_drugs_expr = joined.group_by("drug_concept_id").aggregate(n=joined.count())
+con.create_table("tmp_tar_drugs", tar_drugs_expr, overwrite=True)
+tar_drugs_mat = con.to_pandas(con.table("tmp_tar_drugs").limit(5))
+print(tar_drugs_mat.to_string(index=False))
+```
+
+# 15. Putting it together: a tiny "study report" function
+
+A realistic workflow: a function that takes the connection and cohort table name and returns a summary (using Ibis).
+
+```{pyodide-python}
+def summarise_cohort_basics(con, cohort_table_name):
+    cohort_t = con.table(cohort_table_name)
+    person_t = con.table("person")
+    joined = cohort_t.join(person_t, cohort_t.subject_id == person_t.person_id)
+    age_expr = joined.cohort_start_date.year() - joined.year_of_birth
+    return con.to_pandas(
+        joined.aggregate(
+            n_entries=joined.count(),
+            n_people=joined.subject_id.nunique(),
+            age_mean=age_expr.mean(),
+            age_p50=age_expr.median(),
+        )
+    )
+
+report = summarise_cohort_basics(con, "gibleed_cohort")
+print(report.to_string(index=False))
+```
+
+# 16. Next steps
+
+To grow this into a full observational analysis course:
+
+1. **Cohort design rigor**: washout periods, prior observation, inclusion criteria, censoring.
+2. **Confounding + covariates**: baseline covariate construction from condition/drug/measurement history.
+3. **Comparative effectiveness**: target trial emulation, exposure cohorts, propensity scores.
+4. **Outcome modeling**: incidence rates, Kaplan–Meier, Cox models (with careful design).
+5. **Reusable pipelines**: parameterized functions producing standardized outputs.
+
+# 17. Clean up
+
+```{pyodide-python}
+con.disconnect()
+print("Disconnected.")
+```
+
+---
+
+**Provenance**: This in-browser lesson uses synthetic data to mirror the [Pedagogical OMOP (GiBleed)](../notebooks/10_pedagogical_omop_gibleed.qmd) tutorial. For real OMOP data, use [CDMConnector](https://github.com/darwin-eu/CDMConnector) with [Eunomia](https://darwin-eu.github.io/CDMConnector/reference/eunomiaDir.html) (e.g. `eunomia_dir("GiBleed")`) and run the same workflow with Ibis + DuckDB or your backend. Prefer **Ibis** for queries; use **SQLGlot** to translate existing SQL between dialects when needed.

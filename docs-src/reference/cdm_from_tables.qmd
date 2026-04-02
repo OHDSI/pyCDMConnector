@@ -1,0 +1,25 @@
+# cdm_from_tables { #cdmconnector.cdm_from_tables }
+
+```python
+cdm_from_tables(tables, cdm_name, *, cdm_version='5.3', cohort_tables=None)
+```
+
+Create a CDM reference from a dict of (table_name -> Ibis table or DataFrame).
+
+For local/in-memory CDMs: if tables are pandas/pyarrow, an in-memory DuckDB
+is created and tables are registered there; then CDM holds Ibis refs to them.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type                     | Description                                                              | Default    |
+|---------------|--------------------------|--------------------------------------------------------------------------|------------|
+| tables        | dict\[str, Any\]         | Mapping of table name -> Ibis table, pandas.DataFrame, or pyarrow.Table. | _required_ |
+| cdm_name      | str                      | Display name for this CDM.                                               | _required_ |
+| cdm_version   | str or None              | OMOP CDM version (default "5.3").                                        | `'5.3'`    |
+| cohort_tables | dict\[str, Any\] or None | Optional cohort tables to attach (name -> table).                        | `None`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                             |
+|--------|--------|-----------------------------------------|
+|        | Cdm    | CDM reference (local or DuckDB-backed). |

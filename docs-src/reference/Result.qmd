@@ -1,0 +1,60 @@
+# Result { #cdmconnector.Result }
+
+```python
+Result(expr, meta=dict())
+```
+
+Lazy result: holds an Ibis table expression and optional metadata.
+
+Use .collect(limit=None) to get a pandas DataFrame, or
+.compute(cdm, name, ...) to persist as a table and get an Ibis reference.
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [collect](#cdmconnector.Result.collect) | Materialize to a pandas DataFrame. Optionally limit rows. |
+| [compute](#cdmconnector.Result.compute) | Persist to a table and return Ibis table reference. |
+
+### collect { #cdmconnector.Result.collect }
+
+```python
+Result.collect(limit=None)
+```
+
+Materialize to a pandas DataFrame. Optionally limit rows.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type        | Description                                           | Default   |
+|--------|-------------|-------------------------------------------------------|-----------|
+| limit  | int or None | If set, limit number of rows (for table expressions). | `None`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type             | Description                                                         |
+|--------|------------------|---------------------------------------------------------------------|
+|        | pandas.DataFrame | Materialized result (or CDM snapshot if this is a snapshot Result). |
+
+### compute { #cdmconnector.Result.compute }
+
+```python
+Result.compute(cdm, name, *, schema=None, overwrite=False)
+```
+
+Persist to a table and return Ibis table reference.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                | Description                                              | Default    |
+|-----------|---------------------|----------------------------------------------------------|------------|
+| cdm       | Cdm or Any          | CDM reference (must be database-backed for table write). | _required_ |
+| name      | str                 | Table name in write schema.                              | _required_ |
+| schema    | str or dict or None | Override schema for write (default: cdm.write_schema).   | `None`     |
+| overwrite | bool                | If True, replace existing table (default False).         | `False`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                            |
+|--------|--------|----------------------------------------|
+|        | Any    | Ibis table reference to the new table. |

@@ -1,0 +1,14 @@
+<script>
+(function() {
+  console.log("[WASM debug] Header script ran (runs first)");
+  window.quartoLog = function(msg, data) {
+    console.log("[QuartoLog]", new Date().toISOString(), msg, data !== undefined ? data : "");
+  };
+  window.addEventListener("error", function(ev) {
+    console.error("[QuartoLog] error:", ev.message, ev.filename, ev.lineno, ev.error);
+  });
+  window.addEventListener("unhandledrejection", function(ev) {
+    console.error("[QuartoLog] unhandledrejection:", ev.reason);
+  });
+})();
+</script>

@@ -1,0 +1,40 @@
+# add_age { #cdmconnector.add_age }
+
+```python
+add_age(
+    table,
+    cdm,
+    *,
+    index_date='cohort_start_date',
+    age_name='age',
+    age_group=None,
+    age_missing_month=1,
+    age_missing_day=1,
+    age_impose_month=False,
+    age_impose_day=False,
+    missing_age_group_value='None',
+)
+```
+
+Add age at index_date (and optional age groups).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                    | Type         | Description                                                                    | Default               |
+|-------------------------|--------------|--------------------------------------------------------------------------------|-----------------------|
+| table                   | Any          | Ibis table with person_id or subject_id and index_date column.                 | _required_            |
+| cdm                     | Cdm          | CDM reference (person).                                                        | _required_            |
+| index_date              | str          | Column name for index date (default "cohort_start_date").                      | `'cohort_start_date'` |
+| age_name                | str          | Output column name (default "age").                                            | `'age'`               |
+| age_group               | list or None | Optional age groups (col_name, (low, high)) or (col_name, label, (low, high)). | `None`                |
+| age_missing_month       | int          | Default month/day when missing.                                                | `1`                   |
+| age_missing_day         | int          | Default month/day when missing.                                                | `1`                   |
+| age_impose_month        | bool         | Force default month/day.                                                       | `False`               |
+| age_impose_day          | bool         | Force default month/day.                                                       | `False`               |
+| missing_age_group_value | str          | Value for missing/unknown group.                                               | `'None'`              |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                  | Description                                      |
+|--------|-----------------------|--------------------------------------------------|
+|        | ibis.expr.types.Table | Table with age (and optional age_group) columns. |

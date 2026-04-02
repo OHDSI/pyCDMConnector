@@ -1,0 +1,32 @@
+# eunomia_dir { #cdmconnector.eunomia_dir }
+
+```python
+eunomia_dir(
+    dataset_name='GiBleed',
+    cdm_version='5.3',
+    path=None,
+    database_file=None,
+)
+```
+
+Return path to a DuckDB file containing the Eunomia dataset.
+
+EUNOMIA_DATA_FOLDER must be set; it is the cache location (zip and DuckDB).
+If the dataset is not yet available, downloads it. If the DuckDB file does not
+exist, creates it from the ZIP. Always returns a path to a *copy* of the DB.
+path (or database_file) is where to copy the DB; if None, a temp file is used.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type                | Description                                                              | Default     |
+|---------------|---------------------|--------------------------------------------------------------------------|-------------|
+| dataset_name  | str                 | One of example_datasets() (default "GiBleed").                           | `'GiBleed'` |
+| cdm_version   | str                 | "5.3" or "5.4" (default "5.3").                                          | `'5.3'`     |
+| path          | str or Path or None | Where to copy the DuckDB file (file or directory); if None, a temp file. | `None`      |
+| database_file | str or Path or None | Alias for path (where to copy the DB). path takes precedence.            | `None`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                               |
+|--------|--------|---------------------------------------------------------------------------|
+|        | str    | Path to a copy of the DuckDB database file (cached DB is never returned). |

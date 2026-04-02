@@ -1,0 +1,23 @@
+# compute { #cdmconnector.compute }
+
+```python
+compute(cdm, expr, name, *, schema=None, overwrite=True)
+```
+
+Materialize an Ibis expression into a table in the CDM's write schema.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type                                                      | Description   | Default    |
+|-----------|-----------------------------------------------------------|---------------|------------|
+| cdm       | Cdm reference (database-backed).                          |               | _required_ |
+| expr      | Ibis table expression to materialize.                     |               | _required_ |
+| name      | Name of the new table.                                    |               | _required_ |
+| schema    | If set, write to this schema instead of cdm.write_schema. |               | `None`     |
+| overwrite | If True, replace existing table.                          |               | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                   | Description   |
+|--------|----------------------------------------|---------------|
+|        | Ibis table reference to the new table. |               |

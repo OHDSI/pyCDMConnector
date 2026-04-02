@@ -1,0 +1,67 @@
+# Function reference {.doc .doc-index}
+
+## CDM & connection
+
+Core CDM object and connection helpers.
+
+| | |
+| --- | --- |
+| [Cdm](Cdm.qmd#cdmconnector.Cdm) | OMOP CDM reference: holds a mapping of table names to Ibis table expressions |
+| [cdm_from_con](cdm_from_con.qmd#cdmconnector.cdm_from_con) | Create a CDM reference from an Ibis connection. |
+| [cdm_from_tables](cdm_from_tables.qmd#cdmconnector.cdm_from_tables) | Create a CDM reference from a dict of (table_name -> Ibis table or DataFrame). |
+| [cdm_tables](cdm_tables.qmd#cdmconnector.cdm_tables) | Return available CDM table names (logical names). |
+| [collect](collect.qmd#cdmconnector.collect) | Materialize an Ibis expression to a pandas DataFrame. |
+| [compute](compute.qmd#cdmconnector.compute) | Materialize an Ibis expression into a table in the CDM's write schema. |
+| [insert_table](insert_table.qmd#cdmconnector.insert_table) | Insert a table (Ibis expr or pyarrow/pandas) into the write schema and return Ibis table ref. |
+| [drop_table](drop_table.qmd#cdmconnector.drop_table) | Drop one or more tables from the write schema. |
+
+## Cohorts
+
+Cohort set generation.
+
+| | |
+| --- | --- |
+| [generate_cohort_set](generate_cohort_set.qmd#cdmconnector.generate_cohort_set) | Generate a cohort set from a cohort definition set (CIRCE JSON or equivalent). |
+
+## Eunomia
+
+Example datasets and download helpers.
+
+| | |
+| --- | --- |
+| [download_eunomia_data](download_eunomia_data.qmd#cdmconnector.download_eunomia_data) | Download Eunomia data from CDMConnector blob storage (or GitHub for Synthea27NjParquet). |
+| [eunomia_dir](eunomia_dir.qmd#cdmconnector.eunomia_dir) | Return path to a DuckDB file containing the Eunomia dataset. |
+| [eunomia_is_available](eunomia_is_available.qmd#cdmconnector.eunomia_is_available) | Return True if the Eunomia dataset ZIP is present in the data folder. |
+| [example_datasets](example_datasets.qmd#cdmconnector.example_datasets) | Return the list of available Eunomia example dataset names. |
+| [require_eunomia](require_eunomia.qmd#cdmconnector.require_eunomia) | Ensure the Eunomia dataset is available; download if needed. |
+
+## Patient profiles
+
+Demographics and summarise helpers.
+
+| | |
+| --- | --- |
+| [add_age](add_age.qmd#cdmconnector.add_age) | Add age at index_date (and optional age groups). |
+| [add_demographics](add_demographics.qmd#cdmconnector.add_demographics) | Add demographic characteristics to a table: age, sex, prior/future observation, optional date_of_birth. |
+| [add_sex](add_sex.qmd#cdmconnector.add_sex) | Add sex from person (gender_concept_id: 8507 Male, 8532 Female). |
+
+## Results
+
+Result container and export.
+
+| | |
+| --- | --- |
+| [Result](Result.qmd#cdmconnector.Result) | Lazy result: holds an Ibis table expression and optional metadata. |
+
+## Exceptions
+
+Errors raised by the package.
+
+| | |
+| --- | --- |
+| [CDMConnectorError](CDMConnectorError.qmd#cdmconnector.CDMConnectorError) | Base exception for CDMConnector. |
+| [CDMValidationError](CDMValidationError.qmd#cdmconnector.CDMValidationError) | Raised when CDM or table validation fails. |
+| [CohortError](CohortError.qmd#cdmconnector.CohortError) | Raised when cohort operations or validation fail. |
+| [EunomiaError](EunomiaError.qmd#cdmconnector.EunomiaError) | Raised when Eunomia download or path operations fail. |
+| [SourceError](SourceError.qmd#cdmconnector.SourceError) | Raised when source/connection operations fail. |
+| [TableNotFoundError](TableNotFoundError.qmd#cdmconnector.TableNotFoundError) | Raised when a requested table does not exist in the CDM. |

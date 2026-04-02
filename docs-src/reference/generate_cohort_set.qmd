@@ -1,0 +1,44 @@
+# generate_cohort_set { #cdmconnector.generate_cohort_set }
+
+```python
+generate_cohort_set(
+    cdm,
+    cohort_definition_set,
+    *,
+    name='cohort',
+    overwrite=True,
+    compute_attrition=True,
+)
+```
+
+Generate a cohort set from a cohort definition set (CIRCE JSON or equivalent).
+
+Uses internal CIRCE-style functions (cohort_expression_from_json,
+create_generate_options, build_cohort_query) backed by Circepy. SQL generation
+requires Circepy (a package dependency). Alternatively provide
+cohort_definition_set with a "sql" column (pre-generated SQL). Creates the
+cohort table, cohort_set, and cohort_attrition in the CDM write schema and
+runs the cohort SQL.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name                  | Type                                                                                   | Description                                                                                                                                 | Default    |
+|-----------------------|----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| cdm                   | Cdm reference (from cdm_from_con with write_schema).                                   |                                                                                                                                             | _required_ |
+| cohort_definition_set | DataFrame with cohort_definition_id, cohort_name, and                                  | either "json" (CIRCE JSON strings) or "sql" (pre-generated SQL). May include "cohort" (parsed dicts). From read_cohort_set() or equivalent. | _required_ |
+| name                  | Name of the cohort table (lowercase, letters/numbers/underscores). Default \"cohort\". |                                                                                                                                             | `'cohort'` |
+| overwrite             | If True, overwrite existing cohort tables. Default True.                               |                                                                                                                                             | `True`     |
+| compute_attrition     | If True, CIRCE generates inclusion-rule stats (requires                                | CIRCE SQL to create inclusion/inclusion_result tables). Default True.                                                                       | `True`     |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description                                                              |
+|--------|--------|--------------------------------------------------------------------------|
+|        | Cdm    | CDM with the new cohort table and cohort_set/cohort_attrition populated. |
+
+## Raises {.doc-section .doc-section-raises}
+
+| Name   | Type                | Description                                                                              |
+|--------|---------------------|------------------------------------------------------------------------------------------|
+|        | CohortError         | If CDM has no database source, cohort_definition_set is invalid, or SQL execution fails. |
+|        | NotImplementedError | If Circepy is not installed and no "sql" column is provided.                             |

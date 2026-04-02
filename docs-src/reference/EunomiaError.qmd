@@ -1,0 +1,7 @@
+# EunomiaError { #cdmconnector.EunomiaError }
+
+```python
+EunomiaError()
+```
+
+Raised when Eunomia download or path operations fail.

@@ -1,0 +1,48 @@
+---
+title: "Development"
+---
+
+This page describes the developer workflow: updating notebooks, rebuilding the documentation site, and the release checklist.
+
+## Developer workflow
+
+1. **Clone and install** (see [Contributing](contributing.qmd)).
+2. **Make changes** in `src/cdmconnector/` or in `docs-src/` (notebooks, `.qmd` pages).
+3. **Run tests**: `pytest tests -v`
+4. **Lint**: `ruff check src tests`
+5. **Rebuild docs** when you change API or narrative content (see below).
+
+## Updating notebooks
+
+- Notebooks live in **`docs-src/notebooks/`** as `.ipynb` files.
+- Run Jupyter from the **repository root** so paths like `docs-src/assets/cohort_json` resolve.
+- Outputs can be pre-rendered; Quarto renders notebooks **without executing** by default (execute is controlled in `_quarto.yml` or per-file YAML if needed).
+- After editing a notebook, run `quarto render docs-src/` to regenerate HTML in `docs/`.
+
+## Rebuilding docs
+
+From the repository root:
+
+```bash
+# 1. Generate API reference (writes into docs-src/reference/)
+quartodoc build
+
+# 2. Render website into docs/
+quarto render docs-src/
+```
+
+Ensure **Quarto CLI** is installed ([quarto.org](https://quarto.org)); it is not installed via pip. After a successful build, `docs/` contains the full site (index, tutorials, reference, contributing, development). Commit the updated `docs/` if your workflow uses committed HTML for GitHub Pages.
+
+## Release checklist (PyPI)
+
+Before publishing to PyPI:
+
+1. **Version** — Bump version in `pyproject.toml` and `src/cdmconnector/__init__.py` (or use single source from pyproject).
+2. **Tests** — `pip install -e ".[dev]" && pytest tests -v`; ensure supported Python versions (CI covers these).
+3. **Lint** — `ruff check src tests`; fix any issues.
+4. **Docs** — Run `quartodoc build` and `quarto render docs-src/`; confirm no broken links or missing API pages.
+5. **Build** — `pip install build && python -m build`; check `dist/` for `.whl` and `.tar.gz`.
+6. **Publish** — `pip install twine && twine upload dist/*` (use Test PyPI first: `twine upload --repository testpypi dist/*`).
+7. **Changelog** — Update `CHANGELOG.md` with the release date and any last-minute notes.
+
+Optional: exclude tests/docs from the wheel if needed; current config packages only `src/cdmconnector`.

@@ -1,0 +1,73 @@
+---
+title: "Contributing"
+---
+
+Thank you for your interest in contributing to CDMConnector. This page covers how to get the development environment set up and run tests.
+
+## Installation
+
+### Environment setup
+
+1. **Create a virtual environment** (recommended):
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate   # Windows: .venv\Scripts\activate
+   ```
+
+   Or use **pyenv** to manage Python versions, then create a venv with your chosen version.
+
+2. **Editable install** (from the repository root):
+
+   ```bash
+   pip install -e ".[dev,docs]"
+   ```
+
+   This installs the package in editable mode so code changes take effect without reinstalling. The `dev` extra adds pytest, ruff, mypy; `docs` adds quartodoc and any other doc-build dependencies.
+
+3. **Optional backends** (e.g. DuckDB for Eunomia and tutorials):
+
+   ```bash
+   pip install -e ".[dev,docs,duckdb]"
+   ```
+
+## Running tests
+
+From the repository root:
+
+```bash
+pytest tests -v --tb=short
+```
+
+Run with coverage:
+
+```bash
+pytest tests -v --cov=src/cdmconnector --cov-report=term-missing
+```
+
+To skip integration tests (if marked):
+
+```bash
+pytest tests -v -m "not integration"
+```
+
+## Linting
+
+```bash
+ruff check src tests
+```
+
+## Type checking
+
+```bash
+mypy src/cdmconnector
+```
+
+## Documentation
+
+See [Development](development.qmd) for how to rebuild the docs (quartodoc + Quarto) and update notebooks.
+
+## Getting help
+
+- Open an [issue](https://github.com/darwin-eu/CDMConnector/issues) for bugs or feature requests.
+- Check existing issues and discussions before opening a new one.

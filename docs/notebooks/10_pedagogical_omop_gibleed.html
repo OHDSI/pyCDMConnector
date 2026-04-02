@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Mini-course: observational data analysis on an OMOP CDM using CDMConnector, Ibis, and Eunomia GiBleed—joins, cohort construction, time-at-risk, and outcome counting.">
+
+<title>Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia) – CDMConnector</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-bd513eccd93cf58363ffe0c05d3753b3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../stylesheets/extra.css">
+<link rel="stylesheet" href="../reference/_styles-quartodoc.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      CDMConnector
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">CDMConnector</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-youll-learn" id="toc-what-youll-learn" class="nav-link active" data-scroll-target="#what-youll-learn"><span class="header-section-number">1</span> 1. What you’ll learn</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">2</span> 2. Prerequisites</a></li>
+  <li><a href="#install-and-load-packages" id="toc-install-and-load-packages" class="nav-link" data-scroll-target="#install-and-load-packages"><span class="header-section-number">3</span> 3. Install and load packages</a></li>
+  <li><a href="#get-the-gibleed-example-cdm-and-connect" id="toc-get-the-gibleed-example-cdm-and-connect" class="nav-link" data-scroll-target="#get-the-gibleed-example-cdm-and-connect"><span class="header-section-number">4</span> 4. Get the GiBleed example CDM and connect</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-cdm-reference" id="toc-what-is-a-cdm-reference" class="nav-link" data-scroll-target="#what-is-a-cdm-reference"><span class="header-section-number">4.1</span> 4.1 What is a Cdm reference?</a></li>
+  </ul></li>
+  <li><a href="#first-contact-with-omop-data" id="toc-first-contact-with-omop-data" class="nav-link" data-scroll-target="#first-contact-with-omop-data"><span class="header-section-number">5</span> 5. First contact with OMOP data</a>
+  <ul class="collapse">
+  <li><a href="#person-who-are-the-individuals" id="toc-person-who-are-the-individuals" class="nav-link" data-scroll-target="#person-who-are-the-individuals"><span class="header-section-number">5.1</span> 5.1 person: who are the individuals?</a>
+  <ul class="collapse">
+  <li><a href="#key-omop-idea-concept_id-everywhere" id="toc-key-omop-idea-concept_id-everywhere" class="nav-link" data-scroll-target="#key-omop-idea-concept_id-everywhere"><span class="header-section-number">5.1.1</span> Key OMOP idea: “concept_id everywhere”</a></li>
+  </ul></li>
+  <li><a href="#visits-where-do-records-cluster-in-time" id="toc-visits-where-do-records-cluster-in-time" class="nav-link" data-scroll-target="#visits-where-do-records-cluster-in-time"><span class="header-section-number">5.2</span> 5.2 Visits: where do records cluster in time?</a></li>
+  </ul></li>
+  <li><a href="#ibis-on-a-database-mental-model" id="toc-ibis-on-a-database-mental-model" class="nav-link" data-scroll-target="#ibis-on-a-database-mental-model"><span class="header-section-number">6</span> 6. Ibis on a database: mental model</a></li>
+  <li><a href="#a-first-descriptive-analysis-top-conditions" id="toc-a-first-descriptive-analysis-top-conditions" class="nav-link" data-scroll-target="#a-first-descriptive-analysis-top-conditions"><span class="header-section-number">7</span> 7. A first descriptive analysis: “Top conditions”</a>
+  <ul class="collapse">
+  <li><a href="#exercise-optional" id="toc-exercise-optional" class="nav-link" data-scroll-target="#exercise-optional"><span class="header-section-number">7.1</span> 7.1 Exercise (optional)</a></li>
+  </ul></li>
+  <li><a href="#the-observational-workflow-define-a-cohort-then-analyze-within-it" id="toc-the-observational-workflow-define-a-cohort-then-analyze-within-it" class="nav-link" data-scroll-target="#the-observational-workflow-define-a-cohort-then-analyze-within-it"><span class="header-section-number">8</span> 8. The observational workflow: define a cohort, then analyze within it</a>
+  <ul class="collapse">
+  <li><a href="#define-a-gi-bleed-cohort" id="toc-define-a-gi-bleed-cohort" class="nav-link" data-scroll-target="#define-a-gi-bleed-cohort"><span class="header-section-number">8.1</span> 8.1 Define a “GI bleed” cohort</a></li>
+  <li><a href="#cohort-size-and-person-time" id="toc-cohort-size-and-person-time" class="nav-link" data-scroll-target="#cohort-size-and-person-time"><span class="header-section-number">8.2</span> 8.2 Cohort size and person-time</a></li>
+  </ul></li>
+  <li><a href="#baseline-characteristics-at-cohort-entry" id="toc-baseline-characteristics-at-cohort-entry" class="nav-link" data-scroll-target="#baseline-characteristics-at-cohort-entry"><span class="header-section-number">9</span> 9. Baseline characteristics at cohort entry</a></li>
+  <li><a href="#outcomes-count-events-during-time-at-risk" id="toc-outcomes-count-events-during-time-at-risk" class="nav-link" data-scroll-target="#outcomes-count-events-during-time-at-risk"><span class="header-section-number">10</span> 10. Outcomes: count events during time-at-risk</a>
+  <ul class="collapse">
+  <li><a href="#death-during-cohort-window-if-available" id="toc-death-during-cohort-window-if-available" class="nav-link" data-scroll-target="#death-during-cohort-window-if-available"><span class="header-section-number">10.1</span> 10.1 Death during cohort window (if available)</a></li>
+  <li><a href="#condition-outcome-during-cohort-window-general-pattern" id="toc-condition-outcome-during-cohort-window-general-pattern" class="nav-link" data-scroll-target="#condition-outcome-during-cohort-window-general-pattern"><span class="header-section-number">10.2</span> 10.2 Condition outcome during cohort window (general pattern)</a></li>
+  </ul></li>
+  <li><a href="#rates-events-per-person-time" id="toc-rates-events-per-person-time" class="nav-link" data-scroll-target="#rates-events-per-person-time"><span class="header-section-number">11</span> 11. Rates: events per person-time</a></li>
+  <li><a href="#practical-sql-on-cdm-skills" id="toc-practical-sql-on-cdm-skills" class="nav-link" data-scroll-target="#practical-sql-on-cdm-skills"><span class="header-section-number">12</span> 12. Practical SQL-on-CDM skills</a>
+  <ul class="collapse">
+  <li><a href="#semi_join-to-restrict-to-a-cohort" id="toc-semi_join-to-restrict-to-a-cohort" class="nav-link" data-scroll-target="#semi_join-to-restrict-to-a-cohort"><span class="header-section-number">12.1</span> 12.1 semi_join to restrict to a cohort</a></li>
+  <li><a href="#time-window-joins-a-core-observational-pattern" id="toc-time-window-joins-a-core-observational-pattern" class="nav-link" data-scroll-target="#time-window-joins-a-core-observational-pattern"><span class="header-section-number">12.2</span> 12.2 Time-window joins (a core observational pattern)</a></li>
+  </ul></li>
+  <li><a href="#performance-and-materialization" id="toc-performance-and-materialization" class="nav-link" data-scroll-target="#performance-and-materialization"><span class="header-section-number">13</span> 13. Performance and materialization</a></li>
+  <li><a href="#putting-it-together-a-tiny-study-report-function" id="toc-putting-it-together-a-tiny-study-report-function" class="nav-link" data-scroll-target="#putting-it-together-a-tiny-study-report-function"><span class="header-section-number">14</span> 14. Putting it together: a tiny “study report” function</a></li>
+  <li><a href="#next-steps-what-to-learn-after-this" id="toc-next-steps-what-to-learn-after-this" class="nav-link" data-scroll-target="#next-steps-what-to-learn-after-this"><span class="header-section-number">15</span> 15. Next steps (what to learn after this)</a></li>
+  <li><a href="#clean-up" id="toc-clean-up" class="nav-link" data-scroll-target="#clean-up"><span class="header-section-number">16</span> 16. Clean up</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/darwin-eu/CDMConnector/edit/main/notebooks/10_pedagogical_omop_gibleed.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/darwin-eu/CDMConnector/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pedagogical OMOP Data Analysis with CDMConnector (GiBleed / Eunomia)</h1>
+</div>
+
+<div>
+  <div class="description">
+    Mini-course: observational data analysis on an OMOP CDM using CDMConnector, Ibis, and Eunomia GiBleed—joins, cohort construction, time-at-risk, and outcome counting.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-youll-learn" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 1. What you’ll learn</h1>
+<p>This tutorial is a <strong>mini-course</strong> in doing observational data analysis <em>directly on an OMOP CDM database</em> using:</p>
+<ul>
+<li><strong>CDMConnector</strong>: creates a single <code>Cdm</code> object (named CDM table references + metadata).</li>
+<li><strong>Ibis + DuckDB</strong>: connects to a local database file created from the Eunomia example dataset.</li>
+<li><strong>Ibis verbs</strong>: <code>filter</code>, <code>select</code>, <code>mutate</code>, <code>group_by</code>, <code>aggregate</code>, <code>order_by</code>, <code>join</code>, etc., executed lazily as SQL.</li>
+</ul>
+<p>We’ll also learn the <strong>shape and meaning</strong> of core OMOP tables:</p>
+<ul>
+<li><code>person</code>, <code>visit_occurrence</code>, <code>condition_occurrence</code>, <code>drug_exposure</code>, <code>measurement</code>, and <code>concept</code>.</li>
+</ul>
+<p>Finally, we will create a simple cohort and compute:</p>
+<ul>
+<li>baseline characteristics (age/sex),</li>
+<li>event counts,</li>
+<li>a basic time-at-risk rate.</li>
+</ul>
+</section>
+<section id="prerequisites" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 2. Prerequisites</h1>
+<p>You should be comfortable with:</p>
+<ul>
+<li>basic Python</li>
+<li>basic pandas (or Ibis) for tables and joins</li>
+</ul>
+<p>Everything else will be taught as we go.</p>
+</section>
+<section id="install-and-load-packages" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 3. Install and load packages</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If needed:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install cdmconnector "cdmconnector[postgres]"  # optional: postgres</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eunomia datasets are downloaded on first use.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cdmconnector <span class="im">as</span> cc</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="get-the-gibleed-example-cdm-and-connect" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 4. Get the GiBleed example CDM and connect</h1>
+<p>Eunomia provides synthetic OMOP CDM datasets for testing and teaching. <code>eunomia_dir()</code> creates (and caches) a DuckDB database copy on your machine.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure the dataset is available (may download the first time).</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cc.require_eunomia(dataset_name<span class="op">=</span><span class="st">"GiBleed"</span>, cdm_version<span class="op">=</span><span class="st">"5.3"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> cc.eunomia_dir(<span class="st">"GiBleed"</span>, cdm_version<span class="op">=</span><span class="st">"5.3"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.duckdb.<span class="ex">connect</span>(path)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>cdm <span class="op">=</span> cc.cdm_from_con(con, cdm_schema<span class="op">=</span><span class="st">"main"</span>, write_schema<span class="op">=</span><span class="st">"main"</span>, cdm_name<span class="op">=</span><span class="st">"eunomia"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>cdm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-is-a-cdm-reference" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="what-is-a-cdm-reference"><span class="header-section-number">4.1</span> 4.1 What is a Cdm reference?</h2>
+<p>A <code>Cdm</code> behaves like a mapping: <code>cdm.person</code>, <code>cdm["condition_occurrence"]</code>, etc. Each element is a <strong>lazy table reference</strong> (Ibis) that translates your operations into SQL.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdm.tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="first-contact-with-omop-data" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 5. First contact with OMOP data</h1>
+<section id="person-who-are-the-individuals" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="person-who-are-the-individuals"><span class="header-section-number">5.1</span> 5.1 person: who are the individuals?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cc.collect(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    cdm.person.select(<span class="st">"person_id"</span>, <span class="st">"gender_concept_id"</span>, <span class="st">"year_of_birth"</span>, <span class="st">"month_of_birth"</span>, <span class="st">"day_of_birth"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="key-omop-idea-concept_id-everywhere" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="key-omop-idea-concept_id-everywhere"><span class="header-section-number">5.1.1</span> Key OMOP idea: “concept_id everywhere”</h3>
+<p>OMOP stores standardized medical vocabulary references as integer IDs. <code>gender_concept_id</code> points to the <code>concept</code> table. Decode gender counts by joining to <code>concept</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> cdm.person.join(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    cdm.concept.select(concept_id<span class="op">=</span>cdm.concept.concept_id, concept_name<span class="op">=</span>cdm.concept.concept_name),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    cdm.person.gender_concept_id <span class="op">==</span> cdm.concept.concept_id,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>gender_counts <span class="op">=</span> (</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    joined.group_by(<span class="st">"concept_name"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    .aggregate(n<span class="op">=</span>joined.person_id.count())</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    .order_by(ibis.desc(<span class="st">"n"</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>cc.collect(gender_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="visits-where-do-records-cluster-in-time" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="visits-where-do-records-cluster-in-time"><span class="header-section-number">5.2</span> 5.2 Visits: where do records cluster in time?</h2>
+<p>In OMOP, many records can be linked to a visit via <code>visit_occurrence_id</code> (when available).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cc.collect(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    cdm.visit_occurrence.aggregate(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        n_visits<span class="op">=</span>cdm.visit_occurrence.count(),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        n_people<span class="op">=</span>cdm.visit_occurrence.person_id.nunique(),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        min_date<span class="op">=</span>cdm.visit_occurrence.visit_start_date.<span class="bu">min</span>(),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        max_date<span class="op">=</span>cdm.visit_occurrence.visit_end_date.<span class="bu">max</span>(),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="ibis-on-a-database-mental-model" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> 6. Ibis on a database: mental model</h1>
+<p>When you run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cdm.condition_occurrence.<span class="bu">filter</span>(cdm.condition_occurrence.condition_start_date <span class="op">&gt;=</span> <span class="st">"2000-01-01"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>you are <strong>not</strong> pulling the whole table into memory. You are building a query. Only when you call <code>cc.collect(expr)</code> (or <code>.execute()</code>) does work happen. Inspect SQL with <code>.compile()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> (</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    cdm.condition_occurrence</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(cdm.condition_occurrence.condition_start_date <span class="op">&gt;=</span> <span class="st">"2000-01-01"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    .select(<span class="st">"person_id"</span>, <span class="st">"condition_concept_id"</span>, <span class="st">"condition_start_date"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q.<span class="bu">compile</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="a-first-descriptive-analysis-top-conditions" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> 7. A first descriptive analysis: “Top conditions”</h1>
+<p>We’ll compute the most frequent <em>condition concepts</em>, then decode them to names.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cond <span class="op">=</span> cdm.condition_occurrence</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>concept <span class="op">=</span> cdm.concept</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>by_concept <span class="op">=</span> cond.group_by(<span class="st">"condition_concept_id"</span>).aggregate(n<span class="op">=</span>cond.count()).order_by(ibis.desc(<span class="st">"n"</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>top_conditions <span class="op">=</span> (</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    by_concept.join(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        concept.select(<span class="st">"concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"domain_id"</span>, <span class="st">"vocabulary_id"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        by_concept.condition_concept_id <span class="op">==</span> concept.concept_id,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    .select(<span class="st">"condition_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"domain_id"</span>, <span class="st">"vocabulary_id"</span>, <span class="st">"n"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">15</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>cc.collect(top_conditions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="exercise-optional" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="exercise-optional"><span class="header-section-number">7.1</span> 7.1 Exercise (optional)</h2>
+<ul>
+<li>Repeat this for <code>drug_exposure</code> (<code>drug_concept_id</code>).</li>
+<li>Repeat this for <code>measurement</code> (<code>measurement_concept_id</code>).</li>
+</ul>
+</section>
+</section>
+<section id="the-observational-workflow-define-a-cohort-then-analyze-within-it" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> 8. The observational workflow: define a cohort, then analyze within it</h1>
+<p>A common pattern in OHDSI-style observational studies:</p>
+<ol type="1">
+<li>Define an <strong>index event</strong> (cohort entry).</li>
+<li>Define <strong>inclusion/exclusion</strong> (optional).</li>
+<li>Define <strong>time-at-risk</strong>.</li>
+<li>Estimate outcomes, covariates, rates, etc.</li>
+</ol>
+<p>We’ll build a simple “GI bleed” cohort from condition concept ID 192671 (Gastrointestinal hemorrhage). In R, CDMConnector has <code>generateConceptCohortSet</code>; in Python we build the cohort manually with Ibis and insert it.</p>
+<section id="define-a-gi-bleed-cohort" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="define-a-gi-bleed-cohort"><span class="header-section-number">8.1</span> 8.1 Define a “GI bleed” cohort</h2>
+<p>First occurrence of concept 192671 per person; cohort end = start + 10 days.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gibleed_concept_id <span class="op">=</span> <span class="dv">192671</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cond <span class="op">=</span> cdm.condition_occurrence</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>first_occurrence <span class="op">=</span> (</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    cond.<span class="bu">filter</span>(cond.condition_concept_id <span class="op">==</span> gibleed_concept_id)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    .group_by(cond.person_id)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    .aggregate(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        cohort_start_date<span class="op">=</span>cond.condition_start_date.<span class="bu">min</span>(),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># cohort_end_date = cohort_start_date + 10 days</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>first_occurrence <span class="op">=</span> first_occurrence.mutate(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    cohort_definition_id<span class="op">=</span>ibis.literal(<span class="dv">1</span>, <span class="bu">type</span><span class="op">=</span><span class="st">"int64"</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    cohort_end_date<span class="op">=</span>first_occurrence.cohort_start_date <span class="op">+</span> ibis.interval(days<span class="op">=</span><span class="dv">10</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>cohort_expr <span class="op">=</span> first_occurrence.select(</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cohort_definition_id"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    subject_id<span class="op">=</span>first_occurrence.person_id,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cohort_start_date"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cohort_end_date"</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Insert into the write schema as a cohort table (create empty table, then insert rows).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow <span class="im">as</span> pa</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cohort_df <span class="op">=</span> cc.collect(cohort_expr)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># PyArrow date columns for cohort_start_date, cohort_end_date</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>cohort_arrow <span class="op">=</span> pa.table({</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cohort_definition_id"</span>: pa.array(cohort_df[<span class="st">"cohort_definition_id"</span>], <span class="bu">type</span><span class="op">=</span>pa.int64()),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"subject_id"</span>: pa.array(cohort_df[<span class="st">"subject_id"</span>], <span class="bu">type</span><span class="op">=</span>pa.int64()),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cohort_start_date"</span>: pa.array(cohort_df[<span class="st">"cohort_start_date"</span>].dt.date, <span class="bu">type</span><span class="op">=</span>pa.date32()),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"cohort_end_date"</span>: pa.array(cohort_df[<span class="st">"cohort_end_date"</span>].dt.date, <span class="bu">type</span><span class="op">=</span>pa.date32()),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>cdm <span class="op">=</span> cc.new_cohort_table(cdm, <span class="st">"gibleed_cohort"</span>, overwrite<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>cdm.source.insert_table(<span class="st">"gibleed_cohort"</span>, cohort_arrow, overwrite<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>cdm[<span class="st">"gibleed_cohort"</span>] <span class="op">=</span> cdm.source.table(<span class="st">"gibleed_cohort"</span>, cdm.write_schema)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A cohort table has (at minimum): <code>cohort_definition_id</code>, <code>subject_id</code>, <code>cohort_start_date</code>, <code>cohort_end_date</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cc.collect(cdm[<span class="st">"gibleed_cohort"</span>].select(<span class="st">"cohort_definition_id"</span>, <span class="st">"subject_id"</span>, <span class="st">"cohort_start_date"</span>, <span class="st">"cohort_end_date"</span>).limit(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cohort-size-and-person-time" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="cohort-size-and-person-time"><span class="header-section-number">8.2</span> 8.2 Cohort size and person-time</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cc.collect(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    cohort_tbl.aggregate(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        n_entries<span class="op">=</span>cohort_tbl.count(),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        n_people<span class="op">=</span>cohort_tbl.subject_id.nunique(),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        min_start<span class="op">=</span>cohort_tbl.cohort_start_date.<span class="bu">min</span>(),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        max_start<span class="op">=</span>cohort_tbl.cohort_start_date.<span class="bu">max</span>(),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Compute crude person-time (days) inside cohort:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tar_days_expr <span class="op">=</span> cohort_tbl.cohort_end_date <span class="op">-</span> cohort_tbl.cohort_start_date</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>cohort_with_tar <span class="op">=</span> cohort_tbl.mutate(tar_days<span class="op">=</span>tar_days_expr)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>pt <span class="op">=</span> cohort_with_tar.aggregate(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    total_tar_days<span class="op">=</span>cohort_with_tar.tar_days.<span class="bu">sum</span>(),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    mean_tar_days<span class="op">=</span>cohort_with_tar.tar_days.mean(),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>cc.collect(pt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="baseline-characteristics-at-cohort-entry" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> 9. Baseline characteristics at cohort entry</h1>
+<p>A simple “baseline” snapshot: age and sex at <code>cohort_start_date</code>. We’ll compute approximate age from year/month/day of birth.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>person <span class="op">=</span> cdm.person</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>baseline <span class="op">=</span> cohort_tbl.join(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    person.select(<span class="st">"person_id"</span>, <span class="st">"gender_concept_id"</span>, <span class="st">"year_of_birth"</span>, <span class="st">"month_of_birth"</span>, <span class="st">"day_of_birth"</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    cohort_tbl.subject_id <span class="op">==</span> person.person_id,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Approximate age at cohort entry (ref year - year_of_birth)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> datetime</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>ref_year <span class="op">=</span> datetime.date.today().year</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>baseline <span class="op">=</span> baseline.mutate(age<span class="op">=</span>ref_year <span class="op">-</span> baseline.year_of_birth)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>cc.collect(baseline.select(<span class="st">"subject_id"</span>, <span class="st">"cohort_start_date"</span>, <span class="st">"gender_concept_id"</span>, <span class="st">"age"</span>).limit(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Summarise age distribution and sex breakdown:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cc.collect(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    baseline.aggregate(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        n_people<span class="op">=</span>baseline.subject_id.nunique(),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        age_mean<span class="op">=</span>baseline.age.mean(),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        age_sd<span class="op">=</span>baseline.age.std(),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>sex_summary <span class="op">=</span> (</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    baseline.group_by(<span class="st">"gender_concept_id"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    .aggregate(n<span class="op">=</span>baseline.subject_id.count())</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    .order_by(ibis.desc(<span class="st">"n"</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>sex_with_names <span class="op">=</span> sex_summary.join(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    cdm.concept.select(<span class="st">"concept_id"</span>, <span class="st">"concept_name"</span>),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    sex_summary.gender_concept_id <span class="op">==</span> cdm.concept.concept_id,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>).select(<span class="st">"gender_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>cc.collect(sex_with_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="outcomes-count-events-during-time-at-risk" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> 10. Outcomes: count events during time-at-risk</h1>
+<p>For each cohort entry, look for records between <code>cohort_start_date</code> and <code>cohort_end_date</code>.</p>
+<section id="death-during-cohort-window-if-available" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="death-during-cohort-window-if-available"><span class="header-section-number">10.1</span> 10.1 Death during cohort window (if available)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"death"</span> <span class="kw">in</span> cdm.tables:</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    death_tbl <span class="op">=</span> cdm.death</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    death_joined <span class="op">=</span> cohort_tbl.join(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        death_tbl.select(<span class="st">"person_id"</span>, <span class="st">"death_date"</span>),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        cohort_tbl.subject_id <span class="op">==</span> death_tbl.person_id,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    death_joined <span class="op">=</span> death_joined.mutate(</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        death_in_window<span class="op">=</span>(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>            death_joined.death_date.isnull().<span class="kw">not</span>()</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (death_joined.death_date <span class="op">&gt;=</span> death_joined.cohort_start_date)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">&amp;</span> (death_joined.death_date <span class="op">&lt;=</span> death_joined.cohort_end_date)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    death_in_tar <span class="op">=</span> death_joined.group_by(<span class="st">"cohort_definition_id"</span>).aggregate(</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        n_entries<span class="op">=</span>death_joined.count(),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        n_deaths_in_window<span class="op">=</span>death_joined.death_in_window.<span class="bu">sum</span>(),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    cc.collect(death_in_tar)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No death table found in this CDM."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="condition-outcome-during-cohort-window-general-pattern" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="condition-outcome-during-cohort-window-general-pattern"><span class="header-section-number">10.2</span> 10.2 Condition outcome during cohort window (general pattern)</h2>
+<p>Join cohort to <code>condition_occurrence</code>, filter condition dates within TAR, then summarise.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>cond <span class="op">=</span> cdm.condition_occurrence</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>concept_outcome <span class="op">=</span> <span class="dv">192671</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>outcome_joined <span class="op">=</span> cohort_tbl.join(</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    cond.select(<span class="st">"person_id"</span>, <span class="st">"condition_concept_id"</span>, <span class="st">"condition_start_date"</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    cohort_tbl.subject_id <span class="op">==</span> cond.person_id,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>outcome_joined <span class="op">=</span> outcome_joined.<span class="bu">filter</span>(</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    outcome_joined.condition_concept_id <span class="op">==</span> concept_outcome,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    outcome_joined.condition_start_date <span class="op">&gt;=</span> outcome_joined.cohort_start_date,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    outcome_joined.condition_start_date <span class="op">&lt;=</span> outcome_joined.cohort_end_date,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>outcome_counts <span class="op">=</span> outcome_joined.aggregate(</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    n_events<span class="op">=</span>outcome_joined.count(),</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    n_people_with_event<span class="op">=</span>outcome_joined.subject_id.nunique(),</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>cc.collect(outcome_counts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="rates-events-per-person-time" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> 11. Rates: events per person-time</h1>
+<p>Crude incidence rate = events / total time-at-risk (e.g.&nbsp;per person-year).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cond <span class="op">=</span> cdm.condition_occurrence</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>tar_expr <span class="op">=</span> cohort_tbl.cohort_end_date <span class="op">-</span> cohort_tbl.cohort_start_date</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>cohort_tar <span class="op">=</span> cohort_tbl.mutate(tar_days<span class="op">=</span>tar_expr)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>tar <span class="op">=</span> cc.collect(cohort_tar.aggregate(total_tar_days<span class="op">=</span>cohort_tar.tar_days.<span class="bu">sum</span>()))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>events_df <span class="op">=</span> cc.collect(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    cohort_tbl.join(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        cond.select(<span class="st">"person_id"</span>, <span class="st">"condition_concept_id"</span>, <span class="st">"condition_start_date"</span>),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        (cohort_tbl.subject_id <span class="op">==</span> cond.person_id)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span> (cond.condition_concept_id <span class="op">==</span> concept_outcome)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span> (cond.condition_start_date <span class="op">&gt;=</span> cohort_tbl.cohort_start_date)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span> (cond.condition_start_date <span class="op">&lt;=</span> cohort_tbl.cohort_end_date),</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    ).aggregate(n_events<span class="op">=</span>ibis._.count())</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>total_tar_days <span class="op">=</span> tar[<span class="st">"total_tar_days"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>n_events <span class="op">=</span> events_df[<span class="st">"n_events"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>total_tar_years <span class="op">=</span> total_tar_days <span class="op">/</span> <span class="fl">365.25</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>rate_per_py <span class="op">=</span> n_events <span class="op">/</span> total_tar_years</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total TAR (days): </span><span class="sc">{</span>total_tar_days<span class="sc">}</span><span class="ss">, TAR (years): </span><span class="sc">{</span>total_tar_years<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Events: </span><span class="sc">{</span>n_events<span class="sc">}</span><span class="ss">, Rate per person-year: </span><span class="sc">{</span>rate_per_py<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="practical-sql-on-cdm-skills" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> 12. Practical SQL-on-CDM skills</h1>
+<section id="semi_join-to-restrict-to-a-cohort" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="semi_join-to-restrict-to-a-cohort"><span class="header-section-number">12.1</span> 12.1 semi_join to restrict to a cohort</h2>
+<p>Filter any CDM table to individuals in your cohort using a join + filter (semi_join pattern: keep only rows that match cohort subjects).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>cohort_subjects <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>].select(<span class="st">"subject_id"</span>).distinct()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>drugs_cohort_j <span class="op">=</span> cdm.drug_exposure.join(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    cohort_subjects, cdm.drug_exposure.person_id <span class="op">==</span> cohort_subjects.subject_id, how<span class="op">=</span><span class="st">"inner"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>drugs_in_cohort <span class="op">=</span> (</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    drugs_cohort_j.group_by(<span class="st">"drug_concept_id"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    .aggregate(n<span class="op">=</span>drugs_cohort_j.count())</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    .order_by(ibis.desc(<span class="st">"n"</span>))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>drugs_with_names <span class="op">=</span> drugs_in_cohort.join(</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    cdm.concept.select(<span class="st">"concept_id"</span>, <span class="st">"concept_name"</span>),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    drugs_in_cohort.drug_concept_id <span class="op">==</span> cdm.concept.concept_id,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>).select(<span class="st">"drug_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>cc.collect(drugs_with_names)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="time-window-joins-a-core-observational-pattern" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="time-window-joins-a-core-observational-pattern"><span class="header-section-number">12.2</span> 12.2 Time-window joins (a core observational pattern)</h2>
+<p>Restrict drug exposures to the cohort TAR window:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cohort_tbl <span class="op">=</span> cdm[<span class="st">"gibleed_cohort"</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>drugs_tar_joined <span class="op">=</span> cohort_tbl.join(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    cdm.drug_exposure.select(<span class="st">"person_id"</span>, <span class="st">"drug_concept_id"</span>, <span class="st">"drug_exposure_start_date"</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    cohort_tbl.subject_id <span class="op">==</span> cdm.drug_exposure.person_id,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>drugs_tar_joined <span class="op">=</span> drugs_tar_joined.<span class="bu">filter</span>(</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    drugs_tar_joined.drug_exposure_start_date <span class="op">&gt;=</span> drugs_tar_joined.cohort_start_date,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    drugs_tar_joined.drug_exposure_start_date <span class="op">&lt;=</span> drugs_tar_joined.cohort_end_date,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>drugs_in_tar <span class="op">=</span> (</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    drugs_tar_joined.group_by(<span class="st">"drug_concept_id"</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    .aggregate(n<span class="op">=</span>drugs_tar_joined.count())</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    .order_by(ibis.desc(<span class="st">"n"</span>))</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>drugs_in_tar_named <span class="op">=</span> drugs_in_tar.join(</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    cdm.concept.select(<span class="st">"concept_id"</span>, <span class="st">"concept_name"</span>),</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    drugs_in_tar.drug_concept_id <span class="op">==</span> cdm.concept.concept_id,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>).select(<span class="st">"drug_concept_id"</span>, <span class="st">"concept_name"</span>, <span class="st">"n"</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>cc.collect(drugs_in_tar_named)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="performance-and-materialization" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> 13. Performance and materialization</h1>
+<p>On large CDMs, keep queries lazy as long as possible; use <code>cc.compute()</code> to materialize intermediate results into the database when reused.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: materialize a result for reuse</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>drugs_tar_j <span class="op">=</span> cohort_tbl.join(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    cdm.drug_exposure.select(<span class="st">"person_id"</span>, <span class="st">"drug_concept_id"</span>, <span class="st">"drug_exposure_start_date"</span>),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    (cohort_tbl.subject_id <span class="op">==</span> cdm.drug_exposure.person_id)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (cdm.drug_exposure.drug_exposure_start_date <span class="op">&gt;=</span> cohort_tbl.cohort_start_date)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (cdm.drug_exposure.drug_exposure_start_date <span class="op">&lt;=</span> cohort_tbl.cohort_end_date),</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>drugs_tar_for_compute <span class="op">=</span> drugs_tar_j.select(<span class="st">"drug_concept_id"</span>).group_by(<span class="st">"drug_concept_id"</span>).aggregate(n<span class="op">=</span>drugs_tar_j.count())</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Materialize into the write schema (name is backend-dependent)</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>tar_drugs_mat <span class="op">=</span> cc.compute(drugs_tar_for_compute, name<span class="op">=</span><span class="st">"tmp_tar_drugs"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>cc.collect(tar_drugs_mat.limit(<span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="putting-it-together-a-tiny-study-report-function" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> 14. Putting it together: a tiny “study report” function</h1>
+<p>A realistic workflow is to write functions that accept a <code>Cdm</code> and return a result table.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> summarise_cohort_basics(cdm, cohort_table_name):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    cohort_tbl <span class="op">=</span> cdm[cohort_table_name]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    person <span class="op">=</span> cdm.person</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    joined <span class="op">=</span> cohort_tbl.join(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        person.select(<span class="st">"person_id"</span>, <span class="st">"gender_concept_id"</span>, <span class="st">"year_of_birth"</span>, <span class="st">"month_of_birth"</span>, <span class="st">"day_of_birth"</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        cohort_tbl.subject_id <span class="op">==</span> person.person_id,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        how<span class="op">=</span><span class="st">"inner"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    joined <span class="op">=</span> joined.mutate(</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        birth_month<span class="op">=</span>ibis.coalesce(joined.month_of_birth, <span class="dv">6</span>),</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        birth_day<span class="op">=</span>ibis.coalesce(joined.day_of_birth, <span class="dv">15</span>),</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    joined <span class="op">=</span> joined.mutate(</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>        birth_date<span class="op">=</span>ibis.date(joined.year_of_birth, joined.birth_month, joined.birth_day),</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        age<span class="op">=</span>((joined.cohort_start_date <span class="op">-</span> joined.birth_date).day() <span class="op">/</span> <span class="fl">365.25</span>).floor(),</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> joined.aggregate(</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        n_entries<span class="op">=</span>joined.count(),</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        n_people<span class="op">=</span>joined.subject_id.nunique(),</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        age_mean<span class="op">=</span>joined.age.mean(),</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        age_p50<span class="op">=</span>joined.age.median(),</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>cc.collect(summarise_cohort_basics(cdm, <span class="st">"gibleed_cohort"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="next-steps-what-to-learn-after-this" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> 15. Next steps (what to learn after this)</h1>
+<p>To grow this into a full observational analysis course:</p>
+<ol type="1">
+<li><strong>Cohort design rigor</strong>: washout periods, prior observation, inclusion criteria, censoring rules.</li>
+<li><strong>Confounding + covariates</strong>: baseline covariate construction from condition/drug/measurement history.</li>
+<li><strong>Comparative effectiveness</strong>: target trial emulation, exposure cohorts, propensity scores.</li>
+<li><strong>Outcome modeling</strong>: incidence rates, Kaplan–Meier, Cox models (with careful design).</li>
+<li><strong>Reusable pipelines</strong>: parameterized functions taking a <code>Cdm</code>, producing standardized outputs.</li>
+</ol>
+</section>
+<section id="clean-up" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> 16. Clean up</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>cdm.disconnect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+<p><strong>Provenance</strong>: CDMConnector provides helpers to download/cache Eunomia example CDMs (including “GiBleed”) and connect via Ibis to a DuckDB copy. See <a href="reference/eunomia_dir.qmd">eunomia_dir</a> and <a href="https://darwin-eu.github.io/CDMConnector/">CDMConnector docs</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/darwin-eu\.github\.io\/CDMConnector\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/darwin-eu/CDMConnector/edit/main/notebooks/10_pedagogical_omop_gibleed.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/darwin-eu/CDMConnector/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

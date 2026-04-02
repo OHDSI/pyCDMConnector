@@ -1,0 +1,64 @@
+---
+title: "CDMConnector"
+---
+
+**CDMConnector** is a Python port of the R [CDMConnector](https://github.com/darwin-eu/CDMConnector) and [omopgenerics](https://github.com/darwin-eu/omopgenerics) packages. It provides tools for working with observational health data in the **OMOP Common Data Model** format using **Ibis** for lazy SQL pushdown (replacing dplyr/dbplyr in R).
+
+## What it does
+
+- **Cdm**: A single object holding OMOP table references (Ibis tables) plus metadata (name, version, schemas).
+- **CdmSource / DbCdmSource**: Backed by an Ibis connection (DuckDB, Postgres, etc.) with write-schema support.
+- **Cohort tables**: OMOP cohort structure (cohort_definition_id, subject_id, cohort_start_date, cohort_end_date), attrition, cohort counts.
+- **Eunomia**: Helpers to download and use example OMOP datasets (e.g. GiBleed).
+- **Schema-aware**: `cdm_schema`, `write_schema`, optional `achilles_schema`; works with Ibis backends.
+
+## Install
+
+```bash
+pip install CDMConnector
+```
+
+With optional backends:
+
+```bash
+pip install "CDMConnector[postgres]"
+pip install "CDMConnector[dev,docs]"
+```
+
+## Quick example
+
+```python
+import cdmconnector as cc
+import ibis
+
+# From an Ibis DuckDB connection
+con = ibis.duckdb.connect("path/to/cdm.duckdb")
+cdm = cc.cdm_from_con(
+    con,
+    cdm_schema="main",
+    write_schema="main",
+    cdm_name="My CDM",
+)
+
+# Access tables (Ibis expressions)
+person = cdm.person
+person = cdm["person"]
+
+# Lazy query (Ibis)
+result = (
+    cdm.person
+    .filter(cdm.person.year_of_birth >= 1990)
+    .select("person_id", "year_of_birth")
+)
+# Execute: result.execute() or materialize with cc.compute(...)
+```
+
+## Next steps
+
+- **[Site contents](contents.qmd)** — Complete list of all pages on this site.
+- **[Tutorials](notebooks/index.qmd)** — Try the [Interactive (WASM) Example](tutorials/wasm_example_analysis.qmd) in your browser, or start with [Welcome / first CDM](notebooks/00_welcome_your_first_cdm.ipynb) and work through the notebooks.
+- **[Reference](reference/index.qmd)** — Full API documentation for the `cdmconnector` package.
+
+## License
+
+Apache 2.0.

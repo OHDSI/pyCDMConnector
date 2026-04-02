@@ -1,0 +1,7 @@
+# CDMValidationError { #cdmconnector.CDMValidationError }
+
+```python
+CDMValidationError()
+```
+
+Raised when CDM or table validation fails.

@@ -1,0 +1,131 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "CDMConnector"
+version = "0.1.0"
+description = "Connect to an OMOP Common Data Model (Python port with Ibis)"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10,<3.13"
+authors = [
+    { name = "Marta Alcalde-Herraiz", email = "marta.alcaldeherraiz@ndorms.ox.ac.uk" },
+    { name = "Adam Black", email = "black@ohdsi.org" },
+    { name = "Edward Burn", email = "edward.burn@ndorms.ox.ac.uk" },
+    { name = "Martí Català", email = "marti.catalasabate@ndorms.ox.ac.uk" },
+    { name = "Xihang Chen", email = "xihang.chen@ndorms.ox.ac.uk" },
+    { name = "Mike Du", email = "mike.du@ndorms.ox.ac.uk" },
+    { name = "Artem Gorbachev", email = "artem.gorbachev@odysseusinc.com" },
+    { name = "Yuchen Guo", email = "yuchen.guo@ndorms.ox.ac.uk" },
+    { name = "Xintong Li", email = "xintong.li@ndorms.ox.ac.uk" },
+    { name = "Kim Lopez-Guell", email = "kim.lopez@spc.ox.ac.uk" },
+    { name = "Núria Mercadé-Besora", email = "nuria.mercadebesora@ndorms.ox.ac.uk" },
+    { name = "Ioanna Nika", email = "i.nika@darwin-eu.org" },
+    { name = "Elin Rowlands", email = "elin.rowlands@ndorms.ox.ac.uk" },
+]
+keywords = ["omop", "cdm", "observational-health", "ibis", "sql"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "ibis-framework[duckdb]>=11.0",
+    "pyarrow>=14.0",
+    "pandas>=2.0",
+    "requests>=2.28",
+    "great-tables>=0.20",
+    "tqdm>=4.0",
+    "ohdsi-circe-python-alpha @ git+https://github.com/OHDSI/Circepy.git",
+]
+
+[project.optional-dependencies]
+tables = ["great-tables>=0.20,<1"]
+postgres = ["ibis-framework[postgres]>=11.0"]
+snowflake = ["ibis-framework[snowflake]>=11.0"]
+bigquery = ["ibis-framework[bigquery]>=11.0"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-env>=1.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+]
+docs = [
+    "quartodoc>=0.7.0",
+    "nbformat>=5.9",
+    "nbclient>=0.10",
+    "jupyter>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/darwin-eu/CDMConnector"
+Documentation = "https://darwin-eu.github.io/CDMConnector/"
+Repository = "https://github.com/darwin-eu/CDMConnector"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cdmconnector"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/cdmconnector/inst" = "cdmconnector/inst"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/cdmconnector", "src/cdmconnector/py.typed"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"src/cdmconnector/inst" = "cdmconnector/inst"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+addopts = "-v --tb=short"
+markers = [
+    "integration: marks tests as integration (deselect with '-m \"not integration\"')",
+]
+# Live DB tests: set CDMCONNECTOR_TEST_DB to run generate_cohort_set against a DB (default: duckdb).
+# Example: CDMCONNECTOR_TEST_DB=duckdb pytest tests/test_generate_cohort_set_live.py
+
+[tool.pytest_env]
+# D: prefix means "set as default" — won't override if already set in the shell
+"D:EUNOMIA_DATA_FOLDER" = "/Users/ablack/eunomia_data"
+
+[tool.coverage.run]
+source = ["src/cdmconnector"]
+branch = true
+# Exclude optional/config and integration-heavy modules from coverage requirement
+omit = ["**/logging_config.py", "**/validation.py", "**/patient_profiles.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+]
+fail_under = 80

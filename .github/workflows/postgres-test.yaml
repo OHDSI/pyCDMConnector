@@ -1,0 +1,55 @@
+name: postgres-test
+
+on:
+  push:
+    branches: [main, master, test, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  check-secrets:
+    runs-on: ubuntu-latest
+    outputs:
+      has-secrets: ${{ steps.check.outputs.has-secrets }}
+    steps:
+      - id: check
+        run: |
+          if [ -z "${{ secrets.CDM5_POSTGRESQL_DBNAME }}" ]; then
+            echo "::notice::Skipping postgres tests – CDM5_POSTGRESQL_DBNAME secret not configured"
+            echo "has-secrets=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-secrets=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  test:
+    needs: check-secrets
+    if: needs.check-secrets.outputs.has-secrets == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+    env:
+      CDMCONNECTOR_TEST_DB: postgres
+      CDM5_POSTGRESQL_USER: ${{ secrets.CDM5_POSTGRESQL_USER }}
+      CDM5_POSTGRESQL_PASSWORD: ${{ secrets.CDM5_POSTGRESQL_PASSWORD }}
+      CDM5_POSTGRESQL_HOST: ${{ secrets.CDM5_POSTGRESQL_HOST }}
+      CDM5_POSTGRESQL_PORT: ${{ secrets.CDM5_POSTGRESQL_PORT }}
+      CDM5_POSTGRESQL_DBNAME: ${{ secrets.CDM5_POSTGRESQL_DBNAME }}
+      CDM5_POSTGRESQL_CDM_SCHEMA: ${{ secrets.CDM5_POSTGRESQL_CDM_SCHEMA }}
+      CDM5_POSTGRESQL_SCRATCH_SCHEMA: ${{ secrets.CDM5_POSTGRESQL_SCRATCH_SCHEMA }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,postgres]"
+
+      - name: Run tests
+        run: pytest tests -m integration -v --tb=short

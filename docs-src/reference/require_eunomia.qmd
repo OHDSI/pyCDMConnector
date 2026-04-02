@@ -1,0 +1,25 @@
+# require_eunomia { #cdmconnector.require_eunomia }
+
+```python
+require_eunomia(dataset_name='GiBleed', cdm_version='5.3', path=None)
+```
+
+Ensure the Eunomia dataset is available; download if needed.
+
+Sets EUNOMIA_DATA_FOLDER to a temp directory if unset. Creates the folder
+if it does not exist. Downloads the dataset if not present (matches R
+requireEunomia / eunomiaDir behavior).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                | Description                                                  | Default     |
+|--------------|---------------------|--------------------------------------------------------------|-------------|
+| dataset_name | str                 | One of example_datasets() (default "GiBleed").               | `'GiBleed'` |
+| cdm_version  | str                 | "5.3" or "5.4" (default "5.3").                              | `'5.3'`     |
+| path         | str or Path or None | Override data folder (default: use EUNOMIA_DATA_FOLDER env). | `None`      |
+
+## Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description              |
+|--------|--------|--------------------------|
+|        | str    | Path to the data folder. |

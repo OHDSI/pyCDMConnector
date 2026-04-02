@@ -1,0 +1,42 @@
+website:
+  sidebar:
+  - contents:
+    - reference/index.qmd
+    - contents:
+      - reference/Cdm.qmd
+      - reference/cdm_from_con.qmd
+      - reference/cdm_from_tables.qmd
+      - reference/cdm_tables.qmd
+      - reference/collect.qmd
+      - reference/compute.qmd
+      - reference/insert_table.qmd
+      - reference/drop_table.qmd
+      section: CDM & connection
+    - contents:
+      - reference/generate_cohort_set.qmd
+      section: Cohorts
+    - contents:
+      - reference/download_eunomia_data.qmd
+      - reference/eunomia_dir.qmd
+      - reference/eunomia_is_available.qmd
+      - reference/example_datasets.qmd
+      - reference/require_eunomia.qmd
+      section: Eunomia
+    - contents:
+      - reference/add_age.qmd
+      - reference/add_demographics.qmd
+      - reference/add_sex.qmd
+      section: Patient profiles
+    - contents:
+      - reference/Result.qmd
+      section: Results
+    - contents:
+      - reference/CDMConnectorError.qmd
+      - reference/CDMValidationError.qmd
+      - reference/CohortError.qmd
+      - reference/EunomiaError.qmd
+      - reference/SourceError.qmd
+      - reference/TableNotFoundError.qmd
+      section: Exceptions
+    id: reference
+  - id: dummy-sidebar
